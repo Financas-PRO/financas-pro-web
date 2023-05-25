@@ -1,14 +1,14 @@
 import React from "react";
-import '../assets/style/cadProfessor.css';
-import User from '../assets/image/user.png';
-import Nome from '../assets/image/nome.png';
-import Cpf from '../assets/image/cpf.png';
-import Email from '../assets/image/email.png';
-import Senha from '../assets/image/lock.png';
-import Telefone from '../assets/image/telefone.png';
-import Titulacao from '../assets/image/titulacao.png';
-import Rg from '../assets/image/Rg.png';
-import Navbar from '../components/navbar/header.jsx';
+import './cadProfessor.css';
+import User from '../../assets/image/user.png'
+import Nome from '../../assets/image/nome.png';
+import Cpf from '../../assets/image/cpf.png';
+import Email from '../../assets/image/email.png';
+import Senha from '../../assets/image/lock.png';
+import Telefone from '../../assets/image/telefone.png';
+import Titulacao from '../../assets/image/titulacao.png';
+import Rg from '../../assets/image/Rg.png';
+import Navbar from '../../components/navbar/header.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
