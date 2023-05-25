@@ -8,13 +8,16 @@ import Senha from '../assets/image/lock.png';
 import Telefone from '../assets/image/telefone.png';
 import Titulacao from '../assets/image/titulacao.png';
 import Rg from '../assets/image/Rg.png';
+import Navbar from '../components/navbar/header.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function cadProfessor(){
     return(
         <>
-            <div className="container mt-3">
+            <Navbar/>
+
+            <div className="container mt-4">
                 <div className="imgText">
                     <img src={User} className="img" alt="Usuario" />
                     <h2>Cadastro Professor</h2>
