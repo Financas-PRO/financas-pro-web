@@ -28,7 +28,7 @@ export default function cadTurma() {
         </div>
 
         <form>
-          <div className="conteudo mt-5">
+          <div className="conteudoTurma mt-5">
             <div className="row square">
               <div className="col col-md-6 col-12">
                 <img src={Nome} alt="Nome" />
