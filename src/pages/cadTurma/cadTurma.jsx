@@ -4,17 +4,53 @@ import User from "../../assets/image/user.png";
 import Nome from "../../assets/image/nome.png";
 import Navbar from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+import api from "../../services/api";
 
 export default function cadTurma() {
 
-  const [turma, setTurma] = useState({});
+  const [turmas, setTurmas] = useState({});
+
+  async function handleSubmit(e) {
+
+    e.preventDefault();
+
+    
+    try {
+
+        api.post('turma', turmas).then(async (res) => {
+
+                
+              alert("Sucesso !")
+              
+            }).catch(function (error) {
+
+              let resposta = error.response.data.errors;
+
+                    var erros = "";
+
+                    Object.keys(resposta).forEach(function(index){
+
+                        erros += `${resposta[index]}\n`;
+
+                    });
+                    alert(`Erro ao cadastrar!\n ${erros}`)
+                
+            });
+
+
+    } catch (err) {
+
+        console.log(turmas);
+    }
+
+}
   
   function handleChange(e) {
     const nome = e.target.name;
     const valor = (e.target.value).trim();
-    setTurma({ ...turma, [nome]: valor });
+    setTurmas({ ...turmas, [nome]: valor });
     
-    console.log(turma);  
+    console.log(turmas);  
   }
 
   return (
@@ -27,7 +63,7 @@ export default function cadTurma() {
           <h2>Cadastro Turma</h2>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="conteudoTurma mt-5">
             <div className="row square">
               <div className="col col-md-6 col-12">
@@ -41,17 +77,9 @@ export default function cadTurma() {
                 <input onChange={handleChange} name="semestre" type="text" className="form-control" />
               </div>
               <div className="col col-md-6 col-12">
-                <label>
-                 <img src={Nome} alt="Nome" />
-                  Curso
-                </label>
-                  <select onChange={handleChange} name="curso"  className="form-control">
-                    <option value="">Selecione...</option>
-                    <option value="1">Sistema de Informação</option>
-                    <option value="2">Administração</option>
-                    <option value="3">Contabil</option>
-                    <option value="4">Gestão Financeira</option>
-                  </select>
+                <img src={Nome} alt="Nome" />
+                <label>Curso</label>
+                <input onChange={handleChange} name="curso" type="text" className="form-control" />
               </div>
               <div className="col col-md-6 col-12">
                 <img src={Nome} alt="Nome" />

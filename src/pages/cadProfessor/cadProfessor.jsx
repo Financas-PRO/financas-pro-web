@@ -10,10 +10,48 @@ import Titulacao from "../../assets/image/titulacao.png";
 import Rg from "../../assets/image/Rg.png";
 import Navbar from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+import api from "../../services/api";
+
 
 export default function cadProfessor() {
 
   const [professor, setProfessor] = useState({});
+
+
+  async function handleSubmit(e) {
+
+    e.preventDefault();
+
+    
+    try {
+
+
+        api.post('docente', professor).then(async (res) => {
+
+                alert("Sucesso !")
+
+            }).catch(function (error) {
+
+              let resposta = error.response.data.errors;
+
+                    var erros = "";
+
+                    Object.keys(resposta).forEach(function(index){
+
+                        erros += `${resposta[index]}\n`;
+
+                    });
+                    alert(`Erro ao cadastrar!\n ${erros}`)
+                
+            });
+
+
+    } catch (err) {
+
+        console.log(professor);
+    }
+
+}
 
   function handleChange(e) {
     const nome = e.target.name;
@@ -33,7 +71,7 @@ export default function cadProfessor() {
           <h2>Cadastro Professor</h2>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="conteudoProfessor mt-5">
             <div className="row square">
               <div className="col col-md-12 col-12">
@@ -69,12 +107,23 @@ export default function cadProfessor() {
               <div className="col col-md-6 col-12 mt-2">
                 <img src={Nome} alt="Usuario" />
                 <label>Usuario</label>
-                <input onChange={handleChange} name="usuario" type="text" className="form-control" />
+                <input onChange={handleChange} name="username" type="text" className="form-control" />
               </div>
               <div className="col col-md-6 col-12 mt-2">
                 <img src={Senha} alt="Senha" />
                 <label>Senha</label>
-                <input onChange={handleChange} name="senha" type="password" className="form-control" />
+                <input onChange={handleChange} name="password" type="password" className="form-control" />
+              </div>
+              <div className="col col-md-12 col-12">
+                <label>
+                 <img src={Nome} alt="Nome" />
+                  Tipo
+                </label>
+                  <select onChange={handleChange} name="id_tipoDeUsuario"  className="form-control">
+                    <option value="">Selecione...</option>
+                    <option value="1">Professor</option>
+                    <option value="2">Coordenador</option>
+                  </select>
               </div>
             </div>
             <div className="col col-md-12 col-12 buttonSalvar">
