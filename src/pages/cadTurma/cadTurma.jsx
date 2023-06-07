@@ -32,7 +32,7 @@ export default function cadTurma() {
 
                     Object.keys(resposta).forEach(function(index){
 
-                        erros += resposta[index]
+                      erros += resposta[index] + "\n";
 
                     });
                     toast.error(`Erro ao cadastrar!\n ${erros}`,
@@ -43,7 +43,9 @@ export default function cadTurma() {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "colored",})
+                    theme: "colored",
+                    style: { whiteSpace: "pre-line" }
+                   })
                 
                 
             });
