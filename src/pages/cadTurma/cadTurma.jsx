@@ -5,6 +5,8 @@ import Nome from "../../assets/image/nome.png";
 import Navbar from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function cadTurma() {
 
@@ -20,8 +22,8 @@ export default function cadTurma() {
         api.post('turma', turmas).then(async (res) => {
 
                 
-              alert("Sucesso !")
-              
+          toast.success("Cadastro realizado com sucesso !")
+
             }).catch(function (error) {
 
               let resposta = error.response.data.errors;
@@ -30,10 +32,19 @@ export default function cadTurma() {
 
                     Object.keys(resposta).forEach(function(index){
 
-                        erros += `${resposta[index]}\n`;
+                        erros += resposta[index]
 
                     });
-                    alert(`Erro ao cadastrar!\n ${erros}`)
+                    toast.error(`Erro ao cadastrar!\n ${erros}`,
+                    {position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",})
+                
                 
             });
 
@@ -58,6 +69,12 @@ export default function cadTurma() {
       <Navbar />
 
       <div className="container mt-4">
+
+      <ToastContainer
+         
+         className="toast-top-right"
+       />
+
         <div className="imgText">
           <img src={User} className="img" alt="Usuario" />
           <h2>Cadastro Turma</h2>

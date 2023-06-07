@@ -11,12 +11,17 @@ import Rg from "../../assets/image/Rg.png";
 import Navbar from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export default function cadProfessor() {
 
   const [professor, setProfessor] = useState({});
 
+  
+ 
 
   async function handleSubmit(e) {
 
@@ -27,8 +32,9 @@ export default function cadProfessor() {
 
 
         api.post('docente', professor).then(async (res) => {
+              
 
-                alert("Sucesso !")
+                toast.success("Cadastro realizado com sucesso !")
 
             }).catch(function (error) {
 
@@ -38,10 +44,18 @@ export default function cadProfessor() {
 
                     Object.keys(resposta).forEach(function(index){
 
-                        erros += `${resposta[index]}\n`;
+                        erros += resposta[index]
 
                     });
-                    alert(`Erro ao cadastrar!\n ${erros}`)
+                    toast.error(`Erro ao cadastrar!\n ${erros}`,
+                    {position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",})
                 
             });
 
@@ -65,7 +79,14 @@ export default function cadProfessor() {
     <>
       <Navbar />
 
+      
       <div className="container mt-4">
+
+      <ToastContainer
+         
+         className="toast-top-right"
+       />
+
         <div className="imgText">
           <img src={User} className="img" alt="Usuario" />
           <h2>Cadastro Professor</h2>
