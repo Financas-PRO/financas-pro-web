@@ -15,7 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-export default function cadProfessor() {
+export default function CadProfessor() {
   const [professor, setProfessor] = useState({});
 
   let navigate = useNavigate();
@@ -28,10 +28,10 @@ export default function cadProfessor() {
         .post("docente", professor)
         .then(async (res) => {
           if (res.status) {
-            toast.success("Cadastro realizado com sucesso !");
+            toast.success("Cadastro realizado com sucesso!");
 
             setTimeout (() => {
-              return navigate("/professor/genrenciar", { replace: true });
+              return navigate("/professor/gerenciar", { replace: true });
             }, 4000)
             
           }

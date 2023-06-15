@@ -22,3 +22,25 @@ img{
     position: relative;
     bottom: 3px;
 }
+
+.status {
+    display: inline-block;
+    padding: 5px;
+  }
+
+  .status-box {
+    display: inline-block;
+    padding: 6px 10px;
+    background-color: rgba(19, 146, 19, 0.829);
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .ativo {
+    border-color: rgba(19, 146, 19, 0.829);;
+  }
+
+  .inativo {
+    border-color: red;
+  }

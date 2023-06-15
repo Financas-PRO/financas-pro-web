@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function editarProfessor() {
+export default function EditarProfessor() {
   const [professor, setProfessor] = useState({});
   
 
@@ -196,7 +196,7 @@ export default function editarProfessor() {
                   onChange={handleChange}
                   name="id_tipoDeUsuario"
                   className="form-control"
-                  value={professor.id}
+                  
                 >
                   <option value="">Selecione...</option>
                   <option value="1">Professor</option>

@@ -6,8 +6,9 @@ import Navbar from "../../components/navbar/header.jsx";
 import User from "../../assets/image/user.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function gerProfessor() {
+export default function GerProfessor() {
 
+  
   const [docentes, setDocentes] = useState([]);
 
 
@@ -26,6 +27,10 @@ export default function gerProfessor() {
   var docenteDetalhe = "";
 
   docenteDetalhe = docentes.map ( (item, index) => {
+
+    const statusClass = item.ativo === 1 ? "ativo" : "inativo";
+    const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
+
     return (
       <tr key={index}>
         <td>{item.id}</td>
@@ -35,6 +40,11 @@ export default function gerProfessor() {
         <td>{item.user.email}</td>
         <td>{item.telefone}</td>
         <td>{item.user.username}</td>
+        <td >
+        <span className={`status ${statusClass}`}>
+          <span className="status-box">{statusText}</span>
+        </span>
+        </td>
         <td>
           <Link to={`/professor/${item.id}/editar`} className="btn btn-success">Editar</Link>
         </td>
@@ -71,6 +81,7 @@ export default function gerProfessor() {
                     <th>EMAIL</th>
                     <th>TELEFONE</th>
                     <th>USUARIO</th>
+                    <th>STATUS</th>
                     <th>EDITAR</th>
                     <th>DELETAR</th>
                   </tr>

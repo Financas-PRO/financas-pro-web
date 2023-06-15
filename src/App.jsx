@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css'
-import CadProfessor from "./pages/cadProfessor/cadProfessor.jsx";
-import CadTurma from './pages/cadTurma/cadTurma.jsx';
-import GerProfessor from './pages/gerProfessor/gerProfessor.jsx'
-import EditarProfessor from './pages/editProfessor/editarProfessor.jsx'
+import CadastrarProfessor from './pages/CadProfessor/CadProfessor.jsx';
+import CadastrarTurma from './pages/CadTurma/CadTurma.jsx';
+import GerenciarProfessor from './pages/GerProfessor/GerProfessor.jsx'
+import EditarProfessor from './pages/EditProfessor/EditarProfessor.jsx'
 
 
 
@@ -17,9 +17,9 @@ function App() {
   
           <Routes>
   
-            <Route path="professor/cadastrar" element={<CadProfessor/>}/>
-            <Route path="turma/cadastrar" element={<CadTurma/>}/>
-            <Route path="professor/gerenciar" element={<GerProfessor/>}/>
+            <Route path="professor/cadastrar" element={<CadastrarProfessor/>}/>
+            <Route path="turma/cadastrar" element={<CadastrarTurma/>}/>
+            <Route path="professor/gerenciar" element={<GerenciarProfessor/>}/>
             <Route path="professor/:id/editar" element={<EditarProfessor/>}/>
 
 

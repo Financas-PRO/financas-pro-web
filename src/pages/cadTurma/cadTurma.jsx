@@ -8,7 +8,7 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function cadTurma() {
+export default function CadTurma() {
 
   const [turmas, setTurmas] = useState({});
 
@@ -19,7 +19,7 @@ export default function cadTurma() {
     
     try {
 
-        api.post('turma', turmas).then(async (res) => {
+        api.post('turma', turmas).then(async () => {
 
                 
           toast.success("Cadastro realizado com sucesso !")
