@@ -42,7 +42,7 @@ export default function GerProfessor() {
         <td>{item.user.username}</td>
         <td >
         <span className={`status ${statusClass}`}>
-          <span className="status-box">{statusText}</span>
+          {statusText}
         </span>
         </td>
         <td>

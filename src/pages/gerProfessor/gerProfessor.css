@@ -23,24 +23,21 @@ img{
     bottom: 3px;
 }
 
-.status {
-    display: inline-block;
-    padding: 5px;
-  }
 
-  .status-box {
+  .status {
     display: inline-block;
-    padding: 6px 10px;
-    background-color: rgba(19, 146, 19, 0.829);
-    color: white;
+    padding: 4px 8px;
     border-radius: 4px;
-    font-weight: bold;
+    font-size: 1.0rem;
+    
   }
 
   .ativo {
-    border-color: rgba(19, 146, 19, 0.829);;
+    background-color: green;
+    color: white;
   }
 
   .inativo {
-    border-color: red;
+    background-color: red;
+    color: white;
   }

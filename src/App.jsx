@@ -17,10 +17,10 @@ function App() {
   
           <Routes>
   
-            <Route path="professor/cadastrar" element={<CadastrarProfessor/>}/>
-            <Route path="turma/cadastrar" element={<CadastrarTurma/>}/>
-            <Route path="professor/gerenciar" element={<GerenciarProfessor/>}/>
-            <Route path="professor/:id/editar" element={<EditarProfessor/>}/>
+            <Route exact  path="professor/cadastrar" element={<CadastrarProfessor/>}/>
+            <Route exact  path="turma/cadastrar" element={<CadastrarTurma/>}/>
+            <Route exact  path="professor/gerenciar" element={<GerenciarProfessor/>}/>
+            <Route exact  path="professor/:id/editar" element={<EditarProfessor/>}/>
 
 
           </Routes>
