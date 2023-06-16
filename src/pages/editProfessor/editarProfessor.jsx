@@ -17,21 +17,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function EditarProfessor() {
-  const [professor, setProfessor] = useState({});
-  
+  const [professor, setProfessor] = useState({ cpf: "", telefone: "" });
 
-  let {id} = useParams();
+  let { id } = useParams();
   let navigate = useNavigate();
 
   useEffect(() => {
-
-    axios.get(`http://127.0.0.1:8000/api/docente/${id}`).then(res => {
-      //console.log(res);   
-      console.log((res.data.data));
+    axios.get(`http://127.0.0.1:8000/api/docente/${id}`).then((res) => {
+      //console.log(res);
+      console.log(res.data.data);
       setProfessor(res.data.data);
     });
-
-  }, [id])
+  }, [id]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -43,10 +40,9 @@ export default function EditarProfessor() {
           if (res.status) {
             toast.success("Docente alterado com sucesso !");
 
-            setTimeout (() => {
+            setTimeout(() => {
               return navigate("/professor/gerenciar", { replace: true });
-            }, 4000)
-            
+            }, 4000);
           }
         })
         .catch(function (error) {
@@ -74,15 +70,58 @@ export default function EditarProfessor() {
     }
   }
 
+  const formatCPF = (cpf) => {
+    const cleanedCPF = cpf.replace(/\D/g, "");
+
+    let maskedCPF = "";
+
+    if (cleanedCPF.length > 0) {
+      maskedCPF += cleanedCPF.slice(0, 3);
+    }
+    if (cleanedCPF.length > 3) {
+      maskedCPF += "." + cleanedCPF.slice(3, 6);
+    }
+    if (cleanedCPF.length > 6) {
+      maskedCPF += "." + cleanedCPF.slice(6, 9);
+    }
+    if (cleanedCPF.length > 9) {
+      maskedCPF += "-" + cleanedCPF.slice(9, 11);
+    }
+
+    return maskedCPF;
+  };
+
+  const formatTelefone = (telefone) => {
+    const cleanedTelefoen = telefone.replace(/\D/g, "");
+
+    let maskedTelefone = "";
+
+    if (cleanedTelefoen.length > 0) {
+      maskedTelefone += "(" + cleanedTelefoen.slice(0, 2);
+    }
+    if (cleanedTelefoen.length > 2) {
+      maskedTelefone += ")" + cleanedTelefoen.slice(2, 7);
+    }
+    if (cleanedTelefoen.length > 7) {
+      maskedTelefone += "-" + cleanedTelefoen.slice(7, 11);
+    }
+
+    return maskedTelefone;
+  };
+
   function handleChange(e) {
-    const nome = e.target.name;
-    const valor = e.target.value.trim();
-    setProfessor({ ...professor, [nome]: valor });
+    const { name, value } = e.target;
+    const valor =
+      name === "cpf"
+        ? formatCPF(value)
+        : name === "telefone"
+        ? formatTelefone(value)
+        : value.trim();
+
+    setProfessor({ ...professor, [name]: valor });
 
     console.log(professor);
   }
-
-
 
   return (
     <>
@@ -129,7 +168,7 @@ export default function EditarProfessor() {
                   name="cpf"
                   type="text"
                   className="form-control"
-                  value={professor.cpf} 
+                  value={professor.cpf}
                 />
               </div>
               <div className="col col-md-12 col-12 mt-2">
@@ -140,7 +179,6 @@ export default function EditarProfessor() {
                   name="email"
                   type="email"
                   className="form-control"
-                  
                 />
               </div>
               <div className="col col-md-6 col-12 mt-2">
@@ -151,7 +189,7 @@ export default function EditarProfessor() {
                   name="titulacao"
                   type="text"
                   className="form-control"
-                  value={professor.titulacao} 
+                  value={professor.titulacao}
                 />
               </div>
               <div className="col col-md-6 col-12 mt-2">
@@ -162,7 +200,7 @@ export default function EditarProfessor() {
                   name="telefone"
                   type="text"
                   className="form-control"
-                  value={professor.telefone} 
+                  value={professor.telefone}
                 />
               </div>
               <div className="col col-md-6 col-12 mt-2">
@@ -173,7 +211,6 @@ export default function EditarProfessor() {
                   name="username"
                   type="text"
                   className="form-control"
-                  
                 />
               </div>
               <div className="col col-md-6 col-12 mt-2">
@@ -184,7 +221,6 @@ export default function EditarProfessor() {
                   name="password"
                   type="password"
                   className="form-control"
-                  
                 />
               </div>
               <div className="col col-md-12 col-12">
@@ -196,7 +232,6 @@ export default function EditarProfessor() {
                   onChange={handleChange}
                   name="id_tipoDeUsuario"
                   className="form-control"
-                  
                 >
                   <option value="">Selecione...</option>
                   <option value="1">Professor</option>

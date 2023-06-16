@@ -14,10 +14,9 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import InputMask from "react-input-mask";
 
 export default function CadProfessor() {
-  const [professor, setProfessor] = useState({});
+  const [professor, setProfessor] = useState({ cpf: "", telefone: "" });
 
   let navigate = useNavigate();
 
@@ -31,10 +30,9 @@ export default function CadProfessor() {
           if (res.status) {
             toast.success("Cadastro realizado com sucesso!");
 
-            setTimeout (() => {
+            setTimeout(() => {
               return navigate("/professor/gerenciar", { replace: true });
-            }, 4000)
-            
+            }, 4000);
           }
         })
         .catch(function (error) {
@@ -62,10 +60,55 @@ export default function CadProfessor() {
     }
   }
 
+  const formatCPF = (cpf) => {
+    const cleanedCPF = cpf.replace(/\D/g, "");
+
+    let maskedCPF = "";
+
+    if (cleanedCPF.length > 0) {
+      maskedCPF += cleanedCPF.slice(0, 3);
+    }
+    if (cleanedCPF.length > 3) {
+      maskedCPF += "." + cleanedCPF.slice(3, 6);
+    }
+    if (cleanedCPF.length > 6) {
+      maskedCPF += "." + cleanedCPF.slice(6, 9);
+    }
+    if (cleanedCPF.length > 9) {
+      maskedCPF += "-" + cleanedCPF.slice(9, 11);
+    }
+
+    return maskedCPF;
+  };
+
+  const formatTelefone = (telefone) => {
+    const cleanedTelefoen = telefone.replace(/\D/g, "");
+
+    let maskedTelefone = "";
+
+    if (cleanedTelefoen.length > 0) {
+      maskedTelefone += "(" + cleanedTelefoen.slice(0, 2);
+    }
+    if (cleanedTelefoen.length > 2) {
+      maskedTelefone += ")" + cleanedTelefoen.slice(2, 7);
+    }
+    if (cleanedTelefoen.length > 7) {
+      maskedTelefone += "-" + cleanedTelefoen.slice(7, 11);
+    }
+
+    return maskedTelefone;
+  };
+
   function handleChange(e) {
-    const nome = e.target.name;
-    const valor = e.target.value.trim();
-    setProfessor({ ...professor, [nome]: valor });
+    const { name, value } = e.target;
+    const valor =
+      name === "cpf"
+        ? formatCPF(value)
+        : name === "telefone"
+        ? formatTelefone(value)
+        : value.trim();
+
+    setProfessor({ ...professor, [name]: valor });
 
     console.log(professor);
   }
@@ -110,7 +153,9 @@ export default function CadProfessor() {
               <div className="col col-md-6 col-12">
                 <img src={Cpf} alt="CPF" />
                 <label>CPF</label>
-                <InputMask mask="999.999.999-99" 
+                <input
+                  type="text"
+                  value={professor.cpf}
                   onChange={handleChange}
                   name="cpf"
                   className="form-control"
@@ -141,7 +186,9 @@ export default function CadProfessor() {
               <div className="col col-md-6 col-12">
                 <img src={Telefone} alt="Telefone" />
                 <label>Telefone</label>
-                <InputMask mask="(99)99999-9999" 
+                <input
+                  type="text"
+                  value={professor.telefone}
                   onChange={handleChange}
                   name="telefone"
                   className="form-control"
