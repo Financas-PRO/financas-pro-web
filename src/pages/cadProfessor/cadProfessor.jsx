@@ -14,6 +14,7 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import InputMask from "react-input-mask";
 
 export default function CadProfessor() {
   const [professor, setProfessor] = useState({});
@@ -92,9 +93,10 @@ export default function CadProfessor() {
                   name="nome"
                   type="text"
                   className="form-control"
+                  maxLength="150"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Rg} alt="RG" />
                 <label>RG</label>
                 <input
@@ -102,19 +104,19 @@ export default function CadProfessor() {
                   name="rg"
                   type="text"
                   className="form-control"
+                  maxLength="9"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Cpf} alt="CPF" />
                 <label>CPF</label>
-                <input
+                <InputMask mask="999.999.999-99" 
                   onChange={handleChange}
                   name="cpf"
-                  type="text"
                   className="form-control"
                 />
               </div>
-              <div className="col col-md-12 col-12 mt-2">
+              <div className="col col-md-12 col-12">
                 <img src={Email} alt="Email" />
                 <label>E-mail</label>
                 <input
@@ -122,9 +124,10 @@ export default function CadProfessor() {
                   name="email"
                   type="email"
                   className="form-control"
+                  maxLength="50"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Titulacao} alt="Titulação" />
                 <label>Titulação</label>
                 <input
@@ -132,19 +135,19 @@ export default function CadProfessor() {
                   name="titulacao"
                   type="text"
                   className="form-control"
+                  maxLength="50"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Telefone} alt="Telefone" />
                 <label>Telefone</label>
-                <input
+                <InputMask mask="(99)99999-9999" 
                   onChange={handleChange}
                   name="telefone"
-                  type="text"
                   className="form-control"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Nome} alt="Usuario" />
                 <label>Usuario</label>
                 <input
@@ -152,9 +155,10 @@ export default function CadProfessor() {
                   name="username"
                   type="text"
                   className="form-control"
+                  maxLength="50"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Senha} alt="Senha" />
                 <label>Senha</label>
                 <input
@@ -162,6 +166,7 @@ export default function CadProfessor() {
                   name="password"
                   type="password"
                   className="form-control"
+                  maxLength="20"
                 />
               </div>
               <div className="col col-md-12 col-12">
