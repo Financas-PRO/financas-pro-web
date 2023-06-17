@@ -50,6 +50,7 @@ label{
     border-radius: 50px;
     background-color: #EE7F01;
     border-color: #EE7F01;
+    color: #fff;
     font-size: 1.3rem;
     font-style: italic;
 }
@@ -57,4 +58,9 @@ label{
 .btn-salvar:hover{
     background-color: #b7660a;
     border-color: #b7660a;
+}
+
+
+.hide{
+    display: none;
 }

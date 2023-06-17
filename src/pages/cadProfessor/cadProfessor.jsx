@@ -136,7 +136,7 @@ export default function CadProfessor() {
                   name="nome"
                   type="text"
                   className="form-control"
-                  maxLength="150"
+                  maxLength="80"
                 />
               </div>
               <div className="col col-md-6 col-12">

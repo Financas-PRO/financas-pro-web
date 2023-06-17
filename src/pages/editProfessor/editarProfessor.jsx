@@ -146,10 +146,11 @@ export default function EditarProfessor() {
                   name="nome"
                   type="text"
                   className="form-control"
+                  maxLength="80"
                   value={professor.nome}
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Rg} alt="RG" />
                 <label>RG</label>
                 <input
@@ -157,10 +158,11 @@ export default function EditarProfessor() {
                   name="rg"
                   type="text"
                   className="form-control"
+                  maxLength="9"
                   value={professor.rg}
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Cpf} alt="CPF" />
                 <label>CPF</label>
                 <input
@@ -171,17 +173,18 @@ export default function EditarProfessor() {
                   value={professor.cpf}
                 />
               </div>
-              <div className="col col-md-12 col-12 mt-2">
+              <div className="col col-md-12 col-12">
                 <img src={Email} alt="Email" />
                 <label>E-mail</label>
                 <input
                   onChange={handleChange}
                   name="email"
                   type="email"
+                  maxLength="50"
                   className="form-control"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Titulacao} alt="Titulação" />
                 <label>Titulação</label>
                 <input
@@ -189,10 +192,11 @@ export default function EditarProfessor() {
                   name="titulacao"
                   type="text"
                   className="form-control"
+                  maxLength="50"
                   value={professor.titulacao}
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12">
                 <img src={Telefone} alt="Telefone" />
                 <label>Telefone</label>
                 <input
@@ -203,7 +207,7 @@ export default function EditarProfessor() {
                   value={professor.telefone}
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12 hide">
                 <img src={Nome} alt="Usuario" />
                 <label>Usuario</label>
                 <input
@@ -211,9 +215,10 @@ export default function EditarProfessor() {
                   name="username"
                   type="text"
                   className="form-control"
+                  maxLength="50"
                 />
               </div>
-              <div className="col col-md-6 col-12 mt-2">
+              <div className="col col-md-6 col-12 hide">
                 <img src={Senha} alt="Senha" />
                 <label>Senha</label>
                 <input
@@ -221,6 +226,7 @@ export default function EditarProfessor() {
                   name="password"
                   type="password"
                   className="form-control"
+                  maxLength="20"
                 />
               </div>
               <div className="col col-md-12 col-12">
