@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import CadastrarProfessor from "./pages/CadProfessor/CadProfessor.jsx";
-import CadastrarTurma from "./pages/CadTurma/CadTurma.jsx";
-import GerenciarProfessor from "./pages/GerProfessor/GerProfessor.jsx";
-import EditarProfessor from "./pages/EditProfessor/EditarProfessor.jsx";
+import CadastrarProfessor from "./pages/cadProfessor/cadProfessor.jsx";
+import CadastrarTurma from "./pages/cadTurma/cadTurma.jsx";
+import GerenciarProfessor from "./pages/gerProfessor/gerProfessor.jsx";
+import EditarProfessor from "./pages/editProfessor/editarProfessor.jsx";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            exact
+            
             path="professor/cadastrar"
             element={<CadastrarProfessor />}
           />
@@ -21,12 +21,12 @@ function App() {
             path="turma/cadastrar"
             element={<CadastrarTurma />} />
           <Route
-            exact
+            
             path="professor/gerenciar"
             element={<GerenciarProfessor />}
           />
           <Route
-            exact
+            
             path="professor/:id/editar"
             element={<EditarProfessor />}
           />

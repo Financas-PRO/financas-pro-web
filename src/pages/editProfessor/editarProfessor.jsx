@@ -14,19 +14,25 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+
 
 export default function EditarProfessor() {
-  const [professor, setProfessor] = useState({ cpf: "", telefone: "" });
+  const [professor, setProfessor] = useState({ nome: "", cpf: "",
+   rg: "", titulacao: "", telefone: "",
+    user:{email: "", username: "", id_tipoDeUsuario: ""}});
 
   let { id } = useParams();
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/docente/${id}`).then((res) => {
+    api.get(`docente/${id}`).then((res) => {
       //console.log(res);
       console.log(res.data.data);
-      setProfessor(res.data.data);
+      setProfessor({nome: res.data.data.nome, cpf: res.data.data.cpf,
+      rg: res.data.data.rg, titulacao: res.data.data.titulacao,
+       telefone: res.data.data.telefone,
+       user:{email: res.data.data.user.email, username: res.data.data.user.username,
+         id_tipoDeUsuario: res.data.data.user.id_tipoDeUsuario}});
     });
   }, [id]);
 
@@ -35,7 +41,7 @@ export default function EditarProfessor() {
 
     try {
       api
-        .put("docente", professor)
+        .put(`docente/${id}`, professor)
         .then(async (res) => {
           if (res.status) {
             toast.success("Docente alterado com sucesso !");
@@ -182,6 +188,8 @@ export default function EditarProfessor() {
                   type="email"
                   maxLength="50"
                   className="form-control"
+                 value={professor.user.email}
+                  
                 />
               </div>
               <div className="col col-md-6 col-12">
@@ -207,7 +215,7 @@ export default function EditarProfessor() {
                   value={professor.telefone}
                 />
               </div>
-              <div className="col col-md-6 col-12 hide">
+              <div className="col col-md-6 col-12 ">
                 <img src={Nome} alt="Usuario" />
                 <label>Usuario</label>
                 <input
@@ -216,6 +224,7 @@ export default function EditarProfessor() {
                   type="text"
                   className="form-control"
                   maxLength="50"
+                  value={professor.user.username}
                 />
               </div>
               <div className="col col-md-6 col-12 hide">
@@ -238,6 +247,7 @@ export default function EditarProfessor() {
                   onChange={handleChange}
                   name="id_tipoDeUsuario"
                   className="form-control"
+                  value={professor.user.id_tipoDeUsuario}
                 >
                   <option value="">Selecione...</option>
                   <option value="1">Professor</option>
