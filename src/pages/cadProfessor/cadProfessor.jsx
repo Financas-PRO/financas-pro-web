@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 export default function CadProfessor() {
-  const [professor, setProfessor] = useState({ cpf: "", telefone: "" });
+  const [professor, setProfessor] = useState({ });
 
   let navigate = useNavigate();
 
