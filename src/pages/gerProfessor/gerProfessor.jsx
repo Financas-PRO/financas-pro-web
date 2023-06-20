@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
+import api from "../../services/api";
 import { Link } from "react-router-dom";
 import "./gerProfessor.css";
 import Navbar from "../../components/navbar/header.jsx";
@@ -7,61 +8,88 @@ import User from "../../assets/image/user.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function GerProfessor() {
-
   
   const [docentes, setDocentes] = useState([]);
+  const [busca, setBusca] = useState([]);
 
-
-
+  {
+    /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
+  }
   useEffect(() => {
-
-    axios.get(`http://127.0.0.1:8000/api/docente`).then(res => {
-      //console.log(res);   
-      console.log((res.data.data))
+    api.get(`docente`).then((res) => {
+      //console.log(res);
+      console.log(res.data.data);
       setDocentes(res.data.data);
+      setBusca(res.data.data);
     });
+  }, []);
+  {
+    /*-----------------------------------------------------------------------------------------------*/
+  }
 
-  }, [])
+  {
+    /*FILTRO DE PESQUISA PELO INPUT */
+  }
+  const Filter = (e) => {
+    const buscando = e.target.value.toLowerCase();
 
+    setBusca(
+      docentes.filter(
+        (f) =>
+          f.nome.toLowerCase().includes(buscando) ||
+          f.cpf.includes(buscando) ||
+          f.titulacao.toLowerCase().includes(buscando)
+      )
+    );
+  };
+  {
+    /*-----------------------------------------------------------------------------------------------*/
+  }
 
+  {
+    /*FUNÇÃO DE MAPEAMENTO PARA LISTAR AS INFORMAÇÕES EM SEUS DEVIDOS CAMPO DA TABELA  */
+  }
   var docenteDetalhe = "";
 
-  docenteDetalhe = docentes.map ( (item, index) => {
-
+  docenteDetalhe = busca.map((item, index) => {
     const statusClass = item.ativo === 1 ? "ativo" : "inativo";
     const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
 
     return (
       <tr key={index}>
-        <td>{item.id}</td>
+        <td><strong>{item.id}</strong></td>
         <td>{item.nome}</td>
         <td>{item.titulacao}</td>
         <td>{item.cpf}</td>
         <td>{item.user.email}</td>
         <td>{item.telefone}</td>
         <td>{item.user.username}</td>
-        <td >
-        <span className={`status ${statusClass}`}>
-          {statusText}
-        </span>
+        <td>
+          <span className={`status ${statusClass}`}>{statusText}</span>
         </td>
         <td>
-          <Link to={`/professor/${item.id}/editar`} className="btn btn-success">Editar</Link>
+          <Link to={`/professor/${item.id}/editar`} className="btn btn-warning" >
+            <i className="bi bi-pencil-square"></i>
+          </Link>
         </td>
         <td>
-          <button type="button" className="btn btn-danger">Deletar</button>
+          <button type="button" className="btn btn-danger">
+            <i className="bi bi-power"></i>
+          </button>
         </td>
       </tr>
-    )
+    );
   });
-  
+  {
+    /*-----------------------------------------------------------------------------------------------*/
+  }
 
   return (
     <>
       <Navbar />
 
       <div className="container-fluid">
-        <div className="row">
+        <div className="row justify-content-end">
           <div className="col-md-12">
             <div className="card-header">
               <img src={User} className="img" alt="Usuario" />
@@ -70,11 +98,25 @@ export default function GerProfessor() {
             <Link to="/professor/cadastrar" className="btn btn-primary">
               ADICIONAR
             </Link>
+          </div>
+          <div className="col-md-3 ">
+            <input
+              type="text"
+              className="form-control"
+              onChange={Filter}
+              placeholder="Buscar Docente.."
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
             <div className="card-body">
+              <div className="table-responsive">
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>NOME</th>
                     <th>TITULAÇÃO</th>
                     <th>CPF</th>
@@ -83,13 +125,12 @@ export default function GerProfessor() {
                     <th>USUARIO</th>
                     <th>STATUS</th>
                     <th>EDITAR</th>
-                    <th>DELETAR</th>
+                    <th>INATIVAR</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {docenteDetalhe}
-                </tbody>
+                <tbody>{docenteDetalhe}</tbody>
               </table>
+              </div>
             </div>
           </div>
         </div>
