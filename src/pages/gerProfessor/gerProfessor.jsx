@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
-
 import api from "../../services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./gerProfessor.css";
 import Navbar from "../../components/navbar/header.jsx";
 import User from "../../assets/image/user.png";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function GerProfessor() {
   
   const [docentes, setDocentes] = useState([]);
+
   const [busca, setBusca] = useState([]);
+
+  let navigate = useNavigate();
 
   {
     /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
@@ -47,6 +52,56 @@ export default function GerProfessor() {
   }
 
   {
+    /*FUNÇÃO INATIVAR DOCENTE */
+  }
+    const deletarDocente = (e, id) => {
+
+      e.preventDefault();
+
+      const NoClick = e.currentTarget;
+      NoClick.innerText = "Inativando...";
+
+      try {
+        api
+          .delete(`docente/${id}`)
+          .then(async (res) => {
+            if (res.status) {
+              toast.success("Docente inativo com sucesso !");
+              NoClick.closest("tr").remove();
+              setTimeout(() => {
+                return navigate("/professor/gerenciar", { replace: true });
+              }, 1000);
+            }
+          })
+          .catch(function (error) {
+            let resposta = error.response.data.errors;
+  
+            var erros = "";
+  
+            Object.keys(resposta).forEach(function (index) {
+              erros += resposta[index] + "\n";
+            });
+            toast.error(`Erro ao alterar!\n ${erros}`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              style: { whiteSpace: "pre-line" },
+            });
+          });
+      } catch (err) {
+        console.log(docentes);
+      }
+    }
+    {
+      /*-----------------------------------------------------------------------------------------------*/
+    }
+
+  {
     /*FUNÇÃO DE MAPEAMENTO PARA LISTAR AS INFORMAÇÕES EM SEUS DEVIDOS CAMPO DA TABELA  */
   }
   var docenteDetalhe = "";
@@ -73,13 +128,14 @@ export default function GerProfessor() {
           </Link>
         </td>
         <td>
-          <button type="button" className="btn btn-danger">
+          <button type="button" onClick={(e) => deletarDocente(e, item.id)} className="btn btn-danger">
             <i className="bi bi-power"></i>
           </button>
         </td>
       </tr>
     );
   });
+
   {
     /*-----------------------------------------------------------------------------------------------*/
   }
@@ -89,6 +145,9 @@ export default function GerProfessor() {
       <Navbar />
 
       <div className="container-fluid">
+
+      <ToastContainer className="toast-top-right" />
+
         <div className="row justify-content-end">
           <div className="col-md-12">
             <div className="card-header">
