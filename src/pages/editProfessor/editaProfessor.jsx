@@ -10,9 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditaProfessor(){
 
-
-
-    const [professor, setProfessor] = useState({
+    const [professor, setProfessor] = React.useState({
         nome: "", 
         cpf: "",
         rg: "", 
@@ -20,10 +18,11 @@ export default function EditaProfessor(){
         telefone: "",
         user:{
             email: "", 
-            username: "", 
+            username: "",
             id_tipoDeUsuario: ""
         }
     });
+
 
     let { id } = useParams();
     let navigate = useNavigate();
@@ -33,16 +32,17 @@ export default function EditaProfessor(){
         api.get(`docente/${id}`).then((res) => {
 
           setProfessor({
-            nome: res.data.data.nome, 
-            cpf: res.data.data.cpf,
-            rg: res.data.data.rg, 
-            titulacao: res.data.data.titulacao,
-            telefone: res.data.data.telefone,
-            user:{
-                email: res.data.data.user.email, 
-                username: res.data.data.user.username,
-                id_tipoDeUsuario: res.data.data.user.id_tipoDeUsuario
-            }});
+                nome: res.data.data.nome, 
+                cpf: res.data.data.cpf,
+                rg: res.data.data.rg, 
+                titulacao: res.data.data.titulacao,
+                telefone: res.data.data.telefone,
+                user:{
+                    email: res.data.data.user.email, 
+                    username: res.data.data.user.username,
+                    id_tipoDeUsuario: res.data.data.user.id_tipoDeUsuario
+                }
+            });
         });
     }, [id]);
 
@@ -126,19 +126,18 @@ export default function EditaProfessor(){
     };
     
     function handleChange(e) {
-        
-       
-        
-        const nome = e.target.name;
-
-        const valor = e.target.value;
-
-        setProfessor({ ...professor, [nome]: valor });
-
-
+        const { name, value } = e.target;
+        const valor =
+          name === "cpf"
+            ? formatCPF(value)
+            : name === "telefone"
+            ? formatTelefone(value)
+            : value;
+    
+        setProfessor({ ...professor, [name]: valor });
+    
         console.log(professor);
-        
-    }
+      }
 
     return(
         <>
@@ -146,6 +145,7 @@ export default function EditaProfessor(){
             <Navbar />
 
             <div className="container mt-5">
+                <ToastContainer className="toast-top-right" />
 
                 <div className="imgText">
                     {/* <img src={User} className="img" alt="Usuario" /> */}
@@ -191,16 +191,8 @@ export default function EditaProfessor(){
  
                                 />
                             </div>
-                            <div className="col col-md-12 col-12">
-                                <label>E-mail</label>
-                                <input
-                                    onChange={handleChange} 
-                                    type="text"
-                                    name="email" 
-                                    className="form-control"
-                                    value={professor.user.email}
-                                />
-                            </div>
+                           
+                            
                             <div className="col col-md-6 col-12">
                                 <label>Titulação</label>
                                 <input
@@ -222,13 +214,51 @@ export default function EditaProfessor(){
                                 />
                             </div>
                             <div className="col col-md-12 col-12">
+                               
+                                <label>E-mail</label>
+                                <input
+                                    onChange={handleChange}
+                                    name="email"
+                                    type="email"
+                                    className="form-control"
+                                    maxLength="50"
+                                    defaultValue={professor.user.email}
+                                    
+                                />
+                            </div>
+
+                            <div className="col col-md-6 col-12">
+                            
+                                <label>Usuario</label>
+                                <input
+                                    name="username"
+                                    type="text"
+                                    className="form-control"
+                                    maxLength="50"
+                                    defaultValue={professor.user.username}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="col col-md-6 col-12">
+                            
+                                <label>Senha</label>
+                                <input
+                                    onChange={handleChange}
+                                    name="password"
+                                    type="password"
+                                    className="form-control"
+                                    maxLength="20"
+                                />
+                            </div>
+                            <div className="col col-md-12 col-12">
                                 <label>
                                     Tipo
                                 </label>
                                 <select
-                                    onChange={handleChange}
+                                    onChange={handleChange} 
                                     name="id_tipoDeUsuario"
                                     className="form-control"
+                                    
                                     value={professor.user.id_tipoDeUsuario}
                                 >
                                     <option value="">Selecione...</option>
