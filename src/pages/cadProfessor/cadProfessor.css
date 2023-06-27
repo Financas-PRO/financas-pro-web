@@ -58,3 +58,14 @@ label{
     background-color: #b7660a;
     border-color: #b7660a;
 }
+
+
+.margin-cadastrar-titulo{
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.icons-cad{
+    font-size: 25px;
+    margin-left: 15px;
+}

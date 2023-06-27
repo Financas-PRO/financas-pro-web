@@ -1,13 +1,5 @@
 import React, { useState } from "react";
 import "./cadProfessor.css";
-import User from "../../assets/image/user.png";
-import Nome from "../../assets/image/nome.png";
-import Cpf from "../../assets/image/cpf.png";
-import Email from "../../assets/image/email.png";
-import Senha from "../../assets/image/lock.png";
-import Telefone from "../../assets/image/telefone.png";
-import Titulacao from "../../assets/image/titulacao.png";
-import Rg from "../../assets/image/Rg.png";
 import Navbar from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
@@ -121,15 +113,15 @@ export default function CadProfessor() {
         <ToastContainer className="toast-top-right" />
 
         <div className="imgText">
-          <img src={User} className="img" alt="Usuario" />
-          <h2>Cadastro Professor</h2>
+          <i className="bi bi-person-add"></i>
+          <h2 className="margin-cadastrar-titulo">Cadastro Professor</h2>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="conteudoProfessor mt-5">
             <div className="row square">
               <div className="col col-md-12 col-12">
-                <img src={Nome} alt="Nome" />
+                <i className="bi bi-person icons-cad"></i>
                 <label>Nome</label>
                 <input
                   onChange={handleChange}
@@ -140,7 +132,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-6 col-12">
-                <img src={Rg} alt="RG" />
+                <i className="bi bi-clipboard icons-cad"></i>
                 <label>RG</label>
                 <input
                   onChange={handleChange}
@@ -151,7 +143,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-6 col-12">
-                <img src={Cpf} alt="CPF" />
+                <i className="bi bi-file-earmark icons-cad"></i>
                 <label>CPF</label>
                 <input
                   type="text"
@@ -162,7 +154,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-12 col-12">
-                <img src={Email} alt="Email" />
+                <i className="bi bi-envelope icons"></i>
                 <label>E-mail</label>
                 <input
                   onChange={handleChange}
@@ -173,7 +165,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-6 col-12">
-                <img src={Titulacao} alt="Titulação" />
+                <i className="bi bi-bookmark-check icons-cad"></i>
                 <label>Titulação</label>
                 <input
                   onChange={handleChange}
@@ -184,7 +176,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-6 col-12">
-                <img src={Telefone} alt="Telefone" />
+                <i className="bi bi-telephone-plus icons-cad"></i>
                 <label>Telefone</label>
                 <input
                   type="text"
@@ -195,7 +187,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-6 col-12">
-                <img src={Nome} alt="Usuario" />
+                <i className="bi bi-person icons-cad"></i>
                 <label>Usuario</label>
                 <input
                   onChange={handleChange}
@@ -206,7 +198,7 @@ export default function CadProfessor() {
                 />
               </div>
               <div className="col col-md-6 col-12">
-                <img src={Senha} alt="Senha" />
+                <i className="bi bi-lock-fill icons-cad"></i>  
                 <label>Senha</label>
                 <input
                   onChange={handleChange}
@@ -218,7 +210,7 @@ export default function CadProfessor() {
               </div>
               <div className="col col-md-12 col-12">
                 <label>
-                  <img src={Nome} alt="Nome" />
+                  <i className="bi bi-person icons-cad"></i>
                   Tipo
                 </label>
                 <select

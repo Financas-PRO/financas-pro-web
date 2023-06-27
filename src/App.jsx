@@ -4,7 +4,6 @@ import "./App.css";
 import CadastrarProfessor from "./pages/cadProfessor/cadProfessor.jsx";
 import CadastrarTurma from "./pages/cadTurma/cadTurma.jsx";
 import GerenciarProfessor from "./pages/gerProfessor/gerProfessor.jsx";
-import EditarProfessor from "./pages/editProfessor/editarProfessor.jsx";
 import EditaProfessor from "./pages/editProfessor/editaProfessor";
 
 function App() {

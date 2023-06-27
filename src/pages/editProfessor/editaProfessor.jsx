@@ -16,11 +16,11 @@ export default function EditaProfessor(){
         rg: "", 
         titulacao: "", 
         telefone: "",
-        user:{
-            email: "", 
-            username: "",
-            id_tipoDeUsuario: ""
-        }
+       
+        email: "", 
+        username: "",
+        id_tipoDeUsuario: ""
+       
     });
 
 
@@ -37,11 +37,11 @@ export default function EditaProfessor(){
                 rg: res.data.data.rg, 
                 titulacao: res.data.data.titulacao,
                 telefone: res.data.data.telefone,
-                user:{
-                    email: res.data.data.user.email, 
-                    username: res.data.data.user.username,
-                    id_tipoDeUsuario: res.data.data.user.id_tipoDeUsuario
-                }
+                
+                email: res.data.data.user.email, 
+                username: res.data.data.user.username,
+                id_tipoDeUsuario: res.data.data.user.tipo_de_usuario.id
+                
             });
         });
     }, [id]);
@@ -148,8 +148,8 @@ export default function EditaProfessor(){
                 <ToastContainer className="toast-top-right" />
 
                 <div className="imgText">
-                    {/* <img src={User} className="img" alt="Usuario" /> */}
-                    <h2>Editar Professor</h2>
+                    <i className="bi bi-person-add"></i>
+                    <h2 className="margin-editar-titulo">Editar Professor</h2>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -157,6 +157,7 @@ export default function EditaProfessor(){
                         <div className="row square">
 
                             <div className="col col-md-12 col-12">
+                                <i className="bi bi-person icons"></i>
                                 <label>Nome</label>
                                 <input
                                     onChange={handleChange}
@@ -169,6 +170,7 @@ export default function EditaProfessor(){
                                 />
                             </div>
                             <div className="col col-md-6 col-12">
+                                <i className="bi bi-clipboard icons"></i>
                                 <label>RG</label>
                                 <input
                                     onChange={handleChange} 
@@ -181,6 +183,7 @@ export default function EditaProfessor(){
                                 />
                             </div>
                             <div className="col col-md-6 col-12">
+                                <i className="bi bi-file-earmark icons"></i>
                                 <label>CPF</label>
                                 <input 
                                     onChange={handleChange}
@@ -194,6 +197,7 @@ export default function EditaProfessor(){
                            
                             
                             <div className="col col-md-6 col-12">
+                                <i className="bi bi-bookmark-check icons"></i>
                                 <label>Titulação</label>
                                 <input
                                     onChange={handleChange} 
@@ -204,6 +208,7 @@ export default function EditaProfessor(){
                                 />
                             </div>
                             <div className="col col-md-6 col-12">
+                                <i className="bi bi-telephone-plus icons"></i>
                                 <label>Telefone</label>
                                 <input 
                                     type="text"
@@ -214,7 +219,7 @@ export default function EditaProfessor(){
                                 />
                             </div>
                             <div className="col col-md-12 col-12">
-                               
+                                <i className="bi bi-envelope icons"></i>
                                 <label>E-mail</label>
                                 <input
                                     onChange={handleChange}
@@ -222,7 +227,7 @@ export default function EditaProfessor(){
                                     type="email"
                                     className="form-control"
                                     maxLength="50"
-                                    defaultValue={professor.user.email}
+                                    value={professor.email}
                                     
                                 />
                             </div>
@@ -235,7 +240,7 @@ export default function EditaProfessor(){
                                     type="text"
                                     className="form-control"
                                     maxLength="50"
-                                    defaultValue={professor.user.username}
+                                    defaultValue={professor.username}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -251,6 +256,7 @@ export default function EditaProfessor(){
                                 />
                             </div>
                             <div className="col col-md-12 col-12">
+                                <i className="bi bi-person icons"></i>
                                 <label>
                                     Tipo
                                 </label>
@@ -259,7 +265,7 @@ export default function EditaProfessor(){
                                     name="id_tipoDeUsuario"
                                     className="form-control"
                                     
-                                    value={professor.user.id_tipoDeUsuario}
+                                    value={professor.id_tipoDeUsuario}
                                 >
                                     <option value="">Selecione...</option>
                                     <option value="1">Professor</option>
