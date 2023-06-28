@@ -144,7 +144,7 @@ export default function EditaProfessor(){
 
             <Navbar />
 
-            <div className="container mt-5">
+            <div className="container mt-3">
                 <ToastContainer className="toast-top-right" />
 
                 <div className="imgText">
@@ -163,7 +163,7 @@ export default function EditaProfessor(){
                                     onChange={handleChange}
                                     type="text" 
                                     className="form-control"
-                                    maxLength="80"
+                                    maxLength="50"
                                     name="nome"
                                     value={professor.nome}
 
@@ -194,8 +194,6 @@ export default function EditaProfessor(){
  
                                 />
                             </div>
-                           
-                            
                             <div className="col col-md-6 col-12">
                                 <i className="bi bi-bookmark-check icons"></i>
                                 <label>Titulação</label>
@@ -204,6 +202,7 @@ export default function EditaProfessor(){
                                     type="text" 
                                     name="titulacao" 
                                     className="form-control" 
+                                    maxLength="20"
                                     value={professor.titulacao}
                                 />
                             </div>
@@ -211,12 +210,13 @@ export default function EditaProfessor(){
                                 <i className="bi bi-telephone-plus icons"></i>
                                 <label>Telefone</label>
                                 <input 
+                                    onChange={handleChange}
                                     type="text"
                                     name="telefone"
-                                    className="form-control" 
+                                    className="form-control"
+                                    maxLength="20" 
                                     value={professor.telefone}
-                                    onChange={handleChange}
-                                />
+                                  />
                             </div>
                             <div className="col col-md-12 col-12">
                                 <i className="bi bi-envelope icons"></i>
@@ -229,30 +229,6 @@ export default function EditaProfessor(){
                                     maxLength="50"
                                     value={professor.email}
                                     
-                                />
-                            </div>
-
-                            <div className="col col-md-6 col-12">
-                            
-                                <label>Usuario</label>
-                                <input
-                                    name="username"
-                                    type="text"
-                                    className="form-control"
-                                    maxLength="50"
-                                    defaultValue={professor.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="col col-md-6 col-12">
-                            
-                                <label>Senha</label>
-                                <input
-                                    onChange={handleChange}
-                                    name="password"
-                                    type="password"
-                                    className="form-control"
-                                    maxLength="20"
                                 />
                             </div>
                             <div className="col col-md-12 col-12">
