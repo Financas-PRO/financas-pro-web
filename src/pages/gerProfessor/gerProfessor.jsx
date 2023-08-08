@@ -66,7 +66,7 @@ export default function GerProfessor() {
           .delete(`docente/${id}`)
           .then(async (res) => {
             if (res.status) {
-              toast.success("Docente inativo com sucesso !");
+              toast.success("Docente inativo com sucesso");
               NoClick.closest("tr").remove();
               setTimeout(() => {
                 return navigate("/professor/gerenciar", { replace: true });

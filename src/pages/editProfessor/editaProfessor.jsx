@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditaProfessor(){
 
-    const [professor, setProfessor] = React.useState({
+    const [professor, setProfessor] = useState({
         nome: "", 
         cpf: "",
         rg: "", 
@@ -54,7 +54,7 @@ export default function EditaProfessor(){
             .put(`docente/${id}`, professor)
             .then(async (res) => {
               if (res.status) {
-                toast.success("Docente alterado com sucesso !");
+                toast.success("Docente alterado com sucesso");
     
                 setTimeout(() => {
                   return navigate("/professor/gerenciar", { replace: true });
@@ -62,7 +62,7 @@ export default function EditaProfessor(){
               }
             })
             .catch(function (error) {
-              let resposta = error.response.data.errors;
+              let resposta = error.response.data.error;
     
               var erros = "";
     

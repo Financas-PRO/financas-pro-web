@@ -1,27 +1,47 @@
-import React, { useState } from "react";
-import "./cadTurma.css";
+import React, { useState, useEffect } from "react";
+import "./editaTurma.css";
 import Navbar from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function CadTurma() {
+export default function EditaTurma() {
 
-  const [turmas, setTurmas] = useState({});
-
+  const [turmas, setTurmas] = useState({
+    ano: "",
+    semestre:"",
+    id_curso: "",
+    turma: ""
+  });
+    let { id } = useParams();
   let navigate = useNavigate();
+
+  useEffect(() => {
+
+        api.get(`turma/${id}`).then((res) => {
+
+          setTurmas({
+                ano: res.data.data.ano, 
+                semestre: res.data.data.semestre,
+                id_curso: res.data.data.curso.id,
+                turma: res.data.data.turma,
+                
+                
+            });
+        });
+    }, [id]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
       api
-        .post("turma", turmas)
+        .put(`turma/${id}`, turmas)
         .then(async (res) => {
           if (res.status) {
-            toast.success("Cadastro realizado com sucesso");
+            toast.success("Cadastro alterado com sucesso");
 
             setTimeout(() => {
               return navigate("/turma/gerenciar", { replace: true });
@@ -38,7 +58,7 @@ export default function CadTurma() {
             erros += resposta[index] + "\n";
             
           });
-          toast.error(`Erro ao cadastrar!\n ${erros}`, {
+          toast.error(`Erro ao alterar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -73,7 +93,7 @@ export default function CadTurma() {
 
         <div className="imgText">
         <i className="bi bi-person-add"></i>
-          <h2>Cadastro Turma</h2>
+          <h2>Editar Turma</h2>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -88,6 +108,7 @@ export default function CadTurma() {
                   type="text"
                   className="form-control"
                   maxLength= "4"
+                  value={turmas.ano}
                 />
               </div>
               <div className="col col-md-6 col-12">
@@ -99,6 +120,7 @@ export default function CadTurma() {
                   onChange={handleChange}
                   name="semestre"
                   className="form-control"
+                  value={turmas.semestre}
                 >
                   <option value="">Selecione...</option>
                   <option value="1">1° Semestre</option>
@@ -114,6 +136,7 @@ export default function CadTurma() {
                   onChange={handleChange}
                   name="id_curso"
                   className="form-control"
+                  value={turmas.id_curso}
                 >
                   <option value="">Selecione...</option>
                   <option value="1">Sistema de Informação</option>
@@ -130,6 +153,7 @@ export default function CadTurma() {
                   name="turma"
                   className="form-control"
                   maxLength="1"
+                  value={turmas.turma}
                 />
               </div>
             </div>

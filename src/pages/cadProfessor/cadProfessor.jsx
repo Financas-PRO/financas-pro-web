@@ -20,7 +20,7 @@ export default function CadProfessor() {
         .post("docente", professor)
         .then(async (res) => {
           if (res.status) {
-            toast.success("Cadastro realizado com sucesso!");
+            toast.success("Cadastro realizado com sucesso");
 
             setTimeout(() => {
               return navigate("/professor/gerenciar", { replace: true });
@@ -28,7 +28,7 @@ export default function CadProfessor() {
           }
         })
         .catch(function (error) {
-          let resposta = error.response.data.errors;
+          let resposta = error.response.data.error;
 
           var erros = "";
 
@@ -128,7 +128,7 @@ export default function CadProfessor() {
                   name="nome"
                   type="text"
                   className="form-control"
-                  maxLength="80"
+                  maxLength="50"
                 />
               </div>
               <div className="col col-md-6 col-12">
@@ -172,7 +172,7 @@ export default function CadProfessor() {
                   name="titulacao"
                   type="text"
                   className="form-control"
-                  maxLength="50"
+                  maxLength="20"
                 />
               </div>
               <div className="col col-md-6 col-12">
@@ -194,7 +194,7 @@ export default function CadProfessor() {
                   name="username"
                   type="text"
                   className="form-control"
-                  maxLength="50"
+                  maxLength="30"
                 />
               </div>
               <div className="col col-md-6 col-12">
