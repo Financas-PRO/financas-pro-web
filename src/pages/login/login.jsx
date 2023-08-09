@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './login.css';
 import api from "../../services/api";
@@ -8,6 +8,64 @@ import toledo from "../../assets/image/toledo.png";
 
 
 export default function Login(){
+
+  const [login, setLogin] = useState({});
+
+  let navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      api
+        .post("login", login)
+        .then(async (res) => {
+          if (res.status) {
+            toast.success("Login realizado com sucesso");
+
+            setTimeout(() => {
+              return navigate("/turma/gerenciar", { replace: true });
+            }, 4000);
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+          let resposta = error.response.data.error;
+
+          var erros = "";
+
+          Object.keys(resposta).forEach(function (index) {
+            erros += resposta[index] + "\n";
+            
+          });
+          toast.error(`Erro ao Logar!\n ${erros}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            style: { whiteSpace: "pre-line" },
+          });
+        });
+        
+    } catch (err) {
+      console.log(login);
+    }
+}
+
+    function handleChange(e) {
+        const nome = e.target.name;
+        const valor = e.target.value.trim();
+        setLogin({ ...login, [nome]: valor });
+
+        console.log(login);
+    }
+
+
+
     return( 
         
         <div className="container-fluid">
@@ -20,13 +78,29 @@ export default function Login(){
                     
                     <span>Para ter acesso ao Finanças Pro, informe</span>
                     <span>os dados abaixo.</span>
-                    <div className="mt-5 username">
-                        <input type="text" id="usuario" className="inputControl" placeholder="Usuário"/>
-                        <input type="password" id="senha" className="inputControl mt-4" placeholder="Senha"/>
-                    </div>
+                    <form className="mt-5 username" onSubmit={handleSubmit}>
+                        <input 
+                            type="text" 
+                            id="usuario" 
+                            className="inputControl" 
+                            placeholder="Usuário"
+                            name="username"
+                            onChange={handleChange}
+                        />
+                        <input 
+                            type="password" 
+                            id="senha" 
+                            className="inputControl mt-4" 
+                            placeholder="Senha"
+                            name="password"
+                            onChange={handleChange}
+                        />
+
+                        <button className="btn btn-warning mt-5">Entrar</button>
+                    </form>
                     
 
-                    <button className="btn btn-warning mt-5">Entrar</button>
+                    
 
                     <span className="mt-5">Toledo Prudente</span>
                     <span>Todos os direitos reservados</span>

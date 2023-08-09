@@ -1,3 +1,7 @@
+html, body {
+    overflow: hidden;
+}
+
 .imagemFundo{
     width: 66%;
     height: 100vh;
