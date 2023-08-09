@@ -7,6 +7,7 @@ import GerenciarProfessor from "./pages/gerProfessor/gerProfessor.jsx";
 import EditaProfessor from "./pages/editProfessor/editaProfessor.jsx";
 import GerenciarTurma from "./pages/gerTurma/gerTurma.jsx";
 import EditaTurma from "./pages/editTurma/editaTurma.jsx";
+import Login from "./pages/login/login";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="turma/cadastrar" element={<CadastrarTurma />} />
           <Route path="turma/gerenciar" element={<GerenciarTurma />} />
           <Route path="turma/:id/editar" element={<EditaTurma />} />

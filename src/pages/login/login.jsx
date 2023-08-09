@@ -1,0 +1,39 @@
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import './login.css';
+import api from "../../services/api";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import toledo from "../../assets/image/toledo.png";
+
+
+export default function Login(){
+    return( 
+        
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col col-md-8 imagemFundo"></div>
+                <div className="col col-md-4 text-end login">
+                    
+                    <img className="aguia mt-5" src={toledo} alt="" />
+                    <h1>Finanças PRO</h1>
+                    
+                    <span>Para ter acesso ao Finanças Pro, informe</span>
+                    <span>os dados abaixo.</span>
+                    <div className="mt-5 username">
+                        <input type="text" id="usuario" className="inputControl" placeholder="Usuário"/>
+                        <input type="password" id="senha" className="inputControl mt-4" placeholder="Senha"/>
+                    </div>
+                    
+
+                    <button className="btn btn-warning mt-5">Entrar</button>
+
+                    <span className="mt-5">Toledo Prudente</span>
+                    <span>Todos os direitos reservados</span>
+                </div>
+            </div>
+        </div>
+
+    );
+}
+
