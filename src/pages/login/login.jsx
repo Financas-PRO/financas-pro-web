@@ -3,8 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './login.css';
 import api from "../../services/api";
 import "react-toastify/dist/ReactToastify.css";
+import toledo from '../../assets/image/toledo.png'
 import { useNavigate } from "react-router-dom";
-import toledo from "../../assets/image/toledo.png";
+import { ToastContainer, toast } from "react-toastify";
+
 
 
 export default function Login(){
@@ -69,16 +71,17 @@ export default function Login(){
     return( 
         
         <div className="container-fluid">
+            <ToastContainer className="toast-top-right" />
             <div className="row">
                 <div className="col col-md-8 imagemFundo"></div>
                 <div className="col col-md-4 text-end login">
                     
-                    <img className="aguia mt-5" src={toledo} alt="" />
-                    <h1>Finanças PRO</h1>
+                    <img className="aguia mt-4" src={toledo} alt="" />
+                    <h2>Finanças PRO</h2>
                     
                     <span>Para ter acesso ao Finanças Pro, informe</span>
                     <span>os dados abaixo.</span>
-                    <form className="mt-5 username" onSubmit={handleSubmit}>
+                    <form className="mt-4 username" onSubmit={handleSubmit}>
                         <input 
                             type="text" 
                             id="usuario" 
@@ -96,7 +99,7 @@ export default function Login(){
                             onChange={handleChange}
                         />
 
-                        <button className="btn btn-warning mt-5">Entrar</button>
+                        <button className="btn btn-warning mt-4">Entrar</button>
                     </form>
                     
 
