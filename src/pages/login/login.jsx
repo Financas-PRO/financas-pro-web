@@ -88,6 +88,7 @@ export default function Login(){
                             className="inputControl" 
                             placeholder="Usuário"
                             name="username"
+                            maxLength={20}
                             onChange={handleChange}
                         />
                         <input 
@@ -96,6 +97,7 @@ export default function Login(){
                             className="inputControl mt-4" 
                             placeholder="Senha"
                             name="password"
+                            maxLength={20}
                             onChange={handleChange}
                         />
 

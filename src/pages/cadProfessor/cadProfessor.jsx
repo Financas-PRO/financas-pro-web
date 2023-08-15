@@ -107,17 +107,22 @@ export default function CadProfessor() {
 
   return (
     <>
-      <Navbar />
+     {/*<Navbar />*/}
 
       <div className="container mt-4">
         <ToastContainer className="toast-top-right" />
 
-        <div className="imgText">
-          <i className="bi bi-person-add"></i>
-          <h2 className="margin-cadastrar-titulo">Cadastro Professor</h2>
+        <div className="row">
+          <div className="col col-md-1 col-12">
+            <i class="bi bi-person-plus-fill icon-titulo"></i>
+          </div>
+          <div className="col col-md-5">
+            <h2 className="margin-cadastrar-titulo titulo">Docentes</h2>
+            <span className="subtitulo">Gerenciamento cadastro Docente</span>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="formProfessor">
           <div className="conteudoProfessor mt-5">
             <div className="row square">
               <div className="col col-md-12 col-12">
@@ -224,9 +229,10 @@ export default function CadProfessor() {
                 </select>
               </div>
             </div>
-            <div className="col col-md-12 col-12 buttonSalvar">
-              <button className="btn-salvar mb-3">Salvar</button>
-            </div>
+          </div>
+          <div className="col col-md-8 col-12 buttons justify-content-end">
+            <button className="btn-salvar">Salvar</button>
+            <button className="btn-cancelar">Cancelar</button>
           </div>
         </form>
       </div>

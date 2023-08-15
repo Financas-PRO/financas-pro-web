@@ -66,14 +66,19 @@ export default function CadTurma() {
 
   return (
     <>
-      <Navbar />
+     {/*<Navbar />*/}
 
       <div className="container mt-4">
         <ToastContainer className="toast-top-right" />
 
-        <div className="imgText">
-        <i className="bi bi-person-add"></i>
-          <h2>Cadastro Turma</h2>
+        <div className="row">
+          <div className="col col-md-1 col-12">
+            <i class="bi bi-clipboard2 icon-titulo"></i>
+          </div>
+          <div className="col col-md-5">
+            <h2 className="margin-cadastrar-titulo titulo">Turma</h2>
+            <span className="subtitulo">Gerenciamento Turma</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -121,7 +126,7 @@ export default function CadTurma() {
                   <option value="3">Ciências Contábeis</option>
                 </select>
               </div>
-              <div className="col col-md-6 col-12">
+              <div className="col col-md-6 col-12 mb-5">
                 <i className="bi bi-person-add"></i>
                 <label>Turma</label>
                 <input
@@ -133,8 +138,11 @@ export default function CadTurma() {
                 />
               </div>
             </div>
-            <div className="col col-md-12 col-12 buttonSalvar">
-              <button className="btn-salvar mb-3">Salvar</button>
+          </div>
+          <div className="row button-style mt-5">
+            <div className="col col-md-8 col-12 buttons">
+                <button className="btn-salvar">Salvar</button>
+                <button className="btn-cancelar">Cancelar</button>
             </div>
           </div>
         </form>

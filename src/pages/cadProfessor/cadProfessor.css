@@ -1,9 +1,3 @@
-.imgText{
-    display: flex;
-    font-size: 3rem;
-    font-style: italic;
-    color: #fff;
-}
 
 img{
     margin-left: 6px;
@@ -15,57 +9,19 @@ img{
     margin-right: 1rem;
 }
 
-.conteudoProfessor{
-    height: auto;
-    background-color: #90b2c5;
-    border-radius: 8px;
+.formProfessor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .square{
     padding: 35px;
 }
 
-.form-control{
-    border-radius: 20px !important;
-    padding: 0.1rem 0.75rem !important;
-}
 
-label{
-    font-size: 1.2rem;
-    color: #fff;
-    font-weight: 500;
-    font-style: italic;
-    margin-left: 10px;
-}
-
-.buttonSalvar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.btn-salvar{
-    width: 20%;
-    border-radius: 50px;
-    background-color: #EE7F01;
-    border-color: #EE7F01;
-    font-size: 1.3rem;
-    font-style: italic;
-}
-
-.btn-salvar:hover{
-    background-color: #b7660a;
-    border-color: #b7660a;
-}
-
-
-.margin-cadastrar-titulo{
-    margin-top: 20px;
-    margin-left: 15px;
-}
-
-.icons-cad{
-    font-size: 25px;
-    margin-left: 15px;
+.bi-person-plus-fill::before {
+    content: "\f4dc";
+    color: #12304A !important;
 }

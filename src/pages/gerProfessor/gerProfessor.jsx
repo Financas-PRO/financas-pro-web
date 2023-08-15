@@ -3,7 +3,6 @@ import api from "../../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import "./gerProfessor.css";
 import Navbar from "../../components/navbar/header.jsx";
-import User from "../../assets/image/user.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

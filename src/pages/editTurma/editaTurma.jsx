@@ -86,7 +86,7 @@ export default function EditaTurma() {
 
   return (
     <>
-      <Navbar />
+      {/*<Navbar />*/}
 
       <div className="container mt-4">
         <ToastContainer className="toast-top-right" />

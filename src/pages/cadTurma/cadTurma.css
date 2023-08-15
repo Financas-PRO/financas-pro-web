@@ -15,52 +15,16 @@ img{
     margin-right: 1rem;
 }
 
-.conteudoTurma{
-    height: auto;
-    background-color: #90b2c5;
-    border-radius: 8px;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .square{
     padding: 35px;
 }
 
-.form-control{
-    border-radius: 20px !important;
-    padding: 0.1rem 0.75rem !important;
-}
-
-label{
-    font-size: 1.2rem;
-    color: #fff;
-    font-weight: 500;
-    font-style: italic;
-    margin-left: 10px;
-    margin-top: 35px;
-}
-
-
-.buttonSalvar{
+.button-style{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: 15px;
+    justify-content: end;
 }
 
-.btn-salvar{
-    width: 20%;
-    border-radius: 50px;
-    background-color: #EE7F01;
-    border-color: #EE7F01;
-    font-size: 1.3rem;
-    font-style: italic;
-}
-
-.btn-salvar:hover{
-    background-color: #b7660a;
-    border-color: #b7660a;
+.bi-clipboard2::before {
+    content: "\f733";
+    color: #12304A !important;
 }

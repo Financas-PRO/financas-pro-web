@@ -142,7 +142,7 @@ export default function EditaProfessor(){
     return(
         <>
 
-            <Navbar />
+            {/*<Navbar />*/}
 
             <div className="container mt-3">
                 <ToastContainer className="toast-top-right" />
