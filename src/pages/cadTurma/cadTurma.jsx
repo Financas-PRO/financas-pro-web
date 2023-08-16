@@ -1,3 +1,5 @@
+// Desenvolvedores: João Pontes e Leonardo Mariano
+
 import React, { useState } from "react";
 import "./cadTurma.css";
 import Navbar from "../../components/navbar/header.jsx";
@@ -5,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CadTurma() {
 
@@ -77,7 +79,7 @@ export default function CadTurma() {
           </div>
           <div className="col col-md-5">
             <h2 className="margin-cadastrar-titulo titulo">Turma</h2>
-            <span className="subtitulo">Gerenciamento Turma</span>
+            <span className="subtitulo">Gerenciamento cadastro de Turma</span>
           </div>
         </div>
 
@@ -141,8 +143,8 @@ export default function CadTurma() {
           </div>
           <div className="row button-style mt-5">
             <div className="col col-md-8 col-12 buttons">
-                <button className="btn-salvar">Salvar</button>
-                <button className="btn-cancelar">Cancelar</button>
+              <button className="btn-salvar">Salvar</button>
+              <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
             </div>
           </div>
         </form>

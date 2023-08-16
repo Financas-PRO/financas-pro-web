@@ -1,3 +1,5 @@
+// Desenvolvedores: João Pontes e Leonardo Mariano
+
 import React, { useState, useEffect } from "react";
 import "./editaTurma.css";
 import Navbar from "../../components/navbar/header.jsx";
@@ -5,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function EditaTurma() {
 
@@ -91,9 +93,14 @@ export default function EditaTurma() {
       <div className="container mt-4">
         <ToastContainer className="toast-top-right" />
 
-        <div className="imgText">
-        <i className="bi bi-person-add"></i>
-          <h2>Editar Turma</h2>
+        <div className="row">
+          <div className="col col-md-1 col-12">
+            <i class="bi bi-clipboard2 icon-titulo"></i>
+          </div>
+          <div className="col col-md-5">
+            <h2 className="margin-cadastrar-titulo titulo">Editar</h2>
+            <span className="subtitulo">Gerenciamento para Editar Turma</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -157,8 +164,11 @@ export default function EditaTurma() {
                 />
               </div>
             </div>
-            <div className="col col-md-12 col-12 buttonSalvar">
-              <button className="btn-salvar mb-3">Salvar</button>
+          </div>
+          <div className="row button-style mt-5">
+            <div className="col col-md-8 col-12 buttons">
+              <button className="btn-salvar">Salvar</button>
+              <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
             </div>
           </div>
         </form>
@@ -166,3 +176,4 @@ export default function EditaTurma() {
     </>
   );
 }
+

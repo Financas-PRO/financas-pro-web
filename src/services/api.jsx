@@ -3,7 +3,9 @@ import axios from 'axios';
 const api = 
 
     axios.create({
-        baseURL: "https://localhost:444/" + "api/",
+        baseURL: "https://financas-pro-api.test/" + "api/",
+        withCredentials: true
+        
     });
 
 

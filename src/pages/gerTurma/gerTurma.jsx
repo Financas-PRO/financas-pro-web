@@ -1,3 +1,5 @@
+// Desenvolvedores: João Pontes e Leonardo Mariano
+
 import React, {useState, useEffect} from "react";
 import api from "../../services/api";
 import "./gerTurma.css";
@@ -134,55 +136,64 @@ export default function GerTurma (){
 
     return (
         <>
-          <Navbar />
+          {/* <Navbar /> */}
     
-          <div className="container-fluid">
+          <div className="container">
     
           <ToastContainer className="toast-top-right" />
     
-            <div className="row justify-content-end">
-              <div className="col-md-12">
-                <div className="card-header">
-                  <img src={User} className="img" alt="Usuario" />
-                  <h2>Gerenciamento de Turmas</h2>
-                </div>
-                <Link to="/turma/cadastrar" className="btn btn-primary">
-                  ADICIONAR
-                </Link>
-              </div>
-              <div className="col-md-3 ">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={Filter}
-                  placeholder="Buscar Turma.."
-                />
-              </div>
+          <div className="row mt-5">
+
+            <div className="col col-md-1 col-12">
+              <i class="bi bi-book-fill icon-titulo"></i>
             </div>
+
+            <div className="col col-md-5">
+              <h2 className="margin-cadastrar-titulo titulo">Gerenciamento</h2>
+              <span className="subtitulo">Gerenciamento das Turma cadastradas</span>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col col-md-8 col-12 mt-5">
+              <Link to="/turma/cadastrar" className="btn-add">
+                <i class="bi bi-person-plus-fill"></i>ADICIONAR
+              </Link>
+            </div>
+            
+            <div className="col col-md-4 col-12 mt-5">
+              <input
+                type="text"
+                className="form-control"
+                onChange={Filter}
+                placeholder="Buscar Turma.."
+              />
+            </div>
+          </div>
     
-            <div className="row">
-              <div className="col-md-12">
-                <div className="card-body">
-                  <div className="table-responsive">
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>ANO</th>
-                        <th>SEMESTRE</th>
-                        <th>CURSO</th>
-                        <th>TURMA</th>
-                        <th>EDITAR</th>
-                        <th>INATIVAR</th>
-                      </tr>
-                    </thead>
-                    <tbody>{turmaDetalhe}</tbody>
-                  </table>
-                  </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="card-body">
+                <div className="table-responsive">
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>ANO</th>
+                      <th>SEMESTRE</th>
+                      <th>CURSO</th>
+                      <th>TURMA</th>
+                      <th>EDITAR</th>
+                      <th>INATIVAR</th>
+                    </tr>
+                  </thead>
+                  <tbody>{turmaDetalhe}</tbody>
+                </table>
                 </div>
               </div>
             </div>
           </div>
-        </>
-      );
+        </div>
+      </>
+    );
 }

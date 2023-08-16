@@ -1,3 +1,5 @@
+// Desenvolvedores: João Pontes e Leonardo Mariano
+
 import React, { useState } from "react";
 import "./cadProfessor.css";
 import Navbar from "../../components/navbar/header.jsx";
@@ -5,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CadProfessor() {
   const [professor, setProfessor] = useState({ });
@@ -232,7 +234,7 @@ export default function CadProfessor() {
           </div>
           <div className="col col-md-8 col-12 buttons justify-content-end">
             <button className="btn-salvar">Salvar</button>
-            <button className="btn-cancelar">Cancelar</button>
+            <Link to="/professor/gerenciar" className="btn-cancelar">Cancelar</Link>
           </div>
         </form>
       </div>

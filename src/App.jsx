@@ -17,14 +17,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route element={<ProtectedRoute/>}>
+          {/* <Route element={<ProtectedRoute/>}> */}
             <Route path="turma/cadastrar" element={<CadastrarTurma />} />
             <Route path="turma/gerenciar" element={<GerenciarTurma />} />
             <Route path="turma/:id/editar" element={<EditaTurma />} />
             <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
-          </Route>
+          {/* </Route> */}
           
         </Routes>
       </BrowserRouter>

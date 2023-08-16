@@ -8,16 +8,12 @@ const ProtectedRoute = () => {
     const [autenticado, setAutenticado] = useState(); // initially undefined
   
     useEffect(() => {
-      api.get(
-        'https://localhost:444/api/cursos',
-        { withCredentials: true },
-      )
+      api.get('cursos')
         .then(function (res){
 
             if (res.status == 201){
                 setAutenticado(true);
             }
-
           return autenticado;
         });
     }, []);

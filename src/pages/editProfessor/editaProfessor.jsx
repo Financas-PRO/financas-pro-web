@@ -1,3 +1,5 @@
+// Desenvolvedores: João Pontes e Leonardo Mariano
+
 import React, { useState, useEffect } from "react";
 import "./editarProfessor.css";
 import Navbar from "../../components/navbar/header.jsx";
@@ -5,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 
 export default function EditaProfessor(){
@@ -147,12 +149,17 @@ export default function EditaProfessor(){
             <div className="container mt-3">
                 <ToastContainer className="toast-top-right" />
 
-                <div className="imgText">
-                    <i className="bi bi-person-add"></i>
-                    <h2 className="margin-editar-titulo">Editar Professor</h2>
+                <div className="row">
+                  <div className="col col-md-1 col-12">
+                    <i class="bi bi-person-plus-fill icon-titulo"></i>
+                  </div>
+                  <div className="col col-md-5">
+                    <h2 className="margin-cadastrar-titulo titulo">Editar</h2>
+                    <span className="subtitulo">Gerenciamento para Editar Docente</span>
+                  </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="formProfessor">
                     <div className="conteudoProfessor mt-3">
                         <div className="row square">
 
@@ -249,12 +256,11 @@ export default function EditaProfessor(){
                                 </select>
                             </div>
 
-
-                            <div className="col col-md-12 col-12 buttonSalvar">
-                                <button className="btn-salvar mb-3">Alterar</button>
-                            </div>
-
                         </div>
+                    </div>
+                    <div className="col col-md-8 col-12 buttons justify-content-end">
+                      <button className="btn-salvar">Salvar</button>
+                      <Link to="/professor/gerenciar" className="btn-cancelar">Cancelar</Link>
                     </div>
                 </form>
             </div>

@@ -41,7 +41,6 @@ export default function GerProfessor() {
       docentes.filter(
         (f) =>
           f.nome.toLowerCase().includes(buscando) ||
-          f.cpf.includes(buscando) ||
           f.titulacao.toLowerCase().includes(buscando)
       )
     );
@@ -114,9 +113,7 @@ export default function GerProfessor() {
         <td><strong>{item.id}</strong></td>
         <td>{item.nome}</td>
         <td>{item.titulacao}</td>
-        <td>{item.cpf}</td>
         <td>{item.user.email}</td>
-        <td>{item.telefone}</td>
         <td>{item.user.username}</td>
         <td>
           <span className={`status ${statusClass}`}>{statusText}</span>
@@ -141,23 +138,29 @@ export default function GerProfessor() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
-      <div className="container-fluid">
+      <div className="container">
 
-      <ToastContainer className="toast-top-right" />
+        <ToastContainer className="toast-top-right" />
+        <div className="row mt-5">
+          <div className="col col-md-1 col-12">
+              <i class="bi bi-book-fill icon-titulo"></i>
+          </div>
+          <div className="col col-md-5 col-12">
+            <h2 className="margin-cadastrar-titulo titulo">Gerenciamento</h2>
+            <span className="subtitulo">Gerenciamento dos Docente cadastrados</span>
+          </div>
+        </div>
 
-        <div className="row justify-content-end">
-          <div className="col-md-12">
-            <div className="card-header">
-              <img src={User} className="img" alt="Usuario" />
-              <h2>Gerenciamento de Docentes</h2>
-            </div>
-            <Link to="/professor/cadastrar" className="btn btn-primary">
-              ADICIONAR
+        <div className="row">
+          <div className="col col-md-8 col-12 mt-5">
+            <Link to="/professor/cadastrar" className="btn-add">
+              <i class="bi bi-person-plus-fill"></i>ADICIONAR
             </Link>
           </div>
-          <div className="col-md-3 ">
+          
+          <div className="col col-md-4 col-12 mt-5">
             <input
               type="text"
               className="form-control"
@@ -177,9 +180,7 @@ export default function GerProfessor() {
                     <th>#</th>
                     <th>NOME</th>
                     <th>TITULAÇÃO</th>
-                    <th>CPF</th>
                     <th>EMAIL</th>
-                    <th>TELEFONE</th>
                     <th>USUARIO</th>
                     <th>STATUS</th>
                     <th>EDITAR</th>
