@@ -33,14 +33,14 @@ body{
 }
 
 .conteudoProfessor {
-  width: 66%;
+  width: 85%;
   height: auto;
   background-color: #12304A;
   border-radius: 8px;
 }
 
 .conteudoTurma{
-  width: 66%;
+  width: 85%;
   height: auto;
   background-color: #12304A;
   border-radius: 8px;
@@ -78,6 +78,16 @@ td{
 
 .subtitulo{
   color: #12304A !important;
+}
+
+.row-page{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 

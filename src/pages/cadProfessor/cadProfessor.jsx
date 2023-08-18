@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "./cadProfessor.css";
-import Navbar from "../../components/navbar/header.jsx";
+import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -109,12 +109,15 @@ export default function CadProfessor() {
 
   return (
     <>
-     {/*<Navbar />*/}
-
-      <div className="container mt-4">
+     <div className="row-page">
+        <div className="col col-md-2">
+          <Header />
+        </div>
+     
+      <div className="container mt-4 col-md-8">
         <ToastContainer className="toast-top-right" />
 
-        <div className="row">
+        <div className="title">
           <div className="col col-md-1 col-12">
             <i class="bi bi-person-plus-fill icon-titulo"></i>
           </div>
@@ -232,11 +235,12 @@ export default function CadProfessor() {
               </div>
             </div>
           </div>
-          <div className="col col-md-8 col-12 buttons justify-content-end">
+          <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
             <button className="btn-salvar">Salvar</button>
             <Link to="/professor/gerenciar" className="btn-cancelar">Cancelar</Link>
           </div>
         </form>
+      </div>
       </div>
     </>
   );
