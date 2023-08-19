@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "./cadTurma.css";
-import Navbar from "../../components/navbar/header.jsx";
+import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -38,7 +38,7 @@ export default function CadTurma() {
 
           Object.keys(resposta).forEach(function (index) {
             erros += resposta[index] + "\n";
-            
+
           });
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
@@ -52,7 +52,7 @@ export default function CadTurma() {
             style: { whiteSpace: "pre-line" },
           });
         });
-        
+
     } catch (err) {
       console.log(turmas);
     }
@@ -68,87 +68,90 @@ export default function CadTurma() {
 
   return (
     <>
-     {/*<Navbar />*/}
-
-      <div className="container mt-4">
-        <ToastContainer className="toast-top-right" />
-
-        <div className="row">
-          <div className="col col-md-1 col-12">
-            <i class="bi bi-clipboard2 icon-titulo"></i>
-          </div>
-          <div className="col col-md-5">
-            <h2 className="margin-cadastrar-titulo titulo">Turma</h2>
-            <span className="subtitulo">Gerenciamento cadastro de Turma</span>
-          </div>
+      <div className="row-page">
+        <div className="col col-md-2">
+          <Header />
         </div>
+        <div className="container mt-4 col-md-8">
+          <ToastContainer className="toast-top-right" />
 
-        <form onSubmit={handleSubmit}>
-          <div className="conteudoTurma mt-5">
-            <div className="row square">
-              <div className="col col-md-6 col-12">
-                <i className="bi bi-person-add"></i>
-                <label>Ano</label>
-                <input
-                  onChange={handleChange}
-                  name="ano"
-                  type="text"
-                  className="form-control"
-                  maxLength= "4"
-                />
-              </div>
-              <div className="col col-md-6 col-12">
-                <label>
-                  <i className="bi bi-person icons-cad"></i>
-                  Semestre
-                </label>
-                <select
-                  onChange={handleChange}
-                  name="semestre"
-                  className="form-control"
-                >
-                  <option value="">Selecione...</option>
-                  <option value="1">1° Semestre</option>
-                  <option value="2">2° Semestre</option>
-                </select>
-              </div>
-              <div className="col col-md-6 col-12">
-                <label>
-                  <i className="bi bi-person icons-cad"></i>
-                  Curso
-                </label>
-                <select
-                  onChange={handleChange}
-                  name="id_curso"
-                  className="form-control"
-                >
-                  <option value="">Selecione...</option>
-                  <option value="1">Sistema de Informação</option>
-                  <option value="2">Administração</option>
-                  <option value="3">Ciências Contábeis</option>
-                </select>
-              </div>
-              <div className="col col-md-6 col-12 mb-5">
-                <i className="bi bi-person-add"></i>
-                <label>Turma</label>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  name="turma"
-                  className="form-control"
-                  maxLength="1"
-                />
-              </div>
+          <div className="title">
+            <div className="col col-md-1 col-12">
+              <i class="bi bi-clipboard2 icon-titulo"></i>
+            </div>
+            <div className="col col-md-5">
+              <h2 className="margin-cadastrar-titulo titulo">Turma</h2>
+              <span className="subtitulo">Gerenciamento cadastro de Turma</span>
             </div>
           </div>
-          <div className="row button-style mt-5">
-            <div className="col col-md-8 col-12 buttons">
-              <button className="btn-salvar">Salvar</button>
-              <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
+
+          <form onSubmit={handleSubmit} className="formTurma">
+            <div className="conteudoTurma mt-5">
+              <div className="row square">
+                <div className="col col-md-6 col-12">
+                  <i className="bi bi-person-add"></i>
+                  <label>Ano</label>
+                  <input
+                    onChange={handleChange}
+                    name="ano"
+                    type="text"
+                    className="form-control"
+                    maxLength="4"
+                  />
+                </div>
+                <div className="col col-md-6 col-12">
+                  <label>
+                    <i className="bi bi-person icons-cad"></i>
+                    Semestre
+                  </label>
+                  <select
+                    onChange={handleChange}
+                    name="semestre"
+                    className="form-control"
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="1">1° Semestre</option>
+                    <option value="2">2° Semestre</option>
+                  </select>
+                </div>
+                <div className="col col-md-6 col-12">
+                  <label>
+                    <i className="bi bi-person icons-cad"></i>
+                    Curso
+                  </label>
+                  <select
+                    onChange={handleChange}
+                    name="id_curso"
+                    className="form-control"
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="1">Sistema de Informação</option>
+                    <option value="2">Administração</option>
+                    <option value="3">Ciências Contábeis</option>
+                  </select>
+                </div>
+                <div className="col col-md-6 col-12 mb-5">
+                  <i className="bi bi-person-add"></i>
+                  <label>Turma</label>
+                  <input
+                    onChange={handleChange}
+                    type="text"
+                    name="turma"
+                    className="form-control"
+                    maxLength="1"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </form>
+              <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
+                <button className="btn-salvar">Salvar</button>
+                <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
+              </div>
+          </form>
+        </div>
       </div>
+
+
     </>
   );
 }
