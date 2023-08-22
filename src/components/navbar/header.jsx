@@ -13,10 +13,10 @@ const Header = () => {
   return (
     // <div>
     <div style={{ display: 'flex', height: '100vh', position: 'fixed', overflow: 'scroll initial' }}> 
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
+      <CDBSidebar textColor="#fff" backgroundColor="#12304A">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Header
+            Toledo Prudente
           </a>
         </CDBSidebarHeader>
 
@@ -47,7 +47,7 @@ const Header = () => {
               padding: '20px 5px',
             }}
           >
-            Sidebar Footer
+            Finanças PRO
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>
