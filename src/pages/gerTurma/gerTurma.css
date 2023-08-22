@@ -1,0 +1,56 @@
+.card-body{
+    height: auto;
+    background-color:#12304A;
+    color: #fff;
+    border-radius: 8px;
+    width: auto;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 25px;
+  }
+  
+  
+  .card-header{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    font-size: 3rem;
+    font-style: italic;
+    color: #fff;
+  }
+  
+  img{
+      margin-left: 6px;
+      position: relative;
+      bottom: 3px;
+  }
+  
+  
+  .status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 1.0rem;
+    
+  }
+  
+  .ativo {
+    background-color: green;
+    color: white;
+  }
+  
+  .inativo {
+    background-color: red;
+    color: white;
+  }
+  
+  .buscar{
+    display: flex;
+    justify-content: flex;
+    text-align: end;
+  }
+  
+  .bi-book-fill::before {
+    content: "\f192";
+    color:#12304A !important;
+  }

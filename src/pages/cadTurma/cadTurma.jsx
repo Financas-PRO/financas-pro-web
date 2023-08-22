@@ -77,7 +77,7 @@ export default function CadTurma() {
 
           <div className="title">
             <div className="col col-md-1 col-12">
-              <i class="bi bi-clipboard2 icon-titulo"></i>
+              <i className="bi bi-clipboard2 icon-titulo"></i>
             </div>
             <div className="col col-md-5">
               <h2 className="margin-cadastrar-titulo titulo">Turma</h2>

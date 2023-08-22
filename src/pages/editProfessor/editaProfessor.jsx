@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import "./editarProfessor.css";
-import Navbar from "../../components/navbar/header.jsx";
+import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -143,15 +143,17 @@ export default function EditaProfessor(){
 
     return(
         <>
+          <div className="row-page">
 
-            {/*<Navbar />*/}
-
-            <div className="container mt-3">
+          <div className="col col-md-2">
+          <Header />
+        </div>
+        <div className="container mt-4 col-md-8">
                 <ToastContainer className="toast-top-right" />
 
-                <div className="row">
+                <div className="title">
                   <div className="col col-md-1 col-12">
-                    <i class="bi bi-person-plus-fill icon-titulo"></i>
+                    <i className="bi bi-person-plus-fill icon-titulo"></i>
                   </div>
                   <div className="col col-md-5">
                     <h2 className="margin-cadastrar-titulo titulo">Editar</h2>
@@ -163,7 +165,7 @@ export default function EditaProfessor(){
                     <div className="conteudoProfessor mt-3">
                         <div className="row square">
 
-                            <div className="col col-md-12 col-12">
+                            <div className="col col-md-6 col-12">
                                 <i className="bi bi-person icons"></i>
                                 <label>Nome</label>
                                 <input
@@ -264,6 +266,11 @@ export default function EditaProfessor(){
                     </div>
                 </form>
             </div>
+
+          </div>
+            
+
+           
         </>
     );
 }

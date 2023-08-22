@@ -1,4 +1,6 @@
 import React from 'react';
+import "./header.css";
+import menutoledo from "../../assets/image/menu.png";
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -9,34 +11,28 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 
+
 const Header = () => {
   return (
     // <div>
-    <div style={{ display: 'flex', height: '100vh', position: 'fixed', overflow: 'scroll initial' }}> 
+    <div style={{ display: 'flex', height: '100vh', position: 'fixed', overflow: 'scroll initial'}}> 
       <CDBSidebar textColor="#fff" backgroundColor="#12304A">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Toledo Prudente
+            <img  className= "aguia-menu"src={menutoledo} alt='aguia'/>
           </a>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
+          <CDBSidebarMenu >
+            <NavLink exact to="/">
+              <CDBSidebarMenuItem icon="columns">Inicial</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
+            <NavLink exact to="/professor/cadastrar">
+              <CDBSidebarMenuItem icon="table">Cadastro Professor</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
+            <NavLink exact to="/turma/cadastrar">
+              <CDBSidebarMenuItem icon="table">Cadastro Turma</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>

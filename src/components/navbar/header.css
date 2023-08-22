@@ -1,11 +1,11 @@
-nav{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 
-    color: #fff;
-    background-color: #12304A;
-    
-    font-style: italic;
+.aguia-menu{
+   margin-left: 45px;
+    height: 75%;
 }
+
+.jGeaPm{
+    border-bottom: none !important;
+}
+
 
