@@ -156,4 +156,13 @@ button{
   border-color: #b7660a;
 }
 
+.btn-assitir{
+  width: 100%;
+  font-family: Poppins-bold;
+  font-size: 1rem;
+  border-radius: 5px;
+  background-color: #EE7F01;
+  border-color: #EE7F01;
+}
+
 

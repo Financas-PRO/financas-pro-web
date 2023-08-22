@@ -165,7 +165,7 @@ export default function EditaProfessor(){
                     <div className="conteudoProfessor mt-3">
                         <div className="row square">
 
-                            <div className="col col-md-6 col-12">
+                            <div className="col col-md-12 col-12">
                                 <i className="bi bi-person icons"></i>
                                 <label>Nome</label>
                                 <input
