@@ -9,6 +9,7 @@ import GerenciarTurma from "./pages/gerTurma/gerTurma.jsx";
 import EditaTurma from "./pages/editTurma/editaTurma.jsx";
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/dashboard";
+import CadastrarSimulador from "./pages/cadSimulador/cadSimulador";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
+            <Route path="simulador/cadastrar" element={<CadastrarSimulador />} />
           {/* </Route> */}
           
         </Routes>

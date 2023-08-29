@@ -47,6 +47,14 @@ body{
  
 }
 
+.conteudoSimulador{
+  width: 85%;
+  height: auto;
+  background-color: #12304A;
+  border-radius: 8px;
+ 
+}
+
 label{
   color: #fff;
   font-weight: 500;
