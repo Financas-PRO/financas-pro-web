@@ -25,13 +25,13 @@ const Header = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu >
-            <NavLink exact to="/">
+            <NavLink to="/">
               <CDBSidebarMenuItem icon="columns">Inicial</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/professor/cadastrar">
+            <NavLink to="/professor/cadastrar">
               <CDBSidebarMenuItem icon="table">Cadastro Professor</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/turma/cadastrar">
+            <NavLink to="/turma/cadastrar">
               <CDBSidebarMenuItem icon="table">Cadastro Turma</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>

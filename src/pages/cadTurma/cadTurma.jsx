@@ -88,15 +88,15 @@ export default function CadTurma() {
           <form onSubmit={handleSubmit} className="formTurma">
             <div className="conteudoTurma mt-5">
               <div className="row square">
-                <div className="col col-md-6 col-12">
+                <div className="col col-md-12 col-12 ">
                   <i className="bi bi-person-add"></i>
-                  <label>Ano</label>
+                  <label>Turma</label>
                   <input
                     onChange={handleChange}
-                    name="ano"
                     type="text"
+                    name="turma"
                     className="form-control"
-                    maxLength="4"
+                    maxLength="1"
                   />
                 </div>
                 <div className="col col-md-6 col-12">
@@ -114,31 +114,15 @@ export default function CadTurma() {
                     <option value="2">2° Semestre</option>
                   </select>
                 </div>
-                <div className="col col-md-6 col-12">
-                  <label>
-                    <i className="bi bi-person icons-cad"></i>
-                    Curso
-                  </label>
-                  <select
-                    onChange={handleChange}
-                    name="id_curso"
-                    className="form-control"
-                  >
-                    <option value="">Selecione...</option>
-                    <option value="1">Sistema de Informação</option>
-                    <option value="2">Administração</option>
-                    <option value="3">Ciências Contábeis</option>
-                  </select>
-                </div>
                 <div className="col col-md-6 col-12 mb-5">
                   <i className="bi bi-person-add"></i>
-                  <label>Turma</label>
+                  <label>Ano</label>
                   <input
                     onChange={handleChange}
+                    name="ano"
                     type="text"
-                    name="turma"
                     className="form-control"
-                    maxLength="1"
+                    maxLength="4"
                   />
                 </div>
               </div>

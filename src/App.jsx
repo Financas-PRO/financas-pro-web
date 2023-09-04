@@ -10,6 +10,7 @@ import EditaTurma from "./pages/editTurma/editaTurma.jsx";
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/dashboard";
 import Simuladores from "./pages/simuladores/Simuladores";
+import CadastrarSimulador from "./pages/cadSimulador/cadSimulador.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
             <Route path="/simulador" element={<Simuladores />} />
+            <Route path="simulador/cadasatrar" element={<CadastrarSimulador />} />
           {/* </Route> */}
           
         </Routes>

@@ -23,6 +23,7 @@ export default function GerProfessor() {
       console.log(res.data.data);
       setDocentes(res.data.data);
       setBusca(res.data.data);
+      
     });
   }, []);
   {
@@ -105,20 +106,22 @@ export default function GerProfessor() {
     const statusClass = item.ativo === 1 ? "ativo" : "inativo";
     const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
 
+    console.log(`item.ativo: ${item.ativo}`);
+
     return (
       <tr key={index}>
         <td>
           <strong>{item.id}</strong>
         </td>
         <td>{item.nome}</td>
-        <td>{item.titulacao}</td>
+        <td>{item.user.tipo_de_usuario.papel}</td>
         <td>{item.user.email}</td>
         <td>{item.user.username}</td>
         <td>
           <span className={`status ${statusClass}`}>{statusText}</span>
         </td>
         <td>
-          <Link to={`/professor/${item.id}/editar`} className="btn btn-warning">
+          <Link to={`/professor/${item.id}/editar`} className="btn btn-warning" style={{width: 'auto', borderRadius: '7px'}}>
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>
@@ -185,7 +188,7 @@ export default function GerProfessor() {
                       <tr>
                         <th>#</th>
                         <th>NOME</th>
-                        <th>TITULAÇÃO</th>
+                        <th>TIPO USUARIO</th>
                         <th>EMAIL</th>
                         <th>USUARIO</th>
                         <th>STATUS</th>

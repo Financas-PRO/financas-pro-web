@@ -116,7 +116,7 @@ export default function GerTurma() {
         <td>{item.id_curso}</td>
         <td>{item.turma}</td>
         <td>
-          <Link to={`/turma/${item.id}/editar`} className="btn btn-warning">
+          <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{width: 'auto', borderRadius: '7px'}}>
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>

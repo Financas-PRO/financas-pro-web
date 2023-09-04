@@ -1,6 +1,6 @@
 // Desenvolvedores: João Pontes e Leonardo Mariano
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./cadProfessor.css";
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,8 +11,24 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function CadProfessor() {
   const [professor, setProfessor] = useState({});
+  const [tipoDeUsuario, setTipoDeUsuario] = useState([]);
 
   let navigate = useNavigate();
+
+  {
+    /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE TIPO DE USUARIO QUE ESTÃO ATIVOS */
+  }
+  useEffect(() => {
+    api.get(`tipoDeUsuario`).then((res) => {
+      //console.log(res);
+      console.log(res.data.data);
+      setTipoDeUsuario(res.data.data);
+      
+    });
+  }, []);
+  {
+    /*-----------------------------------------------------------------------------------------------*/
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -119,7 +135,7 @@ export default function CadProfessor() {
 
           <div className="title">
             <div className="col col-md-1 col-12">
-              <i class="bi bi-person-plus-fill icon-titulo"></i>
+              <i className="bi bi-person-plus-fill icon-titulo"></i>
             </div>
             <div className="col col-md-5">
               <h2 className="margin-cadastrar-titulo titulo">Docentes</h2>
@@ -163,13 +179,24 @@ export default function CadProfessor() {
                     className="form-control"
                   />
                 </div>
-                <div className="col col-md-12 col-12">
+                <div className="col col-md-6 col-12">
                   <i className="bi bi-envelope icons"></i>
                   <label>E-mail</label>
                   <input
                     onChange={handleChange}
                     name="email"
                     type="email"
+                    className="form-control"
+                    maxLength="50"
+                  />
+                </div>
+                <div className="col col-md-6 col-12">
+                  <i className="bi bi-pen"></i>
+                  <label>Matricula</label>
+                  <input
+                    onChange={handleChange}
+                    name="matricula"
+                    type="text"
                     className="form-control"
                     maxLength="50"
                   />
@@ -224,13 +251,17 @@ export default function CadProfessor() {
                     Tipo
                   </label>
                   <select
+                    
                     onChange={handleChange}
                     name="id_tipoDeUsuario"
                     className="form-control"
                   >
                     <option value="">Selecione...</option>
-                    <option value="1">Professor</option>
-                    <option value="2">Coordenador</option>
+                    {tipoDeUsuario.map(item => (
+                      <option key={item.id} value={item.id}>
+                        {item.papel}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

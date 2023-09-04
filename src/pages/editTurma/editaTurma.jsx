@@ -108,17 +108,17 @@ export default function EditaTurma() {
 
           <form onSubmit={handleSubmit} className="formTurma">
             <div className="conteudoTurma mt-5">
-              <div className="row square">
-                <div className="col col-md-6 col-12">
+            <div className="row square">
+                <div className="col col-md-12 col-12 ">
                   <i className="bi bi-person-add"></i>
-                  <label>Ano</label>
+                  <label>Turma</label>
                   <input
                     onChange={handleChange}
-                    name="ano"
                     type="text"
+                    name="turma"
                     className="form-control"
-                    maxLength="4"
-                    value={turmas.ano}
+                    maxLength="1"
+                    value={turmas.turma}
                   />
                 </div>
                 <div className="col col-md-6 col-12">
@@ -137,37 +137,20 @@ export default function EditaTurma() {
                     <option value="2">2° Semestre</option>
                   </select>
                 </div>
-                <div className="col col-md-6 col-12">
-                  <label>
-                    <i className="bi bi-person icons-cad"></i>
-                    Curso
-                  </label>
-                  <select
-                    onChange={handleChange}
-                    name="id_curso"
-                    className="form-control"
-                    value={turmas.id_curso}
-                  >
-                    <option value="">Selecione...</option>
-                    <option value="1">Sistema de Informação</option>
-                    <option value="2">Administração</option>
-                    <option value="3">Ciências Contábeis</option>
-                  </select>
-                </div>
-                <div className="col col-md-6 col-12 mb-4">
+                <div className="col col-md-6 col-12 mb-5">
                   <i className="bi bi-person-add"></i>
-                  <label>Turma</label>
+                  <label>Ano</label>
                   <input
                     onChange={handleChange}
+                    name="ano"
                     type="text"
-                    name="turma"
                     className="form-control"
-                    maxLength="1"
-                    value={turmas.turma}
+                    maxLength="4"
+                    value={turmas.ano}
                   />
                 </div>
               </div>
-            </div>
+              </div>
             <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
               <button className="btn-salvar">Salvar</button>
               <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
