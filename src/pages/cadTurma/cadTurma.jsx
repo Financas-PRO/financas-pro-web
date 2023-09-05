@@ -90,13 +90,12 @@ export default function CadTurma() {
               <div className="row square">
                 <div className="col col-md-12 col-12 ">
                   <i className="bi bi-person-add"></i>
-                  <label>Turma</label>
+                  <label>Descrição</label>
                   <input
                     onChange={handleChange}
                     type="text"
                     name="turma"
                     className="form-control"
-                    maxLength="1"
                   />
                 </div>
                 <div className="col col-md-6 col-12">

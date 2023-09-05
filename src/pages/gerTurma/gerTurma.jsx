@@ -8,6 +8,7 @@ import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Importa from "../importarAluno/importa";
 
 export default function GerTurma() {
   const [turmas, setTurmas] = useState({});
@@ -42,8 +43,7 @@ export default function GerTurma() {
         (f) =>
           f.ano.includes(buscando) ||
           f.semestre.includes(buscando) ||
-          f.curso.includes(buscando) ||
-          f.turma.toLowerCase().includes(buscando)
+          f.descricao.includes(buscando) 
       )
     );
   };
@@ -111,10 +111,14 @@ export default function GerTurma() {
         <td>
           <strong>{item.id}</strong>
         </td>
+        <td>{item.descricao}</td>
         <td>{item.ano}</td>
         <td>{item.semestre}</td>
-        <td>{item.id_curso}</td>
-        <td>{item.turma}</td>
+        <td>
+          <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{width: 'auto', borderRadius: '7px'}}>
+            <i class="bi bi-arrow-bar-up"></i>
+          </Link>
+        </td>
         <td>
           <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{width: 'auto', borderRadius: '7px'}}>
             <i className="bi bi-pencil-square"></i>
@@ -185,10 +189,10 @@ export default function GerTurma() {
                     <thead>
                       <tr>
                         <th>#</th>
+                        <th>DESCRIÇÃO</th>
                         <th>ANO</th>
                         <th>SEMESTRE</th>
-                        <th>CURSO</th>
-                        <th>TURMA</th>
+                        <th>IMPORTAR</th>
                         <th>EDITAR</th>
                         <th>INATIVAR</th>
                       </tr>

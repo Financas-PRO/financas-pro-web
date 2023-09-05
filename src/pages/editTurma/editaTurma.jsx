@@ -111,7 +111,7 @@ export default function EditaTurma() {
             <div className="row square">
                 <div className="col col-md-12 col-12 ">
                   <i className="bi bi-person-add"></i>
-                  <label>Turma</label>
+                  <label>Descição</label>
                   <input
                     onChange={handleChange}
                     type="text"
