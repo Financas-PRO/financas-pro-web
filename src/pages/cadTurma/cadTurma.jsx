@@ -61,7 +61,7 @@ export default function CadTurma() {
   function handleChange(e) {
     const nome = e.target.name;
     const valor = e.target.value.trim();
-    setTurmas({ ...turmas, [nome]: valor });
+    setTurmas({ ...turmas, [nome]: valor, id_docente: 1  });
 
     console.log(turmas);
   }
@@ -94,7 +94,7 @@ export default function CadTurma() {
                   <input
                     onChange={handleChange}
                     type="text"
-                    name="turma"
+                    name="descricao"
                     className="form-control"
                   />
                 </div>

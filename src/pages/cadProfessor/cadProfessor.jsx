@@ -51,7 +51,7 @@ export default function CadProfessor() {
           var erros = "";
 
           Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
+            erros += resposta[index];
           });
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
