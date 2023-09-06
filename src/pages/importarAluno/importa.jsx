@@ -9,7 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Title from "../../components/title/title";
-
+import ButtonSalvar from "../../components/button/buttonSalvar";
+import ButtonCancelar from "../../components/button/buttonCancelar";
 
 export default function Importa() {
 
@@ -104,34 +105,32 @@ export default function Importa() {
                 onChange={handleUploadFile}
                 type="file"
                 name="arquivo"
-                className="form-control"
+                className="form-control mb-3"
                 id="formFileLg"
                 accept="text/plain"
               />
 
-              <button className="btn-salvar mt-3">enviar</button>
+              <ButtonSalvar nome="importar" />
+
             </form>
 
-          </div>
-        </div>
-
-        <div className="container col-md-8">
-          <div className="card-body">
-            <div className="table-responsive">
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>NOME</th>
-                    <th>R.A.</th>
-                    <th>TERMO</th>
-                    <th>E-MAIL</th>
-                    <th>CURSO</th>
-                    <th>DISCIPLINA</th>
-                  </tr>
-                </thead>
-                {/* <tbody>{alunoDetalhe}</tbody> */}
-              </table>
+            <div className="card-body">
+              <div className="table-responsive">
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>NOME</th>
+                      <th>R.A.</th>
+                      <th>TERMO</th>
+                      <th>E-MAIL</th>
+                      <th>CURSO</th>
+                      <th>DISCIPLINA</th>
+                    </tr>
+                  </thead>
+                  {/* <tbody>{alunoDetalhe}</tbody> */}
+                </table>
+              </div>
             </div>
           </div>
         </div>
