@@ -8,6 +8,7 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
+import Title from "../../components/title/title";
 
 export default function CadTurma() {
 
@@ -61,7 +62,7 @@ export default function CadTurma() {
   function handleChange(e) {
     const nome = e.target.name;
     const valor = e.target.value.trim();
-    setTurmas({ ...turmas, [nome]: valor, id_docente: 1  });
+    setTurmas({ ...turmas, [nome]: valor, id_docente: 1 });
 
     console.log(turmas);
   }
@@ -69,21 +70,18 @@ export default function CadTurma() {
   return (
     <>
       <div className="row-page">
+
         <div className="col col-md-2">
           <Header />
         </div>
-        <div className="container mt-4 col-md-8">
-          <ToastContainer className="toast-top-right" />
 
-          <div className="title">
-            <div className="col col-md-1 col-12">
-              <i className="bi bi-clipboard2 icon-titulo"></i>
-            </div>
-            <div className="col col-md-5">
-              <h2 className="margin-cadastrar-titulo titulo">Turma</h2>
-              <span className="subtitulo">Gerenciamento cadastro de Turma</span>
-            </div>
-          </div>
+        <div className="container mt-4 col-md-8">
+
+          <Title
+            icon="bi-clipboard2"
+            titulo="Turma"
+            subTitulo="Gerenciamento cadastro de Turma" />
+
 
           <form onSubmit={handleSubmit} className="formTurma">
             <div className="conteudoTurma mt-5">
@@ -126,10 +124,10 @@ export default function CadTurma() {
                 </div>
               </div>
             </div>
-              <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
-                <button className="btn-salvar">Salvar</button>
-                <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
-              </div>
+            <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
+              <button className="btn-salvar">Salvar</button>
+              <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
+            </div>
           </form>
         </div>
       </div>

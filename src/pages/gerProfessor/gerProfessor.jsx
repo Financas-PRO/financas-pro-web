@@ -6,6 +6,7 @@ import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Title from "../../components/title/title";
 
 export default function GerProfessor() {
   const [docentes, setDocentes] = useState([]);
@@ -23,7 +24,7 @@ export default function GerProfessor() {
       console.log(res.data.data);
       setDocentes(res.data.data);
       setBusca(res.data.data);
-      
+
     });
   }, []);
   {
@@ -121,7 +122,7 @@ export default function GerProfessor() {
           <span className={`status ${statusClass}`}>{statusText}</span>
         </td>
         <td>
-          <Link to={`/professor/${item.id}/editar`} className="btn btn-warning" style={{width: 'auto', borderRadius: '7px'}}>
+          <Link to={`/professor/${item.id}/editar`} className="btn btn-warning" style={{ width: 'auto', borderRadius: '7px' }}>
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>
@@ -145,22 +146,17 @@ export default function GerProfessor() {
   return (
     <>
       <div className="row-page">
+
         <div className="col col-md-2">
           <Header />
         </div>
+
         <div className="container">
-          <ToastContainer className="toast-top-right" />
-          <div className="row mt-5">
-            <div className="col col-md-1 col-12">
-              <i className="bi bi-book-fill icon-titulo"></i>
-            </div>
-            <div className="col col-md-5 col-12">
-              <h2 className="margin-cadastrar-titulo titulo">Gerenciamento</h2>
-              <span className="subtitulo">
-                Gerenciamento dos Docente cadastrados
-              </span>
-            </div>
-          </div>
+
+          <Title
+            icon="bi-book-fill"
+            titulo="Gerenciamento"
+            subTitulo="Gerenciamento dos Docente cadastrados" />
 
           <div className="row">
             <div className="col col-md-8 col-12 mt-5">

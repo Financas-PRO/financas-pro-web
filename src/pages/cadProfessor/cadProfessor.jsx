@@ -8,6 +8,7 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
+import Title from "../../components/title/title";
 
 export default function CadProfessor() {
   const [professor, setProfessor] = useState({});
@@ -23,7 +24,7 @@ export default function CadProfessor() {
       //console.log(res);
       console.log(res.data.data);
       setTipoDeUsuario(res.data.data);
-      
+
     });
   }, []);
   {
@@ -131,17 +132,10 @@ export default function CadProfessor() {
         </div>
 
         <div className="container mt-4 col-md-8">
-          <ToastContainer className="toast-top-right" />
-
-          <div className="title">
-            <div className="col col-md-1 col-12">
-              <i className="bi bi-person-plus-fill icon-titulo"></i>
-            </div>
-            <div className="col col-md-5">
-              <h2 className="margin-cadastrar-titulo titulo">Docentes</h2>
-              <span className="subtitulo">Gerenciamento cadastro Docente</span>
-            </div>
-          </div>
+          <Title
+            icon="bi-person-plus-fill"
+            titulo="Docentes"
+            subTitulo="Gerenciamento cadastro Docente" />
 
           <form onSubmit={handleSubmit} className="formProfessor">
             <div className="conteudoProfessor mt-5">
@@ -251,7 +245,7 @@ export default function CadProfessor() {
                     Tipo
                   </label>
                   <select
-                    
+
                     onChange={handleChange}
                     name="id_tipoDeUsuario"
                     className="form-control"

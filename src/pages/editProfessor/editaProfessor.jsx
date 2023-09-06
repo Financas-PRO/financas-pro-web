@@ -8,6 +8,7 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Title from "../../components/title/title";
 
 export default function EditaProfessor() {
   const [professor, setProfessor] = useState({
@@ -34,7 +35,7 @@ export default function EditaProfessor() {
       //console.log(res);
       console.log(res.data.data);
       setTipoDeUsuario(res.data.data);
-      
+
     });
   }, []);
   {
@@ -143,8 +144,8 @@ export default function EditaProfessor() {
       name === "cpf"
         ? formatCPF(value)
         : name === "telefone"
-        ? formatTelefone(value)
-        : value;
+          ? formatTelefone(value)
+          : value;
 
     setProfessor({ ...professor, [name]: valor });
 
@@ -158,19 +159,12 @@ export default function EditaProfessor() {
           <Header />
         </div>
         <div className="container mt-4 col-md-8">
-          <ToastContainer className="toast-top-right" />
 
-          <div className="title">
-            <div className="col col-md-1 col-12">
-              <i className="bi bi-person-plus-fill icon-titulo"></i>
-            </div>
-            <div className="col col-md-5">
-              <h2 className="margin-cadastrar-titulo titulo">Editar</h2>
-              <span className="subtitulo">
-                Gerenciamento para Editar Docente
-              </span>
-            </div>
-          </div>
+          <Title
+            icon="bi-person-plus-fill"
+            titulo="Editar"
+            subTitulo="Gerenciamento para Editar Docente" />
+
 
           <form onSubmit={handleSubmit} className="formProfessor">
             <div className="conteudoProfessor mt-3">
@@ -247,17 +241,17 @@ export default function EditaProfessor() {
                   />
                 </div>
                 <div className="col col-md-6 col-12">
-                    <i className="bi bi-pen"></i>
-                    <label>Matricula</label>
-                    <input
-                      onChange={handleChange}
-                      name="matricula"
-                      type="text"
-                      className="form-control"
-                      maxLength="50"
-                      value={professor.matricula}
-                    />
-                  </div>
+                  <i className="bi bi-pen"></i>
+                  <label>Matricula</label>
+                  <input
+                    onChange={handleChange}
+                    name="matricula"
+                    type="text"
+                    className="form-control"
+                    maxLength="50"
+                    value={professor.matricula}
+                  />
+                </div>
                 <div className="col col-md-12 col-12">
                   <label>
                     <i className="bi bi-person icons-cad"></i>

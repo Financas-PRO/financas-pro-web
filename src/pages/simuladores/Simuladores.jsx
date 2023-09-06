@@ -8,27 +8,24 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
+import Title from "../../components/title/title";
 
 
-export default function Simuladores(){
+export default function Simuladores() {
 
-    return(
+    return (
         <div className="row-page">
+
             <div className="col col-md-2">
                 <Header />
             </div>
-            <div className="container mt-4 col-md-8">
-                <ToastContainer className="toast-top-right" />
 
-                <div className="title">
-                    <div className="col col-md-1 col-12">
-                        {/* <i class="bi bi-person-plus-fill icon-titulo"></i> */}
-                    </div>
-                    <div className="col col-md-5">
-                        <h2 className="margin-cadastrar-titulo titulo">Simuladores</h2>
-                        <span className="subtitulo">Gerenciamento seus simuladores</span>
-                    </div>
-                </div>
+            <div className="container mt-4 col-md-8">
+
+                <Title
+                    icon="bi-bezier2"
+                    titulo="Simuladores"
+                    subTitulo="Gerenciamento dos simuladores" />
 
                 <div className="row mt-5 cardFundo">
                     <div className="col col-md-3">
@@ -39,7 +36,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -52,7 +49,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -65,7 +62,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -78,7 +75,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -91,7 +88,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -104,7 +101,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -117,7 +114,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -130,7 +127,7 @@ export default function Simuladores(){
                                 <span className="nomes">João, Pedro, Lara</span>
                             </div>
                             <Link className="link">
-                                 Clique aqui para retornar 
+                                Clique aqui para retornar
                             </Link>
                         </div>
                     </div>
@@ -141,7 +138,7 @@ export default function Simuladores(){
                     <Link to="/dashboard" className="btn-cancelar">Cancelar</Link>
                 </div>
             </div>
-            
+
         </div>
 
     );

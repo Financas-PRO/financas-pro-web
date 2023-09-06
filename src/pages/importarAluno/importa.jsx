@@ -8,6 +8,7 @@ import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
+import Title from "../../components/title/title";
 
 
 export default function Importa() {
@@ -83,21 +84,17 @@ export default function Importa() {
     <>
 
       <div className="row-page">
+
         <div className="col col-md-2">
           <Header />
         </div>
-        <div className="container mt-4 col-md-8">
-          <ToastContainer className="toast-top-right" />
 
-          <div className="title">
-            <div className="col col-md-1 col-12">
-              <i className="bi bi-clipboard2 icon-titulo"></i>
-            </div>
-            <div className="col col-md-5">
-              <h2 className="margin-cadastrar-titulo titulo">Importar Aluno</h2>
-              <span className="subtitulo">Gerenciamento de importação de Aluno</span>
-            </div>
-          </div>
+        <div className="container mt-4 col-md-8">
+
+          <Title
+            icon="bi-clipboard2"
+            titulo="Importar Aluno"
+            subTitulo="Gerenciamento de importação de Aluno" />
 
           <div className="mt-4">
             <form onSubmit={handleSubmit}>

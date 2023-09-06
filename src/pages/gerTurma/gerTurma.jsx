@@ -8,7 +8,7 @@ import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Importa from "../importarAluno/importa";
+import Title from "../../components/title/title";
 
 export default function GerTurma() {
   const [turmas, setTurmas] = useState({});
@@ -43,7 +43,7 @@ export default function GerTurma() {
         (f) =>
           f.ano.includes(buscando) ||
           f.semestre.includes(buscando) ||
-          f.descricao.includes(buscando) 
+          f.descricao.includes(buscando)
       )
     );
   };
@@ -115,12 +115,12 @@ export default function GerTurma() {
         <td>{item.ano}</td>
         <td>{item.semestre}</td>
         <td>
-          <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{width: 'auto', borderRadius: '7px'}}>
+          <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{ width: 'auto', borderRadius: '7px' }}>
             <i class="bi bi-arrow-bar-up"></i>
           </Link>
         </td>
         <td>
-          <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{width: 'auto', borderRadius: '7px'}}>
+          <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{ width: 'auto', borderRadius: '7px' }}>
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>
@@ -144,25 +144,16 @@ export default function GerTurma() {
   return (
     <>
       <div className="row-page">
+
         <div className="col col-md-2">
           <Header />
         </div>
 
         <div className="container">
-          <ToastContainer className="toast-top-right" />
-
-          <div className="row mt-5">
-            <div className="col col-md-1 col-12">
-              <i className="bi bi-book-fill icon-titulo"></i>
-            </div>
-
-            <div className="col col-md-5">
-              <h2 className="margin-cadastrar-titulo titulo">Gerenciamento</h2>
-              <span className="subtitulo">
-                Gerenciamento das Turma cadastradas
-              </span>
-            </div>
-          </div>
+          <Title
+            icon="bi-book-fill"
+            titulo="Gerenciamento"
+            subTitulo="Gerenciamento das Turma cadastradas" />
 
           <div className="row">
             <div className="col col-md-8 col-12 mt-5">

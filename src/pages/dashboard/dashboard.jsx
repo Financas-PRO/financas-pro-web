@@ -10,26 +10,26 @@ import vesti1 from '../../assets/image/carrosel/vesti1.png';
 import vesti2 from '../../assets/image/carrosel/vesti2.png';
 import vesti3 from '../../assets/image/carrosel/vesti3.png';
 import { Link, useNavigate } from "react-router-dom";
+import Title from "../../components/title/title";
 
-export default function Dashboard(){
-    return(
-        
+export default function Dashboard() {
+    return (
+
+
         <div className="row-page">
-
+            
             <div className="col col-md-2">
                 <Header />
             </div>
 
             <div className="container mt-4 col-md-8">
-                <div className="title">
-                    <div className="col col-md-1 col-12">
-                        <i class="bi bi-house-gear-fill icon-titulo"></i>
-                    </div>
-                    <div className="col col-md-5">
-                        <h2 className="margin-cadastrar-titulo titulo">Dashboard</h2>
-                        <span className="subtitulo">Seja bem vindo a Dashboard do Finanças PRO!</span>
-                    </div>
-                </div>
+
+                <Title
+                    icon="bi-house-gear-fill"
+                    titulo="Dashboard"
+                    subTitulo="Gerenciamento da Dashboard"
+                />
+
 
                 <div id="carouselExampleSlidesOnly" className="carousel slide mt-5" data-bs-ride="carousel">
                     <div className="carousel-inner">
@@ -143,8 +143,6 @@ export default function Dashboard(){
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 

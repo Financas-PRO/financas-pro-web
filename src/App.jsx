@@ -13,6 +13,7 @@ import Simuladores from "./pages/simuladores/Simuladores";
 import CadastrarSimulador from "./pages/cadSimulador/cadSimulador.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Importa from "./pages/importarAluno/importa";
+import Empresa from "./pages/empresa/empresa";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/simulador" element={<Simuladores />} />
             <Route path="simulador/cadastrar" element={<CadastrarSimulador />} />
             <Route path="/importa/:id/" element={<Importa />} />
+            <Route path="/empresa" element={<Empresa />} />
           {/* </Route> */}
           
         </Routes>
