@@ -9,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Title from "../../components/title/title";
+import ButtonSalvar from "../../components/button/buttonSalvar";
+import ButtonCancelar from "../../components/button/buttonCancelar";
 
 export default function EditaTurma() {
 
@@ -147,8 +149,8 @@ export default function EditaTurma() {
               </div>
             </div>
             <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
-              <button className="btn-salvar">Salvar</button>
-              <Link to="/turma/gerenciar" className="btn-cancelar">Cancelar</Link>
+              <ButtonSalvar nome="Salvar" />
+              <ButtonCancelar link="turma/gerenciar" nome="Cancelar" />
             </div>
           </form>
         </div>

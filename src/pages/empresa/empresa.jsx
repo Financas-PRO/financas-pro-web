@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
+import ButtonSalvar from "../../components/button/buttonSalvar";
+import ButtonCancelar from "../../components/button/buttonCancelar";
 
 export default function Empresa() {
 
@@ -18,6 +20,9 @@ export default function Empresa() {
                     icon=""
                     titulo="Pais"
                     subTitulo="Gerenciamento de paises" />
+
+                <ButtonSalvar nome="Salvar" />
+                <ButtonCancelar link="" nome="Cancelar" />
             </div>
         </div>
     )
