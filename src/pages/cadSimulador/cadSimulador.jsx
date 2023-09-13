@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './cadSimulador.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
@@ -10,6 +10,67 @@ import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 
 export default function CadSimulador() {
+
+
+    const[simulador, setSimulador] = useState({});
+    const[busca, setBusca] = useState({});
+
+    useEffect(() => {
+        api.get().then((res) => {
+
+        });
+    },[]);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+    
+        try {
+          api
+            .post(`grupo/${id}`, simulador)
+            .then(async (res) => {
+              if (res.status) {
+                toast.success("Cadastro realizado com sucesso");
+    
+                setTimeout(() => {
+                  return navigate("/simulador", { replace: true });
+                }, 4000);
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+              let resposta = error.response.data.error;
+    
+              var erros = "";
+    
+              Object.keys(resposta).forEach(function (index) {
+                erros += resposta[index] + "\n";
+    
+              });
+              toast.error(`Erro ao cadastrar!\n ${erros}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                style: { whiteSpace: "pre-line" },
+              });
+            });
+    
+        } catch (err) {
+          console.log(simulador);
+        }
+      }
+
+    function handleChange(e) {
+        const nome = e.target.name;
+        const valor = e.target.value.trim();
+        setSimulador({ ...simulador, [nome]: valor });
+    
+        console.log(simulador);
+    }
 
     let navigate = useNavigate();
 
@@ -44,7 +105,7 @@ export default function CadSimulador() {
                     subTitulo="Gerenciamento cadastro de simuladores" />
 
 
-                <form className="formSimulador">
+                <form onSubmit={handleSubmit} className="formSimulador">
                     <div className="conteudoSimulador mt-5">
                         <div className="row square">
                             <div className="col col-12">
@@ -65,6 +126,8 @@ export default function CadSimulador() {
                                                 className="form-check-input"
                                                 id={`aluno-${aluno.id}`}
                                                 value={aluno.id}
+                                                onChange={handleChange}
+                                                
                                             />
                                             <label className="form-check-label" htmlFor={`aluno-${aluno.id}`}>
                                                 {aluno.nome}

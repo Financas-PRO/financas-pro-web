@@ -82,7 +82,7 @@ export default function EditaProfessor() {
           var erros = "";
 
           Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
+            erros += resposta[index];
           });
           toast.error(`Erro ao alterar!\n ${erros}`, {
             position: "top-right",

@@ -16,6 +16,7 @@ export default function Importa() {
 
   const [cardFile, setCardFile] = useState();
   const [alunos, setAlunos] = useState();
+  const [busca, setBusca] = useState([]);
   const handleUploadFile = e => setCardFile(e.target.files[0]);
 
   let { id } = useParams();
@@ -23,9 +24,8 @@ export default function Importa() {
 
   useEffect(() => {
     api.get(`relacaoTurma/${id}`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setAlunos(res.data.data);
+      setBusca(res.data.data);
     });
   }, []);
 
@@ -80,6 +80,27 @@ export default function Importa() {
     }
   }
 
+  // FUNÇÃO PARA LISTAR OS DADOS IMPORTADOS
+
+  var importacao = ""
+
+  importacao = busca.map((item, index) => {
+    return (
+      <tr key={index}>
+        <td>
+          <strong>{item.id}</strong>
+        </td>
+        <td>{item.aluno.nome}</td>
+        <td>{item.aluno.ra}</td>
+        <td>{item.aluno.termo}</td>
+        <td>{item.aluno.user.email}</td>
+        <td>{item.aluno.curso.curso}</td>
+        <td>{item.aluno.id_disciplina}</td>
+      </tr>
+    )
+
+
+  });
 
   return (
     <>
@@ -128,7 +149,7 @@ export default function Importa() {
                       <th>DISCIPLINA</th>
                     </tr>
                   </thead>
-                  {/* <tbody>{alunoDetalhe}</tbody> */}
+                  <tbody>{importacao}</tbody>
                 </table>
               </div>
             </div>
