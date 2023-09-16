@@ -30,7 +30,7 @@ function App() {
             <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
-            <Route path="/simulador" element={<Simuladores />} />
+            <Route path="/simuladores" element={<Simuladores />} />
             <Route path="/simulador/cadastrar" element={<CadastrarSimulador />} />
             <Route path="/importa/:id/" element={<Importa />} />
             <Route path="/empresa" element={<Empresa />} />
