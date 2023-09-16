@@ -36,3 +36,30 @@
     display: flex;
     justify-content: center;
 }
+
+.cadButton{
+    display: flex;
+    justify-content: end;
+}
+
+.btn-criarSi{
+    width: 28%;
+    font-family: Poppins;
+    font-size: 1rem;
+    border-radius: 50px;
+    padding: 5px;
+    background-color: #EE7F01;
+    border-color: #EE7F01;
+    color: white;
+}
+  
+.btn-criarSi:hover{
+    background-color: #b7660a;
+    border-color: #b7660a;
+}
+
+.bi-bookmark-plus-fill::before {
+    content: "\f19c";
+    margin-right: 5px;
+}
+  
