@@ -1,0 +1,14 @@
+.titulo-turma{
+    font-family: Poppins-bold;
+    font-size: 1.3rem;
+    color: #FFF;
+    background-color: #EE7F01;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.card-turma{
+    background-color: #FFF;
+    border-radius: 14px;
+}

@@ -14,7 +14,7 @@ import CadastrarSimulador from "./pages/cadSimulador/cadSimulador.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Importa from "./pages/importarAluno/importa";
 import Empresa from "./pages/empresa/empresa";
-
+import Turmas from "./pages/turmas/turmas";
 
 function App() {
   return (
@@ -31,9 +31,10 @@ function App() {
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
             <Route path="/simulador" element={<Simuladores />} />
-            <Route path="/simulador/cadastrar/:id/" element={<CadastrarSimulador />} />
+            <Route path="/simulador/cadastrar" element={<CadastrarSimulador />} />
             <Route path="/importa/:id/" element={<Importa />} />
             <Route path="/empresa" element={<Empresa />} />
+            <Route path="/turmas" element={<Turmas />} />
           {/* </Route> */}
           
         </Routes>

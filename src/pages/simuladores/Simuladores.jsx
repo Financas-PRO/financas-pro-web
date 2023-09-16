@@ -1,7 +1,7 @@
 // Desenvolvedores: João Pontes e Leonardo Mariano
 
 import React, { useState } from "react";
-import "./simuladores.css";
+import "./Simuladores.css";
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
@@ -22,12 +22,22 @@ export default function Simuladores() {
                 <Header />
             </div>
 
+
             <div className="container mt-4 col-md-8">
 
                 <Title
                     icon="bi-bezier2"
                     titulo="Simuladores"
                     subTitulo="Gerenciamento dos simuladores" />
+
+
+                <div className="cadButton">
+                    <button className="btn-criarSi">
+                    <i class="bi bi-bookmark-plus-fill"></i>
+                        Criar nova simulação
+                    </button>
+                </div>
+
 
                 <div className="row mt-5 cardFundo">
                     <div className="col col-md-3">
