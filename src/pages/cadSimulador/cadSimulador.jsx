@@ -77,22 +77,42 @@ export default function CadSimulador() {
     }
 
 
+    
 
-    const alunosDisponiveis = [
-        { id: 1, nome: "Leonardo Mariano" },
-        { id: 2, nome: "João Pontes" },
-        { id: 3, nome: "João Garcia" },
-        { id: 4, nome: "Felipe Silveira" },
-        { id: 5, nome: "Gabriel Lanza" },
-        { id: 6, nome: "Lucas Gere" },
-        { id: 7, nome: "Leonardo Mariano" },
-        { id: 8, nome: "João Pontes" },
-        { id: 9, nome: "João Garcia" },
-        { id: 10, nome: "Felipe Silveira" },
-        { id: 11, nome: "Gabriel Lanza" },
-        { id: 12, nome: "Lucas Gere" },
-        // ... outros alunos
-    ];
+//   importacao = simulador.map((item, index) => {
+//     return (
+//       <tr key={index}>
+//         <td>
+//           <strong>{item.id}</strong>
+//         </td>
+//         <td>{item.aluno.nome}</td>
+//         <td>{item.aluno.ra}</td>
+//         <td>{item.aluno.termo}</td>
+//         <td>{item.aluno.user.email}</td>
+//         <td>{item.aluno.curso.curso}</td>
+//         <td>{item.aluno.id_disciplina}</td>
+//       </tr>
+//     )
+
+
+//   });
+
+
+    // const alunosDisponiveis = [
+    //     { id: 1, nome: "Leonardo Mariano" },
+    //     { id: 2, nome: "João Pontes" },
+    //     { id: 3, nome: "João Garcia" },
+    //     { id: 4, nome: "Felipe Silveira" },
+    //     { id: 5, nome: "Gabriel Lanza" },
+    //     { id: 6, nome: "Lucas Gere" },
+    //     { id: 7, nome: "Leonardo Mariano" },
+    //     { id: 8, nome: "João Pontes" },
+    //     { id: 9, nome: "João Garcia" },
+    //     { id: 10, nome: "Felipe Silveira" },
+    //     { id: 11, nome: "Gabriel Lanza" },
+    //     { id: 12, nome: "Lucas Gere" },
+    //     // ... outros alunos
+    // ];
 
     return (
         <div className="row-page">
@@ -121,19 +141,22 @@ export default function CadSimulador() {
                             </div>
                             <div className="col col-12">
                                 <label className="mb-2">Participantes: </label>
+                                <div>
+                                    <label ></label>
+                                </div>
                                 <div className="alunos-checkboxes d-flex">
-                                    {alunosDisponiveis.map(aluno => (
-                                        <div key={aluno.id} className="form-check">
+                                    {simulador.map(item => (
+                                        <div key={item.id} className="form-check">
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
-                                                id={`aluno-${aluno.id}`}
-                                                value={aluno.id}
+                                                // id={`simulador-${item.id}`}
+                                                value={simulador.id}
                                                 onChange={handleChange}
                                                 
                                             />
-                                            <label className="form-check-label" htmlFor={`aluno-${aluno.id}`}>
-                                                {aluno.nome}
+                                            <label className="form-check-label" htmlFor={`item-${item.id}`}>
+                                                {item.aluno.nome}
                                             </label>
                                         </div>
                                     ))}
