@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
@@ -26,14 +26,11 @@ export default function EditaTurma() {
   useEffect(() => {
 
     api.get(`turma/${id}`).then((res) => {
-
+      console.log(setTurmas);
       setTurmas({
-        ano: res.data.data.ano,
+        turma: res.data.data.descricao,
         semestre: res.data.data.semestre,
-        id_curso: res.data.data.curso.id,
-        turma: res.data.data.turma,
-
-
+        ano: res.data.data.ano,
       });
     });
   }, [id]);
@@ -108,7 +105,7 @@ export default function EditaTurma() {
               <div className="row square">
                 <div className="col col-md-12 col-12 ">
                   <i className="bi bi-person-add"></i>
-                  <label>Descição</label>
+                  <label>Turma</label>
                   <input
                     onChange={handleChange}
                     type="text"

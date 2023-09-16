@@ -152,7 +152,7 @@ export default function GerProfessor() {
         </div>
 
         <div className="container">
-
+        <ToastContainer className="toast-top-right" />
           <Title
             icon="bi-book-fill"
             titulo="Gerenciamento"

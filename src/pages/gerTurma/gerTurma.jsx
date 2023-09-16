@@ -116,7 +116,7 @@ export default function GerTurma() {
         <td>{item.semestre}</td>
         <td>
           <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{ width: 'auto', borderRadius: '7px' }}>
-            <i class="bi bi-arrow-bar-up"></i>
+            <i className="bi bi-arrow-bar-up"></i>
           </Link>
         </td>
         <td>
@@ -150,6 +150,7 @@ export default function GerTurma() {
         </div>
 
         <div className="container">
+          <ToastContainer className="toast-top-right" />
           <Title
             icon="bi-book-fill"
             titulo="Gerenciamento"

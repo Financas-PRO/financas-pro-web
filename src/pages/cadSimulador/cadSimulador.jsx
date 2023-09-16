@@ -4,20 +4,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import Header from "../../components/navbar/header";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 
 export default function CadSimulador() {
 
+    let { id } = useParams();
+    let navigate = useNavigate();
 
-    const[simulador, setSimulador] = useState({});
-    const[busca, setBusca] = useState({});
+    const[simulador, setSimulador] = useState([]);
+    
 
     useEffect(() => {
-        api.get().then((res) => {
-
+        console.log(setSimulador);
+        api.get(`relacaoTurma/${id}`).then((res) => {
+            setSimulador(res.data.data);
         });
     },[]);
 
@@ -72,7 +76,6 @@ export default function CadSimulador() {
         console.log(simulador);
     }
 
-    let navigate = useNavigate();
 
 
     const alunosDisponiveis = [
