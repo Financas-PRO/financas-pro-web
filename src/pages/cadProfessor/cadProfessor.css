@@ -24,4 +24,5 @@ img{
 .bi-person-plus-fill::before {
     content: "\f4dc";
     color: #12304A !important;
+    margin-right: 6px;
 }

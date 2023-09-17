@@ -36,3 +36,17 @@
     color: #000;
     margin-left: 5px;
 }
+
+.bi-diagram-2::before {
+    content: "\f2ec";
+    margin-right: 5px;
+    font-size: larger;
+    color: #000;
+}
+
+.bi-people-fill::before {
+    content: "\f4cf";
+    color: #000;
+    margin-right: 5px;
+}
+

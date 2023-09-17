@@ -12,10 +12,10 @@ export default function Simulador(props) {
 
         <div className="col col-md-3 mb-3">
             <div className="card-simuladores">
-                <div className="titulo-simuladores">{props.titulo}</div>
+                <div className="titulo-simuladores"><i className="bi bi-diagram-2"></i> {props.titulo}</div>
                 <div className="card-conteudo mt-3">
                     <span className="etapa">{props.etapa}</span>
-                    <span className="nomes">{props.nomes}</span>
+                    <span className="nomes"><i className="bi bi-people-fill"></i>{props.nomes}</span>
                 </div>
                 <Link className="link">
                     Clique aqui para retornar <i class="bi bi-arrow-right"></i>
