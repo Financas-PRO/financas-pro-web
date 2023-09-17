@@ -4,39 +4,6 @@
     padding: 30px;
 }
 
-.titulo-simuladores{
-    font-family: Poppins-bold;
-    color: #FFF;
-    background-color: #EE7F01;
-    display: flex;
-    justify-content: center;
-    border-radius: 5px;
-}
-
-.card-simuladores{
-    background-color: #FFF;
-    border-radius: 14px;
-}
-
-.etapa{
-    font-size: 0.60rem;
-    color: #000;
-}
-
-.nomes{
-    color: #000;
-    background-color: #AEACAC;
-    border-radius: 6px;
-    padding: 4px;
-}
-
-.link{
-    font-size: 0.75rem;
-    color: #000 !important;
-    display: flex;
-    justify-content: center;
-}
-
 .cadButton{
     display: flex;
     justify-content: end;
@@ -46,6 +13,7 @@
     width: 28%;
     font-family: Poppins;
     font-size: 1rem;
+    text-align: center;
     border-radius: 50px;
     padding: 5px;
     background-color: #EE7F01;

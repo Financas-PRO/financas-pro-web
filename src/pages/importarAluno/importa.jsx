@@ -111,7 +111,7 @@ export default function Importa() {
           <Header />
         </div>
 
-        <div className="container mt-4 col-md-8">
+        <div className="container mt-4 col-md-8 col-12">
 
           <Title
             icon="bi-clipboard2"

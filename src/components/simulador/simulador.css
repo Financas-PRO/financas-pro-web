@@ -1,0 +1,38 @@
+.titulo-simuladores{
+    font-family: Poppins-bold;
+    color: #FFF;
+    background-color: #EE7F01;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.card-simuladores{
+    background-color: #FFF;
+    border-radius: 14px;
+}
+
+.etapa{
+    font-size: 0.60rem;
+    color: #000;
+}
+
+.nomes{
+    color: #000;
+    background-color: #AEACAC;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.link{
+    font-size: 0.75rem;
+    color: #000 !important;
+    display: flex;
+    justify-content: center;
+}
+
+.bi-arrow-right::before {
+    content: "\f138";
+    color: #000;
+    margin-left: 5px;
+}

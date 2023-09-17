@@ -31,7 +31,7 @@ function App() {
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
             <Route path="/simuladores" element={<Simuladores />} />
-            <Route path="/simulador/cadastrar" element={<CadastrarSimulador />} />
+            <Route path="/simulador/cadastrar/:id/" element={<CadastrarSimulador />} />
             <Route path="/importa/:id/" element={<Importa />} />
             <Route path="/empresa" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />

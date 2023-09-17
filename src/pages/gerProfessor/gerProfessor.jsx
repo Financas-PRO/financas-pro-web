@@ -151,7 +151,7 @@ export default function GerProfessor() {
           <Header />
         </div>
 
-        <div className="container">
+        <div className="container mt-4 col-md-8 col-12">
         <ToastContainer className="toast-top-right" />
           <Title
             icon="bi-book-fill"
