@@ -15,28 +15,37 @@ export default function CadSimulador() {
     let { id } = useParams();
     let navigate = useNavigate();
 
-    const[simulador, setSimulador] = useState([]);
-    
+    const [descricao, setDescricao] = useState("");
+    const [alunos, setAlunos] = useState([]);
 
     useEffect(() => {
-        console.log(setSimulador);
         api.get(`relacaoTurma/${id}`).then((res) => {
-            setSimulador(res.data.data);
+            setAlunos(res.data.data);
         });
-    },[]);
+    }, [id]);
 
     async function handleSubmit(e) {
+
+        //const criado para amarzenar alunos selecionados
+        const selectedAlunos = alunos.filter((aluno) => aluno.checked);
+        //const criado para amarzenar id dos alunos
+        const alunoIds = selectedAlunos.map((aluno) => aluno.aluno.id);
+
         e.preventDefault();
     
         try {
+            const requestBody = {
+                descricao: descricao,
+                alunos: alunoIds
+            };
           api
-            .post(`grupo/${id}`, simulador)
+            .post(`grupo/${id}`, requestBody)
             .then(async (res) => {
               if (res.status) {
-                toast.success("Cadastro realizado com sucesso");
+                toast.success("Grupo criado com sucesso");
     
                 setTimeout(() => {
-                  return navigate("/simulador", { replace: true });
+                  return navigate("/simuladores", { replace: true });
                 }, 4000);
               }
             })
@@ -50,7 +59,7 @@ export default function CadSimulador() {
                 erros += resposta[index] + "\n";
     
               });
-              toast.error(`Erro ao cadastrar!\n ${erros}`, {
+              toast.error(`Erro ao criar Grupo!\n ${erros}`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -64,57 +73,31 @@ export default function CadSimulador() {
             });
     
         } catch (err) {
-          console.log(simulador);
+          console.log(descricao);
         }
       }
 
-    function handleChange(e) {
-        const nome = e.target.name;
-        const valor = e.target.value.trim();
-        setSimulador({ ...simulador, [nome]: valor });
-    
-        console.log(simulador);
+      function handleChange(e) {
+        const valor = e.target.value;
+        setDescricao(valor);
+    }
+
+    // Função checkbox selecionado/não selecionado
+    function handleCheckboxChange(alunoId) {
+        const updatedAlunos = alunos.map((aluno) => {
+            if (aluno.id === alunoId) {
+                return { ...aluno, checked: !aluno.checked };
+            }
+            return aluno;
+        });
+
+        setAlunos(updatedAlunos);
+        console.log("Alunos selecionado", updatedAlunos)
     }
 
 
-    
-
-//   importacao = simulador.map((item, index) => {
-//     return (
-//       <tr key={index}>
-//         <td>
-//           <strong>{item.id}</strong>
-//         </td>
-//         <td>{item.aluno.nome}</td>
-//         <td>{item.aluno.ra}</td>
-//         <td>{item.aluno.termo}</td>
-//         <td>{item.aluno.user.email}</td>
-//         <td>{item.aluno.curso.curso}</td>
-//         <td>{item.aluno.id_disciplina}</td>
-//       </tr>
-//     )
-
-
-//   });
-
-
-    // const alunosDisponiveis = [
-    //     { id: 1, nome: "Leonardo Mariano" },
-    //     { id: 2, nome: "João Pontes" },
-    //     { id: 3, nome: "João Garcia" },
-    //     { id: 4, nome: "Felipe Silveira" },
-    //     { id: 5, nome: "Gabriel Lanza" },
-    //     { id: 6, nome: "Lucas Gere" },
-    //     { id: 7, nome: "Leonardo Mariano" },
-    //     { id: 8, nome: "João Pontes" },
-    //     { id: 9, nome: "João Garcia" },
-    //     { id: 10, nome: "Felipe Silveira" },
-    //     { id: 11, nome: "Gabriel Lanza" },
-    //     { id: 12, nome: "Lucas Gere" },
-    //     // ... outros alunos
-    // ];
-
     return (
+
         <div className="row-page">
             <div className="col col-md-2">
                 <Header />
@@ -134,33 +117,31 @@ export default function CadSimulador() {
                             <div className="col col-12">
                                 <label className="mb-2">Titulo da Simulação</label>
                                 <input
+                                    name="descricao"
                                     type="text"
                                     placeholder="Insira aqui o titulo da simulação"
                                     className="form-control"
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="col col-12">
                                 <label className="mb-2">Participantes: </label>
-                                <div>
-                                    <label ></label>
-                                </div>
+
                                 <div className="alunos-checkboxes d-flex">
-                                    {simulador.map(item => (
-                                        <div key={item.id} className="form-check">
+                                    {alunos.map((aluno) => (
+                                        <div key={aluno.id} className="form-check">
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
-                                                // id={`simulador-${item.id}`}
-                                                value={simulador.id}
-                                                onChange={handleChange}
-                                                
+                                                value={aluno.id}
+                                                checked={aluno.checked || false}
+                                                onChange={() => handleCheckboxChange(aluno.id)}
                                             />
-                                            <label className="form-check-label" htmlFor={`item-${item.id}`}>
-                                                {item.aluno.nome}
+                                            <label className="form-check-label" htmlFor={`item-${aluno.id}`}>
+                                                {aluno.aluno.nome}
                                             </label>
                                         </div>
                                     ))}
-
                                 </div>
                             </div>
                         </div>
