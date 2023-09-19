@@ -1,0 +1,100 @@
+.imagemFundo{
+    width: 66%;
+    height: 100vh;
+    position: relative;
+    background-image: url('../../assets/image/image.png');
+    background-size: cover;
+}
+
+.login{
+    width: 34%;
+    background-color: #12304A;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    align-items: center;
+}
+
+.aguia{
+    height: 25%;
+}
+
+h2{
+    font-family: Poppins;
+    font-weight: 700;
+    color: #FFF;
+}
+
+span{
+    font-family: Poppins;
+    font-size: 0.8rem;
+    color: #FFF;
+}
+
+.username{
+    width: 55%;
+}
+
+.inputControl{
+    display: block;
+    width: 100%;
+    padding: 0.4rem 0.1rem;
+    font-family: Poppins;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.9;
+    color: #12304a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #12304a;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.382rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-warning{
+    font-family: Poppins;
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 50px;
+    color: #FFF;
+    background-color: #EE7F01;
+    border-color: #EE7F01;
+}
+
+
+#usuario {
+    text-align: left;
+    background: url('../../assets/image/Icon/user.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 1.6em;
+    padding-left: 1.3em;
+    background-color: #fff;
+}
+
+#senha{
+    text-align: left;
+    background: url('../../assets/image/Icon/lock.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 1.6em;
+    padding-left: 1.3em;
+    background-color: #fff;
+}
+
+@media (max-width: 600px) {
+    .imagemFundo {
+        height: 0vh;
+    }
+    
+    .login {
+        width: 100%;
+    }
+
+    .col {
+        flex: none;
+    }
+}

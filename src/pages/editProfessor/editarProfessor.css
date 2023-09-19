@@ -1,0 +1,41 @@
+.imgText{
+    display: flex;
+    font-size: 3rem;
+    font-style: italic;
+    color: #fff;
+}
+
+img{
+    margin-left: 6px;
+    position: relative;
+    bottom: 3px;
+}
+
+.img{
+    margin-right: 1rem;
+}
+
+
+.square{
+    padding: 35px;
+}
+
+
+.hide{
+    display: none;
+}
+
+
+.bi::before, [class^="bi-"]::before, [class*=" bi-"]::before {
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -0.125em;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

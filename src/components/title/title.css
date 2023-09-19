@@ -1,0 +1,5 @@
+
+.bi-bezier2::before {
+    content: "\f18c";
+    color: #12304A !important;
+}

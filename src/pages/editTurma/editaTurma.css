@@ -1,0 +1,27 @@
+img{
+    margin-left: 6px;
+    position: relative;
+    bottom: 3px;
+}
+
+.img{
+    margin-right: 1rem;
+}
+
+
+.square{
+    padding: 35px;
+}
+
+.formTurma{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bi-clipboard2::before {
+    content: "\f733";
+    color: #12304A !important;
+}
+
