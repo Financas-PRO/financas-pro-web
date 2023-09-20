@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+import React from "react";
+import Img from '../../assets/image/toledo.png';
+import './header.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+export default function header(){
+    return(
+        <>
+            <nav>
+                <img src={Img} alt="" />
+                <h2>Finanças PRO</h2>
+            </nav>
+        </>
+    )
+}
+=======
 import React from 'react';
 import "./header.css";
 import menutoledo from "../../assets/image/menu.png";
@@ -64,3 +81,4 @@ const Header = () => {
 };
 
 export default Header   ;
+>>>>>>> front
