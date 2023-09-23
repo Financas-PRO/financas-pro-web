@@ -73,11 +73,11 @@ export default function CadTurma() {
     <>
       <div className="row-page">
 
-        <div className="col col-md-2">
+        <div className="col col-md-2 col-2">
           <Header />
         </div>
 
-        <div className="container mt-4 col-md-8">
+        <div className="container mt-4 col-md-8 col-9">
 
           <Title
             icon="bi-clipboard2"

@@ -173,4 +173,33 @@ button{
   border-color: #EE7F01;
 }
 
+@media (max-width: 600px) {
+  .btn-salvar{
+    
+    font-size: 55%;
+    padding: 3px;
+  }
+  .btn-cancelar{
+   
+    font-size: 55%;
+    margin-right: 28px;
+    padding: 3px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+  .btn-salvar{
+    
+    font-size: 55%;
+    padding: 3px;
+  }
+  .btn-cancelar{
+   
+    font-size: 55%;
+    margin-right: 40px;
+    padding: 3px;
+  }
+}
+
+
 

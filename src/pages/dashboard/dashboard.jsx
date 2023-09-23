@@ -6,9 +6,7 @@ import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import "react-toastify/dist/ReactToastify.css";
-import vesti1 from '../../assets/image/carrosel/vesti1.png';
 import vesti2 from '../../assets/image/carrosel/vesti2.png';
-import vesti3 from '../../assets/image/carrosel/vesti3.png';
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 
@@ -18,11 +16,11 @@ export default function Dashboard() {
 
         <div className="row-page">
             
-            <div className="col col-md-2">
+            <div className="col col-md-2 col-2" id="sidebar" >
                 <Header />
             </div>
 
-            <div className="container mt-4 col-md-8">
+            <div className="container mt-4 col-md-8 col-9">
 
                 <Title
                     icon="bi-house-gear-fill"
@@ -42,7 +40,7 @@ export default function Dashboard() {
                 <div className="row mt-5">
                     <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -55,7 +53,7 @@ export default function Dashboard() {
 
                     <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -68,7 +66,7 @@ export default function Dashboard() {
 
                     <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -81,7 +79,7 @@ export default function Dashboard() {
 
                     <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -92,9 +90,9 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="col col-md-3 mt-5">
+                    <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -105,9 +103,9 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="col col-md-3 mt-5">
+                    <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -118,9 +116,9 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="col col-md-3 mt-5">
+                    <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>
@@ -131,9 +129,9 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="col col-md-3 mt-5">
+                    <div className="col col-md-3">
                         <div className="card-video">
-                            <div className="teste"></div>
+                            <div className="card-img"></div>
                             <div className="card-conteudo mt-3">
                                 <span className="conteudo-titulo">Assita o video</span>
                                 <span>Como verificar métricas do sistema</span>

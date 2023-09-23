@@ -1,46 +1,80 @@
 @font-face {
-    font-family: Poppins;
-    src: url('../public/Poppins/Poppins-Regular.ttf');
-}
-  
-@font-face {
-    font-family: Poppins-bold;
-    src: url('../public/Poppins/Poppins-Bold.ttf');
+  font-family: Poppins;
+  src: url("../public/Poppins/Poppins-Regular.ttf");
 }
 
+@font-face {
+  font-family: Poppins-bold;
+  src: url("../public/Poppins/Poppins-Bold.ttf");
+}
 
 .bi-house-gear-fill::before {
-    content: "\f890";
-    color: #12304A;
+  content: "\f890";
+  color: #12304a;
 }
 
-.card-video{
-    height: auto;
-    background-color: #12304A;
-    color: #fff;
-    border-radius: 5px;
+#sidebar {
+    z-index: 1; 
 }
 
-.card-conteudo{
-    display: flex;
-    flex-direction: column;
-    font-size: 0.90rem;
-    padding: 8px;
+
+.card-video {
+  height: auto;
+  background-color: #12304a;
+  color: #fff;
+  border-radius: 5px;
+  margin: 10px;
 }
 
-.teste{
-    background-image: url('../../assets/image/vesti.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100px;
+.card-conteudo {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  padding: 8px;
 }
 
-.conteudo-titulo{
-    font-family: Poppins-bold !important;
-    font-size: 0.90rem;
+.card-img {
+  background-image: url("../../assets/image/vesti.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100px;
 }
 
-.button-assita{
-    display: flex;
-    justify-content: center;
+.conteudo-titulo {
+  font-family: Poppins-bold !important;
+  font-size: 0.9rem;
 }
+
+.button-assita {
+  display: flex;
+  justify-content: center;
+}
+
+
+@media (max-width: 600px) {
+    .col-md-3 {
+        width: 100%; 
+        margin-bottom: 10px; 
+    }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+    .col-md-3 {
+        width: 50%; 
+        margin-bottom: 10px; 
+    }
+}
+
+
+@media (min-width: 961px) {
+    .col-md-3 {
+        width: 25%; 
+        
+        margin-bottom: 10px; 
+    }
+
+    .col-md-3:nth-child(3n) {
+        margin-right: 0; 
+    }
+}
+
