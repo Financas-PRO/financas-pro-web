@@ -76,7 +76,7 @@ export default function Login(){
                 <div className="col col-md-8 imagemFundo"></div>
                 <div className="col col-md-4 text-end login">
                     
-                    <img className="aguia mt-4" src={toledo} alt="" />
+                    <img className="aguia" src={toledo} alt="" />
                     <h2>Finanças PRO</h2>
                     
                     <span>Para ter acesso ao Finanças Pro, informe</span>
