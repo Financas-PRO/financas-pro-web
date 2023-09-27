@@ -12,6 +12,9 @@ img{
     padding: 35px;
 }
 
+#sidebar {
+    z-index: 1; 
+}
 .formSimulador{
     display: flex;
     flex-direction: column;
@@ -34,3 +37,4 @@ img{
     content: "\f733";
     color: #12304A !important;
 }
+
