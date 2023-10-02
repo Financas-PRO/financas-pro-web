@@ -16,10 +16,10 @@ export default function Title(props) {
                 <ToastContainer className="toast-top-right" />
 
                 <div className="title">
-                    <div className="col col-md-1 col-12">
+                    <div className="col col-md-1 col-12 icon-margin">
                         <i className={`bi ${props.icon} icon-titulo`}></i>
                     </div>
-                    <div className="col col-md-5">
+                    <div className="col col-md-5 w-response">
                         <h2 className="margin-cadastrar-titulo titulo">{props.titulo}</h2>
                         <span className="subtitulo">{props.subTitulo}</span>
                     </div>
