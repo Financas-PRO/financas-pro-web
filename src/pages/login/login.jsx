@@ -26,7 +26,7 @@ export default function Login(){
             toast.success("Login realizado com sucesso");
 
             setTimeout(() => {
-              return navigate("/turma/gerenciar", { replace: true });
+              return navigate("/turmas", { replace: true });
             }, 4000);
           }
         })
