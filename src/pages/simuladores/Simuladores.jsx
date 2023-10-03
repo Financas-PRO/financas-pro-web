@@ -1,6 +1,6 @@
 // Desenvolvedores: João Pontes e Leonardo Mariano
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Simuladores.css";
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,6 +17,21 @@ import { useParams } from "react-router-dom";
 export default function Simuladores() {
 
     let { id } = useParams();
+
+    const [grupos, setGrupos] = useState([]);
+
+    useEffect(() => {
+        api.get(`grupo/${id}`)
+        .then(res => {
+            if (res.status == 200){
+                console.log(res.data);
+                setGrupos(res.data.data);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }, [id])
 
     return (
         <div className="row-page">
@@ -44,46 +59,26 @@ export default function Simuladores() {
 
                 <div className="row mt-5 cardFundo">
 
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
+                    {
+                        grupos.map(grupo => {
+
+                            let alunos = [];
+
+                            grupo.alunos.forEach(aluno => {
+                                alunos.push(aluno.nome);
+                            });
+
+                            return (
+                                <Simulador
+                                    titulo={grupo.descricao}
+                                    etapa="Etapa: Gráficos"
+                                    nomes={alunos.join(", ")}
+                                />
+
+                            )
+                        })
+                    }
+                    
                 </div>
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
