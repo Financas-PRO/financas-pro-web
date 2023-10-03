@@ -11,9 +11,12 @@ import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import Simulador from "../../components/simulador/simulador";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 export default function Simuladores() {
+
+    let { id } = useParams();
 
     return (
         <div className="row-page">
@@ -32,7 +35,7 @@ export default function Simuladores() {
 
 
                 <div className="cadButton">
-                    <Link to={"/turmas"} className="btn-criarSi">
+                    <Link to={`/simulador02/cadastrar/${id}`} className="btn-criarSi">
                     <i class="bi bi-bookmark-plus-fill"></i>
                         Criar nova simulação
                     </Link>

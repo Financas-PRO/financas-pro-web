@@ -6,20 +6,24 @@ import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../../services/api";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import Turma from "../../components/turmas/turma";
 import { useEffect } from "react";
 
 export default function Turmas() {
 
-    const[turmas, setTurmas] = useState('');
+    const [turmas, setTurmas] = useState([]);
 
     useEffect(() => {
-        api.get(`turma`).then((res) => {
+        api.get(`turma`)
+        .then((res) => {
           //console.log(res);
           console.log(res.data.data);
           setTurmas(res.data.data);
+        })
+        .catch((err) => {
+            console.log(err);
         });
       }, []);
       
@@ -43,8 +47,7 @@ export default function Turmas() {
                 <div className="row mt-5 cardFundoTurma">
                     {
                         turmas.map((turma) => {
-                            <Turma turma={turma.descricao} />
-
+                           return ( <Turma turma={turma.descricao} id={turma.id}/> );
                         })
                     }
                     
@@ -53,6 +56,6 @@ export default function Turmas() {
             </div>
         </div>
 
-    )
+    );
 
 }

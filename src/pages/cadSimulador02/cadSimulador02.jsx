@@ -144,7 +144,7 @@ export default function CadSimulador02() {
           </div>
           <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
             <ButtonSalvar nome="Salvar" />
-            <ButtonCancelar link="simulador" nome="Cancelar" />
+            <ButtonCancelar link={`simuladores/${id}`} nome="Cancelar" />
           </div>
         </form>
       </div>
