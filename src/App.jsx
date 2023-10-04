@@ -1,5 +1,35 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+<<<<<<< HEAD
+import './App.css'
+import CadProfessor from "./pages/cadProfessor/cadProfessor.jsx";
+import CadTurma from './pages/cadTurma/cadTurma.jsx';
+
+
+
+function App() {
+
+    return (
+      <>
+  
+        <BrowserRouter>
+  
+          <Routes>
+  
+            <Route path="cadprofessor" element={<CadProfessor/>}/>
+            <Route path="cadturma" element={<CadTurma/>}/>
+  
+          </Routes>
+  
+        </BrowserRouter>
+  
+      </>
+  
+    );
+  }
+  
+  export default App
+=======
 import "./App.css";
 import CadastrarProfessor from "./pages/cadProfessor/cadProfessor.jsx";
 import CadastrarTurma from "./pages/cadTurma/cadTurma.jsx";
@@ -50,3 +80,4 @@ function App() {
 }
 
 export default App;
+>>>>>>> front
