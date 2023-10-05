@@ -1,21 +1,4 @@
-<<<<<<< HEAD
-import React from "react";
-import Img from '../../assets/image/toledo.png';
-import './header.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-export default function header(){
-    return(
-        <>
-            <nav>
-                <img src={Img} alt="" />
-                <h2>Finanças PRO</h2>
-            </nav>
-        </>
-    )
-}
-=======
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./header.css";
 import menutoledo from "../../assets/image/menu.png";
 import {
@@ -28,57 +11,109 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 
+const HeaderCoord = () => {
+  return (
+    <>
+      <NavLink to="/">
+        <CDBSidebarMenuItem icon="gauge-high">Dashboard</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink to="/turma/gerenciar">
+        <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink to="/professor/gerenciar">
+        <CDBSidebarMenuItem icon="table">Gerenciamento Docente</CDBSidebarMenuItem>
+      </NavLink>
+    </>
+
+  );
+}
+
+const HeaderAluno = () => {
+
+  return (
+    <>
+      <NavLink to="/">
+        <CDBSidebarMenuItem icon="home">Dashboard</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink to="/turmas">
+        <CDBSidebarMenuItem icon="shapes">Minhas Turmas</CDBSidebarMenuItem>
+      </NavLink>
+    </>
+
+  );
+
+}
+
+const HeaderDocente = () => {
+
+  return (
+    <>
+      <NavLink to="/">
+        <CDBSidebarMenuItem icon="gauge-high">Dashboard</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink to="/turmas">
+        <CDBSidebarMenuItem icon="shapes">Minhas Turmas</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink to="/turma/gerenciar">
+        <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
+      </NavLink>
+    </>
+
+  );
+
+}
 
 const Header = () => {
+
+  const [header, setHeader] = useState();
+
+  useEffect(() => {
+    switch(localStorage.getItem("papel")){
+
+      case "Admin":
+        setHeader(<HeaderDocente/>);
+      break;
+
+      case "Docente":
+        setHeader(<HeaderDocente/>);
+      break;
+
+      case "Coordenador":
+        setHeader(<HeaderCoord/>);
+      break;
+
+      case "Aluno":
+        setHeader(<HeaderAluno/>);
+      break;
+    }
+  }, [])
+
   return (
     // <div>
-    <div style={{ display: 'flex', height: '100vh', position: 'fixed', overflow: 'scroll initial'}}> 
+    <div style={{ display: 'flex', height: '100vh', position: 'fixed', overflow: 'scroll initial' }}>
       <CDBSidebar textColor="#fff" backgroundColor="#12304A">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            <img  className= "aguia-menu"src={menutoledo} alt='aguia'/>
+            <img className="aguia-menu" src={menutoledo} alt='aguia' />
           </a>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu >
-            <NavLink to="/">
-              <CDBSidebarMenuItem icon="home">Inicial</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink to="/professor/cadastrar">
-              <CDBSidebarMenuItem icon="table">Cadastro Professor</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink to="/turma/cadastrar">
-              <CDBSidebarMenuItem icon="table">Cadastro Turma</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink to="/turma/gerenciar">
-              <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink to="/professor/gerenciar">
-              <CDBSidebarMenuItem icon="table">Gerenciamento Professor</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink to="/simulador/cadastrar">
-              <CDBSidebarMenuItem icon="table">Cadastro Simulador</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink to="/simulador"> 
-              <CDBSidebarMenuItem icon="table">Simuladores</CDBSidebarMenuItem>
-            </NavLink>
+          <CDBSidebarMenu>
+            {header}
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              padding: '20px 5px',
-            }}
-          >
-            Finanças PRO
-          </div>
+        <CDBSidebarFooter>
+          <CDBSidebarMenuItem icon="user-slash">Logout</CDBSidebarMenuItem>
         </CDBSidebarFooter>
+
       </CDBSidebar>
     </div>
   );
 };
 
-export default Header   ;
->>>>>>> front
+
+export default Header;
+
+

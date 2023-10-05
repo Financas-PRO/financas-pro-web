@@ -145,11 +145,11 @@ export default function GerTurma() {
     <>
       <div className="row-page">
 
-        <div className="col col-md-2">
+        <div className="col col-md-2 col-2">
           <Header />
         </div>
 
-        <div className="container mt-4 col-md-8 col-12">
+        <div className="container mt-4 col-md-8 col-8 ">
           <ToastContainer className="toast-top-right" />
 
           <Title

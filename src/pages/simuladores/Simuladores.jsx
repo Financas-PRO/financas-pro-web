@@ -1,6 +1,6 @@
 // Desenvolvedores: João Pontes e Leonardo Mariano
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Simuladores.css";
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,9 +11,27 @@ import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import Simulador from "../../components/simulador/simulador";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 export default function Simuladores() {
+
+    let { id } = useParams();
+
+    const [grupos, setGrupos] = useState([]);
+
+    useEffect(() => {
+        api.get(`grupo/${id}`)
+        .then(res => {
+            if (res.status == 200){
+                console.log(res.data);
+                setGrupos(res.data.data);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }, [id])
 
     return (
         <div className="row-page">
@@ -32,7 +50,7 @@ export default function Simuladores() {
 
 
                 <div className="cadButton">
-                    <Link to={"/turmas"} className="btn-criarSi">
+                    <Link to={`/simulador02/cadastrar/${id}`} className="btn-criarSi">
                     <i class="bi bi-bookmark-plus-fill"></i>
                         Criar nova simulação
                     </Link>
@@ -41,46 +59,26 @@ export default function Simuladores() {
 
                 <div className="row mt-5 cardFundo">
 
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
-                    <Simulador
-                        titulo="Aula XX - IBM"
-                        etapa="Etapa: Gráficos"
-                        nomes="João, Pedro, Lara"
-                    />
+                    {
+                        grupos.map(grupo => {
+
+                            let alunos = [];
+
+                            grupo.alunos.forEach(aluno => {
+                                alunos.push(aluno.nome);
+                            });
+
+                            return (
+                                <Simulador
+                                    titulo={grupo.descricao}
+                                    etapa="Etapa: Gráficos"
+                                    nomes={alunos.join(", ")}
+                                />
+
+                            )
+                        })
+                    }
+                    
                 </div>
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">

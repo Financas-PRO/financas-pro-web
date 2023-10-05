@@ -7,8 +7,6 @@ import toledo from '../../assets/image/toledo.png'
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
-
-
 export default function Login(){
 
   const [login, setLogin] = useState({});
@@ -24,9 +22,10 @@ export default function Login(){
         .then(async (res) => {
           if (res.status) {
             toast.success("Login realizado com sucesso");
+            localStorage.setItem('papel', res.data.scope);
 
             setTimeout(() => {
-              return navigate("/turma/gerenciar", { replace: true });
+              return navigate("/", { replace: true });
             }, 4000);
           }
         })
@@ -76,7 +75,7 @@ export default function Login(){
                 <div className="col col-md-8 imagemFundo"></div>
                 <div className="col col-md-4 text-end login">
                     
-                    <img className="aguia mt-4" src={toledo} alt="" />
+                    <img className="aguia" src={toledo} alt="" />
                     <h2>Finanças PRO</h2>
                     
                     <span>Para ter acesso ao Finanças Pro, informe</span>
@@ -103,9 +102,6 @@ export default function Login(){
 
                         <button className="btn btn-warning mt-4">Entrar</button>
                     </form>
-                    
-
-                    
 
                     <span className="mt-5">Toledo Prudente</span>
                     <span>Todos os direitos reservados</span>
