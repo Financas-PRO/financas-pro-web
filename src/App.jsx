@@ -16,6 +16,7 @@ import Importa from "./pages/importarAluno/importa";
 import Empresa from "./pages/empresa/empresa";
 import Turmas from "./pages/turmas/turmas";
 import CadSimulador02 from "./pages/cadSimulador02/cadSimulador02";
+import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
             <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
+
+            <Route path="/demonstrativo" element={<Demonstrativo />} />
 
         </Routes>
       </BrowserRouter>
