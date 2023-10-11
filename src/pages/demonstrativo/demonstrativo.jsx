@@ -30,9 +30,9 @@ export default function Demostrativo() {
 
 
 
-  {
+ 
     /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
-  }
+  
   useEffect(() => {
     axios.get(`https://brapi.dev/api/quote/MGLU3?token=8Pusecs13FPwWAARGkHHyi`).then((res) => {
       //console.log(res);
@@ -42,9 +42,10 @@ export default function Demostrativo() {
 
     });
   }, []);
-  {
+ 
     /*-----------------------------------------------------------------------------------------------*/
-  }
+
+  
 
   const acaoData = {
     Empresa: acao.longName,
@@ -60,10 +61,12 @@ export default function Demostrativo() {
     Fechamento_anterior: acao.regularMarketPreviousClose,
     Abertura_mercado: acao.regularMarketOpen,
     Lucro: acao.earningsPerShare,
-    // Adicione outras propriedades conforme necessário
+    
   };
  
   const hotTableData = [acaoData];
+
+  
 
 
   return (
@@ -137,8 +140,6 @@ export default function Demostrativo() {
             </div>
           </div>
         </div>
-
-          
 
         <HotTable
           data={hotTableData}
