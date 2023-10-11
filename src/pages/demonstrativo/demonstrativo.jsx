@@ -15,13 +15,13 @@ import axios from "axios";
 registerAllModules();
 
 // -------------------- TESTE-----------------------------
-const data = new Array(200) // number of rows
-  .fill()
-  .map((_, row) =>
-    new Array(20) // number of columns
-      .fill()
-      .map((_, column) => `${row}, ${column}`)
-  );
+// const data = new Array(200) // number of rows
+//   .fill()
+//   .map((_, row) =>
+//     new Array(13) // number of columns
+//       .fill()
+//       .map((_, column) => `${row}, ${column}`)
+//   );
 // -------------------- TESTE-----------------------------
 
 export default function Demostrativo() {
@@ -45,7 +45,25 @@ export default function Demostrativo() {
   {
     /*-----------------------------------------------------------------------------------------------*/
   }
+
+  const acaoData = {
+    Empresa: acao.longName,
+    Data: acao.regularMarketTime,
+    Abreviacao: acao.shortName,
+    Preco_de_mercado_regular: acao.regularMarketPrice,
+    Variacao_mercado_regular: acao.regularMarketChange,
+    Alto_baixo_mercado_regular: acao.regularMarketDayRange,
+    Intervalo_mercado_regular: acao.regularMarketDayRange,
+    Variacao_mercado_regular_percent: acao.regularMarketChangePercent,
+    Valor_mercado: acao.marketCap,
+    Volume_mercado_regular: acao.regularMarketVolume,
+    Fechamento_anterior: acao.regularMarketPreviousClose,
+    Abertura_mercado: acao.regularMarketOpen,
+    Lucro: acao.earningsPerShare,
+    // Adicione outras propriedades conforme necessário
+  };
  
+  const hotTableData = [acaoData];
 
 
   return (
@@ -120,16 +138,21 @@ export default function Demostrativo() {
           </div>
         </div>
 
+          
+
         <HotTable
-          data={data}
+          data={hotTableData}
           width="100%"
-          height={480}
-          rowHeaders={true}
-          colHeaders={true}
+          height={440}
+          rowHeaders={false}
+          colHeaders={['Empresa', 'Data', 'Abreviação ', 'Preço de Mercado Regular', 'Variação de Mercado Regular',
+            'Alto e baixo no dia mercado regular', 'Intervalo mercado regular', 'Variação mercado regular', 'Valor mercado',
+              'Volume de mercado regular', 'Fechamento anterior', 'Abertura do mercado', 'Lucro']}
           rowHeights={40}
           colHeights={40}
           colWidths={100}
-          manualColumnResize={true}  
+          manualColumnResize={true}
+          fixedColumnsStart={2}
           className="custom-hot-table"
           licenseKey="non-commercial-and-evaluation"
       
