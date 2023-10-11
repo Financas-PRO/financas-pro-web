@@ -36,7 +36,7 @@ export default function Demostrativo() {
       const data = hotInstance.getData();
       const columnHeaders = hotInstance.getColHeader();
       const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet("Planilha");
+      const worksheet = workbook.addWorksheet("Demonstrativo Financeiro");
 
       // Adicione os nomes das colunas à primeira linha
       worksheet.addRow(columnHeaders);
@@ -49,7 +49,7 @@ export default function Demostrativo() {
       const randomDate = `${currentDate.getFullYear()}${
         currentDate.getMonth() + 1
       }${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
-      const fileName = `demonstrativo_${randomDate}.xlsx`;
+      const fileName = `Demonstrativo_${randomDate}.xlsx`;
       // Crie um Blob a partir do arquivo Excel
       workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
