@@ -239,7 +239,7 @@ export default function Demostrativo() {
           ]}
           rowHeights={40}
           colHeights={40}
-          colWidths={100}
+          colWidths={150}
           manualColumnResize={true}
           fixedColumnsStart={2}
           className="custom-hot-table"
