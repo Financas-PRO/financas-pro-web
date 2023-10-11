@@ -45,3 +45,16 @@ img{
   .handsontable span{
     color: white !important;
   }
+
+  .handsontable span.colHeader{
+    font-size: 15px;
+  }
+
+  .buttonExcel{
+    width: 100px;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    float: right;
+    margin-right: 3%;
+  }

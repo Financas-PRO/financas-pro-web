@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./demonstrativo.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "handsontable/dist/handsontable.full.min.css";
@@ -6,11 +6,12 @@ import api from "../../services/api";
 import Header from "../../components/navbar/header";
 import Title from "../../components/title/title";
 
-
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
 import axios from "axios";
 
+import ExcelJS from "exceljs"; // npm install exceljs
+import { saveAs } from "file-saver"; // npm install file-saver
 
 registerAllModules();
 
@@ -25,49 +26,100 @@ registerAllModules();
 // -------------------- TESTE-----------------------------
 
 export default function Demostrativo() {
-
   const [acao, setAcao] = useState([]);
+  const hotTableComponent = useRef([]);
 
+  /*-----------------------------------------------------------------------------------------------*/
+  const exportarExcel = () => {
+    if (hotTableComponent.current) {
+      const hotInstance = hotTableComponent.current.hotInstance;
+      const data = hotInstance.getData();
+      const columnHeaders = hotInstance.getColHeader();
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet("Planilha");
 
+      // Adicione os nomes das colunas à primeira linha
+      worksheet.addRow(columnHeaders);
+      // Adicione os dados à planilha
+      data.forEach((row) => {
+        worksheet.addRow(row);
+      });
+      // Gere um nome de arquivo com uma data aleatória
+      const currentDate = new Date();
+      const randomDate = `${currentDate.getFullYear()}${
+        currentDate.getMonth() + 1
+      }${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
+      const fileName = `demonstrativo_${randomDate}.xlsx`;
+      // Crie um Blob a partir do arquivo Excel
+      workbook.xlsx.writeBuffer().then((buffer) => {
+        const blob = new Blob([buffer], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        // Use a biblioteca 'file-saver' para salvar o blob com o nome gerado
+        saveAs(blob, fileName);
+      });
+    }
+  };
 
- 
-    /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
-  
+  /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
+
   useEffect(() => {
-    axios.get(`https://brapi.dev/api/quote/MGLU3?token=8Pusecs13FPwWAARGkHHyi`).then((res) => {
-      //console.log(res);
-      console.log(res.data.results[0]);
-      setAcao(res.data.results[0]);
-      
-
-    });
+    axios
+      .get(`https://brapi.dev/api/quote/MGLU3?token=8Pusecs13FPwWAARGkHHyi`)
+      .then((res) => {
+        //console.log(res);
+        console.log(res.data.results[0]);
+        setAcao(res.data.results[0]);
+      });
   }, []);
- 
-    /*-----------------------------------------------------------------------------------------------*/
 
-  
+  /*-----------------------------------------------------------------------------------------------*/
 
+  const formatarMoeda = (valor) => {
+    if (valor) {
+      return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    }
+    return "";
+  };
+
+  /*-----------------------------------------------------------------------------------------------*/
   const acaoData = {
     Empresa: acao.longName,
     Data: acao.regularMarketTime,
     Abreviacao: acao.shortName,
-    Preco_de_mercado_regular: acao.regularMarketPrice,
-    Variacao_mercado_regular: acao.regularMarketChange,
-    Alto_baixo_mercado_regular: acao.regularMarketDayRange,
-    Intervalo_mercado_regular: acao.regularMarketDayRange,
-    Variacao_mercado_regular_percent: acao.regularMarketChangePercent,
-    Valor_mercado: acao.marketCap,
-    Volume_mercado_regular: acao.regularMarketVolume,
-    Fechamento_anterior: acao.regularMarketPreviousClose,
-    Abertura_mercado: acao.regularMarketOpen,
-    Lucro: acao.earningsPerShare,
-    
+    MediaDosUltimos200Dias: formatarMoeda(acao.twoHundredDayAverage),
+    MudancaNaMediaDe200Dias: acao.twoHundredDayAverageChange,
+    MudancaPercentualNaMediaDe200Dias: acao.twoHundredDayAverageChangePercent,
+    CapitalizacaoDeMercado: formatarMoeda(acao.marketCap),
+    MudancaNoMercadoRegular: acao.regularMarketChange,
+    MudancaPercentualNoMercadoRegular: acao.regularMarketChangePercent,
+    PrecoDoMercadoRegular: formatarMoeda(acao.regularMarketPrice),
+    AltaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayHigh),
+    FaixaNoDiaDeNegociacaoRegular: acao.regularMarketDayRange,
+    BaixaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayLow),
+    VolumeNoMercadoRegular: formatarMoeda(acao.regularMarketVolume),
+    FechamentoAnteriorNoMercadoRegular: formatarMoeda(acao.regularMarketPreviousClose),
+    AberturaNoMercadoRegular: formatarMoeda(acao.regularMarketOpen),
+    VolumeMedioDiarioNosUltimos3Meses: formatarMoeda(acao.averageDailyVolume3Month),
+    VolumeMedioDiarioNosUltimos10Dias: formatarMoeda(acao.averageDailyVolume10Day),
+    MudancaNaBaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLowChange),
+    MudancaPercentualNaBaixaDe52Semanas: acao.fiftyTwoWeekLowChangePercent,
+    FaixaDe52Semanas: acao.fiftyTwoWeekRange,
+    MudancaNaAltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHighChange),
+    MudancaPercentualNaAltaDe52Semanas: acao.fiftyTwoWeekHighChangePercent,
+    BaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLow),
+    AltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHigh),
+    RelacaoPrecoLucro: formatarMoeda(acao.priceEarnings),
+    LucroPorAcao: formatarMoeda(acao.earningsPerShare),
+    AtualizadoEm: acao.updatedAt,
   };
- 
+
   const hotTableData = [acaoData];
 
-  
-
+  /*-----------------------------------------------------------------------------------------------*/
 
   return (
     <div className="row-page">
@@ -76,7 +128,7 @@ export default function Demostrativo() {
       </div>
 
       <div className="container mt-4 col-md-8 col-9">
-        <Title 
+        <Title
           icon="bi-bezier2"
           titulo="Demonstrativo Financeiro"
           subTitulo="Demonstrativo financeiro da empresa"
@@ -93,7 +145,7 @@ export default function Demostrativo() {
                 type="text"
                 name="nome"
                 className="form-control"
-                value={acao.longName || ''}
+                value={acao.longName || ""}
                 readOnly
               />
             </div>
@@ -103,28 +155,28 @@ export default function Demostrativo() {
                 type="text"
                 name="capitalizacao_mercado"
                 className="form-control"
-                value={acao.marketCap || ''}
+                value={formatarMoeda(acao.marketCap) || ""}
                 readOnly
               />
             </div>
-            
+
             <div className="col col-md-4 col-12 ">
               <label>Ultima atualização</label>
               <input
                 type="text"
                 name="data_cotacao"
                 className="form-control"
-                value={acao.regularMarketTime || ''}
+                value={acao.regularMarketTime || ""}
                 readOnly
               />
-              </div>
+            </div>
             <div className="col col-md-6 col-12 ">
               <label>Codigo</label>
               <input
                 type="text"
                 name="codigo"
                 className="form-control"
-                value={acao.symbol || ''}
+                value={acao.symbol || ""}
                 readOnly
               />
             </div>
@@ -134,21 +186,57 @@ export default function Demostrativo() {
                 type="text"
                 name="acao_atual"
                 className="form-control"
-                value={acao.regularMarketPrice || ''}
+                value={formatarMoeda(acao.regularMarketPrice) || ""}
                 readOnly
               />
             </div>
           </div>
+          <div className="float-right mb-2">
+            <button
+              className="btn btn-success buttonExcel"
+              onClick={exportarExcel}
+            >
+              Excel
+            </button>
+          </div>
         </div>
 
         <HotTable
+          ref={hotTableComponent}
           data={hotTableData}
           width="100%"
           height={440}
           rowHeaders={false}
-          colHeaders={['Empresa', 'Data', 'Abreviação ', 'Preço de Mercado Regular', 'Variação de Mercado Regular',
-            'Alto e baixo no dia mercado regular', 'Intervalo mercado regular', 'Variação mercado regular', 'Valor mercado',
-              'Volume de mercado regular', 'Fechamento anterior', 'Abertura do mercado', 'Lucro']}
+          colHeaders={[
+            "Empresa",
+            "Data",
+            "Abreviação",
+            "Média dos Últimos 200 Dias",
+            " Mudança na Média de 200 Dias",
+            "Mudança Percentual na Média de 200 Dias",
+            "Capitalização de Mercado",
+            "Mudança no Mercado Regular",
+            "Mudança Percentual no Mercado Regular",
+            "Preço do Mercado Regular",
+            "Alta no Dia de Negociação Regular",
+            "Faixa no Dia de Negociação Regular",
+            "Baixa no Dia de Negociação Regular",
+            "Volume no Mercado Regular",
+            "Fechamento Anterior no Mercado Regular",
+            "Abertura no Mercado Regular",
+            "Volume Médio Diário nos Últimos 3 Meses",
+            "Volume Médio Diário nos Últimos 10 Dias",
+            " Mudança na Baixa de 52 Semanas",
+            "Mudança Percentual na Baixa de 52 Semanas",
+            " Faixa de 52 Semanas",
+            " Mudança na Alta de 52 Semanas",
+            "Mudança Percentual na Alta de 52 Semanas",
+            "Baixa de 52 Semanas",
+            "Alta de 52 Semanas",
+            "Relação Preço/Lucro",
+            "Lucro por Ação",
+            " Atualizado em",
+          ]}
           rowHeights={40}
           colHeights={40}
           colWidths={100}
@@ -156,7 +244,6 @@ export default function Demostrativo() {
           fixedColumnsStart={2}
           className="custom-hot-table"
           licenseKey="non-commercial-and-evaluation"
-      
         />
       </div>
     </div>
