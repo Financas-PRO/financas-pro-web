@@ -15,7 +15,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Importa from "./pages/importarAluno/importa";
 import Empresa from "./pages/empresa/empresa";
 import Turmas from "./pages/turmas/turmas";
-import CadSimulador02 from "./pages/cadSimulador02/cadSimulador02";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
             <Route path="/empresa" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />
             <Route path="/simulador/cadastrar/:id/" element={<CadastrarSimulador />} />
-            <Route path="/simulador02/cadastrar/:id/" element={<CadSimulador02 />} />
           </Route>   
 
           <Route element={<ProtectedRoute route="scopeDoc"/>}>

@@ -1,22 +1,21 @@
 import React from "react";
+import './EmpresaCard.css';
 
-const EmpresaCard = (props) => {
+export default function EmpresaCard(props) {
     return (
-        <div className="col-md-6 col-12 row mb-3 align-items-center justify-content-center py-3 rounded bg-light    ">
-            <div className="col-2">
-                <img src={props.imgurl} className="img-fluid"/>
+        <div className="col col-md-4 mb-3">
+            <div className="card-empresa">
+                <img src={props.imgurl} className="img-fluid" />
+                <div className="col col-md-5 col-12">
+                    <h5 className="empresa">{props.stock}</h5>
+                    <p className="nomeEmp">{props.nome}</p>
+                </div>
+                <div className="footer-empresa">
+                    <button className="btn-empresa">
+                        +
+                    </button>
+                </div>
             </div>
-
-            <div className="col-5 flex-wrap">
-                <div className="fw-bold mb-1">{props.stock}</div>
-                <div className="">{props.nome}</div>
-            </div>
-
-            <button className="btn btn-primary col-1 p-2 rounded">
-                +
-            </button>
         </div>
     );
 };
-
-export default EmpresaCard;

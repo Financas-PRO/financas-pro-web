@@ -34,37 +34,37 @@ export default function Empresa() {
     return (
         <div className="row-page">
 
-            <div className="col col-md-2">
+            <div className="col col-md-2 col-2">
                 <Header />
             </div>
 
-            <div className="container mt-4 col col-md-8">
+            <div className="container mt-4 col-md-8 col-9">
 
                 <Title
                     icon="bi-file-earmark-bar-graph"
                     titulo="Empresas"
                     subTitulo="Selecione suas empresas" />
 
-                <div className="cardFundo">
+                <div className="cardFundo mt-5">
 
-                    <p className="">Digite a empresa: </p>
-                    <input className="form-control mb-4" onChange={handleChange}></input>
+                    <input className="form-control mb-4" placeholder="Pesquise a empresa" onChange={handleChange}></input>
 
-                    <div className="row justify-content-center">
+                    <div className="row">
 
                         {
                             resultados.map((empresa) => {
-                                return (<EmpresaCard nome={empresa.name} imgurl={empresa.logo} stock={empresa.stock}/>);
+                                return (<EmpresaCard nome={empresa.name} imgurl={empresa.logo} stock={empresa.stock} />);
                             })
                         }
 
                     </div>
                 </div>
 
+                <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
+                    <ButtonSalvar nome="Salvar" />
+                    <ButtonCancelar link="professor/gerenciar" nome="Cancelar" />
+                </div>
 
-
-                <ButtonSalvar nome="Salvar" />
-                <ButtonCancelar link="" nome="Cancelar" />
             </div>
         </div>
     )

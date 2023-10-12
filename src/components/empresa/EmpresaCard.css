@@ -1,0 +1,29 @@
+.card-empresa {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #FFF;
+    font-family: Poppins;
+}
+
+.empresa {
+    display: flex;
+    justify-content: center;
+    font-family: Poppins-bold;
+    font-size: 1.1rem;
+}
+
+.nomeEmp {
+    display: flex;
+    justify-content: center;
+    font-family: Poppins;
+    font-size: 0.9rem;
+}
+
+.btn-empresa{
+    border-radius: 5px;
+    background-color: #EE7F01;
+}

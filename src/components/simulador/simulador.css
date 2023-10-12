@@ -8,6 +8,7 @@
 }
 
 .card-simuladores{
+    height: 100%;
     background-color: #FFF;
     border-radius: 14px;
 }
@@ -22,6 +23,11 @@
     background-color: #AEACAC;
     border-radius: 6px;
     padding: 4px;
+}
+
+.footer-card{
+    display: flex;
+    justify-content: center;
 }
 
 .link{
