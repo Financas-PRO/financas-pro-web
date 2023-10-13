@@ -18,7 +18,10 @@ registerAllModules();
 export default function Demostrativo() {
   const [acao, setAcao] = useState([]);
   const hotTableComponent = useRef([]);
+  
 
+
+   
   /*-----------------------------------------------------------------------------------------------*/
   const exportarExcel = () => {
     if (hotTableComponent.current) {
@@ -105,39 +108,15 @@ export default function Demostrativo() {
   // precisei fazer uma verificação ternaria de cada ação, onde se ação tiver propriedade ele retorna o dado se nao retorna vazio
   const hotTableData = [
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    [
-      acaoSelecionada
-        ? formatarMoeda(acaoSelecionada.preco_merc_regular) || ""
-        : "",
-    ],
-    [
-      acaoSelecionada
-        ? formatarMoeda(acaoSelecionada.alto_merc_regular) || ""
-        : "",
-    ],
-    [
-      acaoSelecionada
-        ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || ""
-        : "",
-    ],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "": ""],
     [acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
     [acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
     [acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
-    [
-      acaoSelecionada
-        ? formatarMoeda(acaoSelecionada.volume_merc_regular) || ""
-        : "",
-    ],
-    [
-      acaoSelecionada
-        ? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || ""
-        : "",
-    ],
-    [
-      acaoSelecionada
-        ? formatarMoeda(acaoSelecionada.abertura_merc_regular) || ""
-        : "",
-    ],
+    [acaoSelecionada? formatarMoeda(acaoSelecionada.volume_merc_regular) || "": ""],
+    [acaoSelecionada? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "": ""],
+    [acaoSelecionada? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "": ""],
     [acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     [...Object.keys(historicoData)], // Adicione as datas na primeira linha
@@ -145,11 +124,7 @@ export default function Demostrativo() {
     [...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
     [...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
     [...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
-    [
-      ...Object.values(historicoData).map(
-        (item) => item["Preço Fechamento Ajustado"]
-      ),
-    ],
+    [...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   ];
@@ -192,6 +167,8 @@ export default function Demostrativo() {
   registerRenderer("negativeValueRenderer", negativeValueRenderer);
 
   /*-----------------------------------------------------------------------------------------------*/
+
+
 
   return (
     <div className="row-page">
@@ -278,7 +255,7 @@ export default function Demostrativo() {
           data={hotTableData}
           width="100%"
           height="auto"
-          rowHeaderWidth={250}
+          rowHeaderWidth={290}
           rowHeaders={[
             "INFORMAÇÕES GERAIS",
             "PREÇO MERCADO REGULAR",
@@ -301,7 +278,7 @@ export default function Demostrativo() {
             "",
             "",
           ]}
-          colHeaders={false}
+          colHeaders={true}
           rowHeights={40}
           colHeights={40}
           colWidths={150}
