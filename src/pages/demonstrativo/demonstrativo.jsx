@@ -9,47 +9,78 @@ import Title from "../../components/title/title";
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
 
-
 import ExcelJS from "exceljs"; // npm install exceljs
 import { saveAs } from "file-saver"; // npm install file-saver
 
 registerAllModules();
 
-// -------------------- TESTE-----------------------------
-// const data = new Array(200) // number of rows
-//   .fill()
-//   .map((_, row) =>
-//     new Array(13) // number of columns
-//       .fill()
-//       .map((_, column) => `${row}, ${column}`)
-//   );
-// -------------------- TESTE-----------------------------
+
 
 export default function Demostrativo() {
   const [acao, setAcao] = useState([]);
   const hotTableComponent = useRef([]);
 
   /*-----------------------------------------------------------------------------------------------*/
+  // const exportarExcel = () => {
+  //   if (hotTableComponent.current) {
+  //     const hotInstance = hotTableComponent.current.hotInstance;
+  //     const data = hotInstance.getData();
+  //     const rowHeaders = hotInstance.getRowHeader();
+  //     const workbook = new ExcelJS.Workbook();
+  //     const worksheet = workbook.addWorksheet("Demonstrativo Financeiro");
+
+  //     // Adicione os nomes das colunas à primeira linha
+  //     worksheet.addRow(rowHeaders);
+
+  //     // Adicione os dados à planilha
+  //     data.forEach((row) => {
+  //       worksheet.addRow(row);
+  //     });
+  //     // Gere um nome de arquivo com uma data aleatória
+  //     const currentDate = new Date();
+  //     const randomDate = `${currentDate.getFullYear()}${
+  //       currentDate.getMonth() + 1
+  //     }${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
+  //     const fileName = `Demonstrativo_${randomDate}.xlsx`;
+  //     // Crie um Blob a partir do arquivo Excel
+  //     workbook.xlsx.writeBuffer().then((buffer) => {
+  //       const blob = new Blob([buffer], {
+  //         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  //       });
+  //       // Use a biblioteca 'file-saver' para salvar o blob com o nome gerado
+  //       saveAs(blob, fileName);
+  //     });
+  //   }
+  // };
+
   const exportarExcel = () => {
     if (hotTableComponent.current) {
       const hotInstance = hotTableComponent.current.hotInstance;
       const data = hotInstance.getData();
-      const columnHeaders = hotInstance.getColHeader();
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet("Demonstrativo Financeiro");
-
-      // Adicione os nomes das colunas à primeira linha
-      worksheet.addRow(columnHeaders);
-      // Adicione os dados à planilha
-      data.forEach((row) => {
-        worksheet.addRow(row);
+      const rowHeaders = hotInstance.getRowHeader();
+  
+      
+      // Adicione os títulos à primeira coluna
+      rowHeaders.forEach((title, index) => {
+        worksheet.getCell(index + 1, 1).value = title;
       });
+  
+      // Adicione os dados nas colunas restantes
+      data.forEach((row, rowIndex) => {
+        row.forEach((cell, colIndex) => {
+          worksheet.getCell(rowIndex + 1, colIndex + 2).value = cell || "";
+        });
+      });
+  
       // Gere um nome de arquivo com uma data aleatória
       const currentDate = new Date();
       const randomDate = `${currentDate.getFullYear()}${
         currentDate.getMonth() + 1
       }${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
       const fileName = `Demonstrativo_${randomDate}.xlsx`;
+  
       // Crie um Blob a partir do arquivo Excel
       workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
@@ -60,18 +91,20 @@ export default function Demostrativo() {
       });
     }
   };
+  
+  
 
   /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
 
   useEffect(() => {
-    api
-      .get(`acoes/1`)
-      .then((res) => {
-        //console.log(res);
-        console.log(res.data.data);
-        setAcao(res.data.data);
-      });
+    api.get(`acoes/1`).then((res) => {
+      //console.log(res);
+      console.log(res.data.data);
+      setAcao(res.data.data);
+    });
   }, []);
+
+ 
 
   /*-----------------------------------------------------------------------------------------------*/
 
@@ -86,43 +119,54 @@ export default function Demostrativo() {
     return "";
   };
 
-  /*-----------------------------------------------------------------------------------------------*/
-  // const acaoData = {
-  //   Empresa: acao.longName,
-  //   Data: acao.regularMarketTime,
-  //   Abreviacao: acao.shortName,
-  //   MediaDosUltimos200Dias: formatarMoeda(acao.twoHundredDayAverage),
-  //   MudancaNaMediaDe200Dias: acao.twoHundredDayAverageChange,
-  //   MudancaPercentualNaMediaDe200Dias: acao.twoHundredDayAverageChangePercent,
-  //   CapitalizacaoDeMercado: formatarMoeda(acao.marketCap),
-  //   MudancaNoMercadoRegular: acao.regularMarketChange,
-  //   MudancaPercentualNoMercadoRegular: acao.regularMarketChangePercent,
-  //   PrecoDoMercadoRegular: formatarMoeda(acao.regularMarketPrice),
-  //   AltaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayHigh),
-  //   FaixaNoDiaDeNegociacaoRegular: acao.regularMarketDayRange,
-  //   BaixaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayLow),
-  //   VolumeNoMercadoRegular: formatarMoeda(acao.regularMarketVolume),
-  //   FechamentoAnteriorNoMercadoRegular: formatarMoeda(acao.regularMarketPreviousClose),
-  //   AberturaNoMercadoRegular: formatarMoeda(acao.regularMarketOpen),
-  //   VolumeMedioDiarioNosUltimos3Meses: formatarMoeda(acao.averageDailyVolume3Month),
-  //   VolumeMedioDiarioNosUltimos10Dias: formatarMoeda(acao.averageDailyVolume10Day),
-  //   MudancaNaBaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLowChange),
-  //   MudancaPercentualNaBaixaDe52Semanas: acao.fiftyTwoWeekLowChangePercent,
-  //   FaixaDe52Semanas: acao.fiftyTwoWeekRange,
-  //   MudancaNaAltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHighChange),
-  //   MudancaPercentualNaAltaDe52Semanas: acao.fiftyTwoWeekHighChangePercent,
-  //   BaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLow),
-  //   AltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHigh),
-  //   RelacaoPrecoLucro: formatarMoeda(acao.priceEarnings),
-  //   LucroPorAcao: formatarMoeda(acao.earningsPerShare),
-  //   AtualizadoEm: acao.updatedAt,
-  // };
-
-  // const hotTableData = [acaoData];
 
   /*-----------------------------------------------------------------------------------------------*/
 
-  
+
+  const acaoSelecionada = acao[0]; // Assumindo que você está pegando apenas o primeiro item da resposta da API
+
+  const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
+
+if (acaoSelecionada && acaoSelecionada.historico) { // nesta parte verifico se não ha objeto indefinido ou nulo
+  acaoSelecionada.historico.forEach((historicoItem) => { // faço uma repitação para percorrer o array 
+    const dataAcao = new Date(historicoItem.data_acao).toLocaleDateString(); // entao aqui para cada data sera inserido abaixo os elementos abaixo
+    historicoData[dataAcao] = {
+      "Preço Abertura": formatarMoeda(historicoItem.preco_abertura),
+      "Preço Mais Alto": formatarMoeda(historicoItem.preco_mais_alto),
+      "Preço Mais Baixo": formatarMoeda(historicoItem.preco_mais_baixo),
+      "Preço Fechamento": formatarMoeda(historicoItem.preco_fechamento),
+      "Preço Fechamento Ajustado": formatarMoeda(historicoItem.preco_fechamento_ajustado),
+    };
+  });
+}
+
+  // precisei fazer uma verificação ternaria de cada ação, onde se ação tiver propriedade ele retorna o dado se nao retorna vazio
+  const hotTableData = [
+    ["","","","","","","","","","","","","",""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "" : ""],
+    [acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
+    [acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.volume_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "" : ""],
+    [acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
+    ["","","","","","","","","","","","","",""],
+    [...Object.keys(historicoData)], // Adicione as datas na primeira linha
+    [...Object.values(historicoData).map((item) => item["Preço Abertura"])],
+    [...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
+    [...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
+    [...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
+    [...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
+    ["","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","",""],
+  ];
+
+
+   /*-----------------------------------------------------------------------------------------------*/
+
   return (
     <div className="row-page">
       <div className="col col-md-2 col-2" id="sidebar">
@@ -203,50 +247,43 @@ export default function Demostrativo() {
           </div>
         </div>
 
-        {/* <HotTable
-          // ref={hotTableComponent}
-          // data={}
+        <HotTable
+          ref={hotTableComponent}
+          data={hotTableData}
           width="100%"
-          height={400}
-          rowHeaders={false}
-          colHeaders={[
-            "Empresa",
-            "Data",
-            "Abreviação",
-            "Média dos Últimos 200 Dias",
-            "Mudança na Média de 200 Dias",
-            "Mudança Percentual na Média de 200 Dias",
-            "Capitalização de Mercado",
-            "Mudança no Mercado Regular",
-            "Mudança Percentual no Mercado Regular",
-            "Preço do Mercado Regular",
-            "Alta no Dia de Negociação Regular",
-            "Faixa no Dia de Negociação Regular",
-            "Baixa no Dia de Negociação Regular",
-            "Volume no Mercado Regular",
-            "Fechamento Anterior no Mercado Regular",
-            "Abertura no Mercado Regular",
-            "Volume Médio Diário nos Últimos 3 Meses",
-            "Volume Médio Diário nos Últimos 10 Dias",
-            " Mudança na Baixa de 52 Semanas",
-            "Mudança Percentual na Baixa de 52 Semanas",
-            " Faixa de 52 Semanas",
-            " Mudança na Alta de 52 Semanas",
-            "Mudança Percentual na Alta de 52 Semanas",
-            "Baixa de 52 Semanas",
-            "Alta de 52 Semanas",
-            "Relação Preço/Lucro",
-            "Lucro por Ação",
-            " Atualizado em",
+          height="auto"
+          rowHeaderWidth={250}
+          rowHeaders={[
+            "INFORMAÇÕES GERAIS",
+            "PREÇO MERCADO REGULAR",
+            "ALTA MERCADO REGULAR",
+            "BAIXA MERCADO REGULAR",
+            "INTERVALO MERCADO REGULAR",
+            "VARIAÇÃO MERCARDO REGULAR",
+            "VALOR MERCADO",
+            "VOLUME MERCADO REGULAR",
+            "FECHAMENTO ANTERIOR MERCADO REGULAR",
+            "ABERTURA MERCADO REGULAR",
+            "PREÇO LUCRO",
+            "",
+            "HISTORICO",
+            "PREÇO ABERTURA",
+            "PREÇO MAIS ALTO",
+            "PREÇO MAIS BAIXO",
+            "PREÇO FECHAMENTO",
+            "PREÇO FECHAMENTO AJUSTADO",
+            "",
+            "",
           ]}
+          colHeaders={false}
           rowHeights={40}
           colHeights={40}
           colWidths={150}
-          manualColumnResize={true}
-          fixedColumnsStart={2}
+          // manualColumnResize={true}
+          // fixedColumnsStart={2}
           className="custom-hot-table htCenter"
           licenseKey="non-commercial-and-evaluation"
-        /> */}
+        />
       </div>
     </div>
   );
