@@ -8,7 +8,7 @@ import Title from "../../components/title/title";
 
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
-import axios from "axios";
+
 
 import ExcelJS from "exceljs"; // npm install exceljs
 import { saveAs } from "file-saver"; // npm install file-saver
@@ -64,12 +64,12 @@ export default function Demostrativo() {
   /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
 
   useEffect(() => {
-    axios
-      .get(`https://brapi.dev/api/quote/MGLU3?token=8Pusecs13FPwWAARGkHHyi`)
+    api
+      .get(`acoes/1`)
       .then((res) => {
         //console.log(res);
-        console.log(res.data.results[0]);
-        setAcao(res.data.results[0]);
+        console.log(res.data.data);
+        setAcao(res.data.data);
       });
   }, []);
 
@@ -77,50 +77,52 @@ export default function Demostrativo() {
 
   const formatarMoeda = (valor) => {
     if (valor) {
-      return valor.toLocaleString("pt-BR", {
+      const options = {
         style: "currency",
         currency: "BRL",
-      });
+      };
+      return new Intl.NumberFormat("pt-BR", options).format(valor);
     }
     return "";
   };
 
   /*-----------------------------------------------------------------------------------------------*/
-  const acaoData = {
-    Empresa: acao.longName,
-    Data: acao.regularMarketTime,
-    Abreviacao: acao.shortName,
-    MediaDosUltimos200Dias: formatarMoeda(acao.twoHundredDayAverage),
-    MudancaNaMediaDe200Dias: acao.twoHundredDayAverageChange,
-    MudancaPercentualNaMediaDe200Dias: acao.twoHundredDayAverageChangePercent,
-    CapitalizacaoDeMercado: formatarMoeda(acao.marketCap),
-    MudancaNoMercadoRegular: acao.regularMarketChange,
-    MudancaPercentualNoMercadoRegular: acao.regularMarketChangePercent,
-    PrecoDoMercadoRegular: formatarMoeda(acao.regularMarketPrice),
-    AltaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayHigh),
-    FaixaNoDiaDeNegociacaoRegular: acao.regularMarketDayRange,
-    BaixaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayLow),
-    VolumeNoMercadoRegular: formatarMoeda(acao.regularMarketVolume),
-    FechamentoAnteriorNoMercadoRegular: formatarMoeda(acao.regularMarketPreviousClose),
-    AberturaNoMercadoRegular: formatarMoeda(acao.regularMarketOpen),
-    VolumeMedioDiarioNosUltimos3Meses: formatarMoeda(acao.averageDailyVolume3Month),
-    VolumeMedioDiarioNosUltimos10Dias: formatarMoeda(acao.averageDailyVolume10Day),
-    MudancaNaBaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLowChange),
-    MudancaPercentualNaBaixaDe52Semanas: acao.fiftyTwoWeekLowChangePercent,
-    FaixaDe52Semanas: acao.fiftyTwoWeekRange,
-    MudancaNaAltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHighChange),
-    MudancaPercentualNaAltaDe52Semanas: acao.fiftyTwoWeekHighChangePercent,
-    BaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLow),
-    AltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHigh),
-    RelacaoPrecoLucro: formatarMoeda(acao.priceEarnings),
-    LucroPorAcao: formatarMoeda(acao.earningsPerShare),
-    AtualizadoEm: acao.updatedAt,
-  };
+  // const acaoData = {
+  //   Empresa: acao.longName,
+  //   Data: acao.regularMarketTime,
+  //   Abreviacao: acao.shortName,
+  //   MediaDosUltimos200Dias: formatarMoeda(acao.twoHundredDayAverage),
+  //   MudancaNaMediaDe200Dias: acao.twoHundredDayAverageChange,
+  //   MudancaPercentualNaMediaDe200Dias: acao.twoHundredDayAverageChangePercent,
+  //   CapitalizacaoDeMercado: formatarMoeda(acao.marketCap),
+  //   MudancaNoMercadoRegular: acao.regularMarketChange,
+  //   MudancaPercentualNoMercadoRegular: acao.regularMarketChangePercent,
+  //   PrecoDoMercadoRegular: formatarMoeda(acao.regularMarketPrice),
+  //   AltaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayHigh),
+  //   FaixaNoDiaDeNegociacaoRegular: acao.regularMarketDayRange,
+  //   BaixaNoDiaDeNegociacaoRegular: formatarMoeda(acao.regularMarketDayLow),
+  //   VolumeNoMercadoRegular: formatarMoeda(acao.regularMarketVolume),
+  //   FechamentoAnteriorNoMercadoRegular: formatarMoeda(acao.regularMarketPreviousClose),
+  //   AberturaNoMercadoRegular: formatarMoeda(acao.regularMarketOpen),
+  //   VolumeMedioDiarioNosUltimos3Meses: formatarMoeda(acao.averageDailyVolume3Month),
+  //   VolumeMedioDiarioNosUltimos10Dias: formatarMoeda(acao.averageDailyVolume10Day),
+  //   MudancaNaBaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLowChange),
+  //   MudancaPercentualNaBaixaDe52Semanas: acao.fiftyTwoWeekLowChangePercent,
+  //   FaixaDe52Semanas: acao.fiftyTwoWeekRange,
+  //   MudancaNaAltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHighChange),
+  //   MudancaPercentualNaAltaDe52Semanas: acao.fiftyTwoWeekHighChangePercent,
+  //   BaixaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekLow),
+  //   AltaDe52Semanas: formatarMoeda(acao.fiftyTwoWeekHigh),
+  //   RelacaoPrecoLucro: formatarMoeda(acao.priceEarnings),
+  //   LucroPorAcao: formatarMoeda(acao.earningsPerShare),
+  //   AtualizadoEm: acao.updatedAt,
+  // };
 
-  const hotTableData = [acaoData];
+  // const hotTableData = [acaoData];
 
   /*-----------------------------------------------------------------------------------------------*/
 
+  
   return (
     <div className="row-page">
       <div className="col col-md-2 col-2" id="sidebar">
@@ -145,7 +147,7 @@ export default function Demostrativo() {
                 type="text"
                 name="nome"
                 className="form-control"
-                value={acao.longName || ""}
+                value={acao[0]?.nome_completo || ""}
                 readOnly
               />
             </div>
@@ -155,7 +157,7 @@ export default function Demostrativo() {
                 type="text"
                 name="capitalizacao_mercado"
                 className="form-control"
-                value={formatarMoeda(acao.marketCap) || ""}
+                value={formatarMoeda(acao[0]?.valor_merc) || ""}
                 readOnly
               />
             </div>
@@ -166,7 +168,7 @@ export default function Demostrativo() {
                 type="text"
                 name="data_cotacao"
                 className="form-control"
-                value={acao.regularMarketTime || ""}
+                value={acao[0]?.data_importacao || ""}
                 readOnly
               />
             </div>
@@ -176,17 +178,17 @@ export default function Demostrativo() {
                 type="text"
                 name="codigo"
                 className="form-control"
-                value={acao.symbol || ""}
+                value={acao[0]?.simbolo || ""}
                 readOnly
               />
             </div>
             <div className="col col-md-6 col-12 ">
-              <label>Preço Atual da Ação</label>
+              <label>Lucro</label>
               <input
                 type="text"
                 name="acao_atual"
                 className="form-control"
-                value={formatarMoeda(acao.regularMarketPrice) || ""}
+                value={formatarMoeda(acao[0]?.preco_lucro) || ""}
                 readOnly
               />
             </div>
@@ -201,18 +203,18 @@ export default function Demostrativo() {
           </div>
         </div>
 
-        <HotTable
-          ref={hotTableComponent}
-          data={hotTableData}
+        {/* <HotTable
+          // ref={hotTableComponent}
+          // data={}
           width="100%"
-          height={440}
+          height={400}
           rowHeaders={false}
           colHeaders={[
             "Empresa",
             "Data",
             "Abreviação",
             "Média dos Últimos 200 Dias",
-            " Mudança na Média de 200 Dias",
+            "Mudança na Média de 200 Dias",
             "Mudança Percentual na Média de 200 Dias",
             "Capitalização de Mercado",
             "Mudança no Mercado Regular",
@@ -242,9 +244,9 @@ export default function Demostrativo() {
           colWidths={150}
           manualColumnResize={true}
           fixedColumnsStart={2}
-          className="custom-hot-table"
+          className="custom-hot-table htCenter"
           licenseKey="non-commercial-and-evaluation"
-        />
+        /> */}
       </div>
     </div>
   );
