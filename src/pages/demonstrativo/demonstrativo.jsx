@@ -5,24 +5,35 @@ import "handsontable/dist/handsontable.full.min.css";
 import api from "../../services/api";
 import Header from "../../components/navbar/header";
 import Title from "../../components/title/title";
-
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
 import { registerRenderer, textRenderer } from "handsontable/renderers";
-
 import ExcelJS from "exceljs"; // npm install exceljs
 import { saveAs } from "file-saver"; // npm install file-saver
+
+
+
 
 registerAllModules();
 
 export default function Demostrativo() {
+
   const [acao, setAcao] = useState([]);
   const hotTableComponent = useRef([]);
-  
 
 
-   
+  /*----------------FUNÇÃO PARA LISTAR TODOS DADOS AÇÕES SELECIONADA --------------------------- */
+  useEffect(() => {
+    api.get(`acoes/1`).then((res) => {
+      //console.log(res);
+      console.log(res.data.data);
+      setAcao(res.data.data);
+    });
+  }, []);
   /*-----------------------------------------------------------------------------------------------*/
+
+  
+  /*----------------------------------EXPORTA POR EXCEL------------------------------------------*/
   const exportarExcel = () => {
     if (hotTableComponent.current) {
       const hotInstance = hotTableComponent.current.hotInstance;
@@ -60,17 +71,9 @@ export default function Demostrativo() {
       });
     }
   };
-
-  /*FUNÇÃO PARA LISTAR TODOS DADOS CADASTRADO DE DOCENTES QUE ESTÃO ATIVOS */
-  useEffect(() => {
-    api.get(`acoes/1`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
-      setAcao(res.data.data);
-    });
-  }, []);
-  /*-----------------------------------------------------------------------------------------------*/
-
+ /*-----------------------------------------------------------------------------------------------*/
+  
+/*--------------------------------------FORMATAÇÃO DE VALOR - R$ ---------------------------------*/
   const formatarMoeda = (valor) => {
     if (valor) {
       const options = {
@@ -82,7 +85,8 @@ export default function Demostrativo() {
     return "";
   };
   /*-----------------------------------------------------------------------------------------------*/
-  /*-----------------------------------------------------------------------------------------------*/
+
+  /*-------------------------------------RETORNO DOS DADOS NA PLANILHA ----------------------------*/
 
   const acaoSelecionada = acao[0]; // Assumindo que você está pegando apenas o primeiro item da resposta da API
 
@@ -129,7 +133,7 @@ export default function Demostrativo() {
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   ];
   /*-----------------------------------------------------------------------------------------------*/
-  /*-----------------------------------------------------------------------------------------------*/
+  /*-------------------------------------COR NA COLUNA DA PLANILHA---------------------------------*/
 
   function firstRowRenderer(
     instance,
