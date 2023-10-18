@@ -16,6 +16,7 @@ import Importa from "./pages/importarAluno/importa";
 import Empresa from "./pages/empresa/empresa";
 import Turmas from "./pages/turmas/turmas";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
+import Erro from "./pages/erro/erro";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
 
             <Route path="/demonstrativo" element={<Demonstrativo />} />
+
+            <Route path="/erro" element={<Erro />} />
 
         </Routes>
       </BrowserRouter>

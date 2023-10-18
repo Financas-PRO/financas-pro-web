@@ -1,4 +1,5 @@
 .card-empresa {
+    height: 100%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -23,7 +24,16 @@
     font-size: 0.9rem;
 }
 
-.btn-empresa{
+.btn-ativo {
+    border-radius: 5px;
+    background-color: green;
+}
+
+.btn-empresa {
     border-radius: 5px;
     background-color: #EE7F01;
+}
+
+.img-empresa {
+    height: 70px;
 }

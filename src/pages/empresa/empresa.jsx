@@ -8,18 +8,23 @@ import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import EmpresaCard from "../../components/empresa/EmpresaCard";
 import axios from "axios";
+import Select from "react-select";
 
 export default function Empresa() {
 
     const [busca, setBusca] = useState("");
     const [resultados, setResultados] = useState([]);
+    const [empresas, setEmpresas] = useState([]);
+    const [icone, setIcone] = useState(false)
+    const [empresaSelecionada, setEmpresaSelecionada] = useState([]);
+
 
     useEffect(() => {
 
         axios.get(`https://brapi.dev/api/quote/list?search=${busca}&sortBy=close&sortOrder=desc&limit=10`)
             .then(res => {
                 setResultados(res.data.stocks);
-                console.log(resultados);
+
             })
             .catch(err => {
                 console.log(err);
@@ -30,6 +35,26 @@ export default function Empresa() {
     function handleChange(e) {
         setBusca(e.target.value.trim());
     }
+
+
+
+    function handleClick(simbolo) {
+        setIcone(!icone)
+        setEmpresas([...empresas, simbolo]);
+        console.log(empresas)
+
+        if (empresas.includes(simbolo)) {
+            setEmpresas(empresas.filter(empresa => empresa !== simbolo))
+        }
+
+        if (empresaSelecionada.includes(simbolo)) {
+            setEmpresaSelecionada(empresaSelecionada.filter((item) => item !== simbolo));
+        }
+        else {
+            setEmpresaSelecionada([...empresaSelecionada, simbolo]);
+        }
+    }
+
 
     return (
         <div className="row-page">
@@ -46,14 +71,70 @@ export default function Empresa() {
                     subTitulo="Selecione suas empresas" />
 
                 <div className="cardFundo mt-5">
+                    <div className="row">
+                        <div className="col col-md-12 col-12">
+                            <label><i className="bi bi-search margin-icon"></i>Pesquise a empresa</label>
+                            <input className="form-control" placeholder="empresa" onChange={handleChange}></input>
+                        </div>
+                        <div className="col col-md-6 col-6">
+                            <label> <i className="bi bi-calendar-range-fill margin-icon"></i>Informe a Faixa</label>
+                            <select className="form-select" name="" id="">
+                                <option selected>Faixa</option>
+                                <option value="1d">Um dia de negociação, incluindo o dia atual</option>
+                                <option value="5d">Cinco dias de negociação, incluindo o dia atual</option>
+                                <option value="1mo">Um mês de negociação, incluindo o dia atual</option>
+                                <option value="3mo">Três meses de negociação, incluindo o dia atual</option>
+                                <option value="6mo">Seis meses de negociação, incluindo o dia atual</option>
+                                <option value="1y">Um ano de negociação, incluindo o dia atual</option>
+                                <option value="2y">Dois anos de negociação, incluindo o dia atual</option>
+                                <option value="5y">Cinco anos de negociação, incluindo o dia atual</option>
+                                <option value="10y">Dez anos de negociação, incluindo o dia atual</option>
+                                <option value="ytd">O ano atual até a data atual</option>
+                                <option value="max">Todos os dados disponíveis</option>
+                            </select>
+                        </div>
+                        <div className="col col-md-6 col-6">
+                            <label> <i className="bi bi-calendar-range-fill margin-icon"></i>Informe a Intervalo</label>
+                            <select className="form-select" name="" id="">
+                                <option selected>Intervalo</option>
+                                <option value="1m">Um minuto</option>
+                                <option value="2m">Dois minutos</option>
+                                <option value="5m">Cinco minutos</option>
+                                <option value="15m">Quinze minutos</option>
+                                <option value="30m">Trinta minutos</option>
+                                <option value="60m">Sessenta minutos</option>
+                                <option value="90m">Noventa minutos</option>
+                                <option value="1h">Uma hora</option>
+                                <option value="1d">Um dia</option>
+                                <option value="5d">Cinco dias</option>
+                                <option value="1wk">Uma semana</option>
+                                <option value="1mo">Um mês</option>
+                                <option value="3mo">Três meses</option>
+                            </select>
+                        </div>
 
-                    <input className="form-control mb-4" placeholder="Pesquise a empresa" onChange={handleChange}></input>
+                        <div className="col col-md-12 col-12">
+                            <label><i className="bi bi-bar-chart-fill margin-icon"></i>Empresas Selecionadas</label>
+                            <input type="text"
+                                className="form-control mb-4"
+                                placeholder="Selecionados"
+                                value={empresaSelecionada.join(', ')} />
+                        </div>
+                    </div>
 
                     <div className="row">
 
                         {
                             resultados.map((empresa) => {
-                                return (<EmpresaCard nome={empresa.name} imgurl={empresa.logo} stock={empresa.stock} />);
+                                return (<EmpresaCard
+                                    ativo={empresas.includes(empresa.stock) ? 1 : 0}
+                                    nome={empresa.name}
+                                    imgurl={empresa.logo}
+                                    stock={empresa.stock}
+                                    click={e => handleClick(empresa.stock)}
+                                    key={icone.id}
+                                    imagem={empresas.includes(empresa.stock) ? <i class="bi bi-check"></i> : <i class="bi bi-plus"></i>}
+                                    onChange={() => handleSelecao(simbolo)} />);
                             })
                         }
 
