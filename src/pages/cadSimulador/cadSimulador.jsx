@@ -45,7 +45,7 @@ export default function CadSimulador02() {
             toast.success("Grupo criado com sucesso");
 
             setTimeout(() => {
-              return navigate(`/simuladores/${id}`, { replace: true });
+              return navigate(`/empresa/${id}`, { replace: true });
             }, 4000);
           }
         })

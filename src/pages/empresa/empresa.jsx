@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./empresa.css";
 import Header from "../../components/navbar/header.jsx";
+import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
@@ -8,16 +9,27 @@ import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import EmpresaCard from "../../components/empresa/EmpresaCard";
 import axios from "axios";
-import Select from "react-select";
+import api from "../../services/api";
+import { useParams } from "react-router-dom";
 
 export default function Empresa() {
+
+    let {id} = useParams();
 
     const [busca, setBusca] = useState("");
     const [resultados, setResultados] = useState([]);
     const [empresas, setEmpresas] = useState([]);
     const [icone, setIcone] = useState(false)
     const [empresaSelecionada, setEmpresaSelecionada] = useState([]);
+    const [grupo, setGrupo] = useState([]);
+    const [faixa, setFaixa] = useState('');
+    const [intervalo, setItervalo] = useState('');
 
+    useEffect(() => {
+        api.get(`grupo/${id}`).then((res) => {
+            setGrupo(res.data.data);
+        });
+    }, [id]);
 
     useEffect(() => {
 
@@ -32,11 +44,63 @@ export default function Empresa() {
 
     }, [busca]);
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+    
+        try {
+          api
+            .post(`acoes/${id}`, {empresas:empresaSelecionada, faixa:faixa, intervalo:intervalo})
+            .then(async (res) => {
+              if (res.status) {
+                toast.success("Informações da empresa salvo com sucesso");
+    
+                setTimeout(() => {
+                    return navigate(`/demonstrativo/${id}`, { replace: true });
+                }, 4000);
+              }
+            })
+            .catch(function (error) {
+              let resposta = error.response.data.error;
+    
+              var erros = "";
+    
+              Object.keys(resposta).forEach(function (index) {
+                erros += resposta[index];
+              });
+              toast.error(`Erro ao gravar!\n ${erros}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                style: { whiteSpace: "pre-line" },
+              });
+            });
+        } catch (err) {
+          
+        }
+    }
+
+    function handleChangeFaixa(e) {
+        const valor = e.target.value;
+        setFaixa(valor);
+    
+        console.log(valor);
+    }
+
+    function handleChangeIntervalo(e) {
+        const valor = e.target.value;
+        setItervalo(valor);
+    
+        console.log(valor);
+    }
+
     function handleChange(e) {
         setBusca(e.target.value.trim());
     }
-
-
 
     function handleClick(simbolo) {
         setIcone(!icone)
@@ -53,6 +117,8 @@ export default function Empresa() {
         else {
             setEmpresaSelecionada([...empresaSelecionada, simbolo]);
         }
+
+        console.log(empresaSelecionada)
     }
 
 
@@ -70,7 +136,10 @@ export default function Empresa() {
                     titulo="Empresas"
                     subTitulo="Selecione suas empresas" />
 
-                <div className="cardFundo mt-5">
+                <form onSubmit={handleSubmit} className=" mt-5">
+                    <div className="cardFundo">
+
+                    
                     <div className="row">
                         <div className="col col-md-12 col-12">
                             <label><i className="bi bi-search margin-icon"></i>Pesquise a empresa</label>
@@ -78,7 +147,7 @@ export default function Empresa() {
                         </div>
                         <div className="col col-md-6 col-6">
                             <label> <i className="bi bi-calendar-range-fill margin-icon"></i>Informe a Faixa</label>
-                            <select className="form-select" name="" id="">
+                            <select className="form-select" value={faixa} onChange={handleChangeFaixa}>
                                 <option selected>Faixa</option>
                                 <option value="1d">Um dia de negociação, incluindo o dia atual</option>
                                 <option value="5d">Cinco dias de negociação, incluindo o dia atual</option>
@@ -95,7 +164,7 @@ export default function Empresa() {
                         </div>
                         <div className="col col-md-6 col-6">
                             <label> <i className="bi bi-calendar-range-fill margin-icon"></i>Informe a Intervalo</label>
-                            <select className="form-select" name="" id="">
+                            <select className="form-select" value={intervalo} onChange={handleChangeIntervalo}>
                                 <option selected>Intervalo</option>
                                 <option value="1m">Um minuto</option>
                                 <option value="2m">Dois minutos</option>
@@ -131,7 +200,7 @@ export default function Empresa() {
                                     nome={empresa.name}
                                     imgurl={empresa.logo}
                                     stock={empresa.stock}
-                                    click={e => handleClick(empresa.stock)}
+                                    click={e => { e.preventDefault(); handleClick(empresa.stock) }}
                                     key={icone.id}
                                     imagem={empresas.includes(empresa.stock) ? <i class="bi bi-check"></i> : <i class="bi bi-plus"></i>}
                                     onChange={() => handleSelecao(simbolo)} />);
@@ -139,12 +208,16 @@ export default function Empresa() {
                         }
 
                     </div>
-                </div>
 
+                    
+                
+                </div>
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
                     <ButtonSalvar nome="Salvar" />
-                    <ButtonCancelar link="professor/gerenciar" nome="Cancelar" />
+                    <ButtonCancelar link={`simulador/cadastrar/${id}`} nome="Cancelar" />
                 </div>
+                </form>
+
 
             </div>
         </div>

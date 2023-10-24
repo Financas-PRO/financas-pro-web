@@ -1,16 +1,8 @@
-import React, { useState, createContext } from "react";
+import React from "react";
 import './EmpresaCard.css';
 
 
 export default function EmpresaCard(props) {
-
-    const [icone, setIcone] = useState(false);
-
-
-    const handleIcon = () => {
-
-        setIcone(!icone)
-    }
 
     return (
         <div className="col col-md-4 mb-3">
