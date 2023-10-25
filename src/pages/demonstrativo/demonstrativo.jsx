@@ -14,6 +14,7 @@ import { saveAs } from "file-saver"; // npm install file-saver
 
 
 
+
 registerAllModules();
 
 export default function Demostrativo() {
@@ -21,6 +22,8 @@ export default function Demostrativo() {
   const [acao, setAcao] = useState([]);
   const hotTableComponent = useRef([]);
 
+
+  
 
   /*----------------FUNÇÃO PARA LISTAR TODOS DADOS AÇÕES SELECIONADA --------------------------- */
   useEffect(() => {
@@ -40,37 +43,39 @@ export default function Demostrativo() {
       const data = hotInstance.getData();
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet("Demonstrativo Financeiro");
-      const rowHeaders = hotInstance.getRowHeader();
-
-      // Adicione os títulos à primeira coluna
-      rowHeaders.forEach((title, index) => {
-        worksheet.getCell(index + 1, 1).value = title;
-      });
-
-      // Adicione os dados nas colunas restantes
+  
+      // Adicione os dados nas colunas, pulando a primeira linha que contém os cabeçalhos de linha
       data.forEach((row, rowIndex) => {
-        row.forEach((cell, colIndex) => {
-          worksheet.getCell(rowIndex + 1, colIndex + 2).value = cell || "";
-        });
+        if (rowIndex === 0) {
+          // Adicione os cabeçalhos de coluna (primeira linha)
+          row.forEach((cell, colIndex) => {
+            worksheet.getCell(rowIndex + 1, colIndex + 1).value = cell || "";
+          });
+        } else {
+          // Adicione os dados (linhas subsequentes)
+          row.forEach((cell, colIndex) => {
+            worksheet.getCell(rowIndex, colIndex + 1).value = cell || "";
+          });
+        }
       });
-
+  
       // Gere um nome de arquivo com uma data aleatória
       const currentDate = new Date();
-      const randomDate = `${currentDate.getFullYear()}${
-        currentDate.getMonth() + 1
-      }${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
+      const randomDate = `${currentDate.getFullYear()}${currentDate.getMonth() + 1}${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
       const fileName = `Demonstrativo_${randomDate}.xlsx`;
-
+  
       // Crie um Blob a partir do arquivo Excel
       workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
+  
         // Use a biblioteca 'file-saver' para salvar o blob com o nome gerado
         saveAs(blob, fileName);
       });
     }
   };
+  
  /*-----------------------------------------------------------------------------------------------*/
   
 /*--------------------------------------FORMATAÇÃO DE VALOR - R$ ---------------------------------*/
@@ -92,6 +97,9 @@ export default function Demostrativo() {
 
   const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
 
+  const demonstrativosData = acaoSelecionada && acaoSelecionada.demonstrativos ? acaoSelecionada.demonstrativos : {};
+
+
   if (acaoSelecionada && acaoSelecionada.historico) {
     // nesta parte verifico se não ha objeto indefinido ou nulo
     acaoSelecionada.historico.forEach((historicoItem) => {
@@ -112,25 +120,29 @@ export default function Demostrativo() {
   // precisei fazer uma verificação ternaria de cada ação, onde se ação tiver propriedade ele retorna o dado se nao retorna vazio
   const hotTableData = [
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    [acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
-    [acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
-    [acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "": ""],
-    [acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
-    [acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
-    [acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
-    [acaoSelecionada? formatarMoeda(acaoSelecionada.volume_merc_regular) || "": ""],
-    [acaoSelecionada? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "": ""],
-    [acaoSelecionada? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "": ""],
-    [acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
+    ["PREÇO MERCADO REGULAR",acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
+    ["ALTA MERCADO REGULAR",acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
+    ["BAIXA MERCADO REGULAR",acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "": ""],
+    ["INTERVALO MERCADO REGULAR",acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
+    ["VARIAÇÃO MERCARDO REGULAR",acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
+    ["VALOR MERCADO",acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
+    ["VOLUME MERCADO REGULAR",acaoSelecionada? formatarMoeda(acaoSelecionada.volume_merc_regular) || "": ""],
+    ["FECHAMENTO ANTERIOR MERCADO REGULAR",acaoSelecionada? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "": ""],
+    ["ABERTURA MERCADO REGULAR",acaoSelecionada? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "": ""],
+    ["PREÇO LUCRO",acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    [...Object.keys(historicoData)], // Adicione as datas na primeira linha
-    [...Object.values(historicoData).map((item) => item["Preço Abertura"])],
-    [...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
-    [...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
-    [...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
-    [...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
+    ["HISTORICO",...Object.keys(historicoData)], // Adicione as datas na primeira linha
+    ["PREÇO ABERTURA",...Object.values(historicoData).map((item) => item["Preço Abertura"])],
+    ["PREÇO MAIS ALTO",...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
+    ["PREÇO MAIS BAIXO",...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
+    ["PREÇO FECHAMENTO",...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
+    ["PREÇO FECHAMENTO AJUSTADO",...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ...Object.keys(demonstrativosData).map((key) => [
+      key.toUpperCase(), demonstrativosData[key],
+    ]),
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    
   ];
   /*-----------------------------------------------------------------------------------------------*/
   /*-------------------------------------COR NA COLUNA DA PLANILHA---------------------------------*/
@@ -146,8 +158,7 @@ export default function Demostrativo() {
   ) {
     textRenderer.apply(this, arguments);
     td.style.fontWeight = "bold";
-    td.style.color = "white";
-    td.style.background = "#12304A";
+    td.setAttribute("style", "color: white !important; background: #12304A;");
   }
 
   function negativeValueRenderer(
@@ -259,36 +270,38 @@ export default function Demostrativo() {
           data={hotTableData}
           width="100%"
           height="auto"
-          rowHeaderWidth={290}
-          rowHeaders={[
-            "INFORMAÇÕES GERAIS",
-            "PREÇO MERCADO REGULAR",
-            "ALTA MERCADO REGULAR",
-            "BAIXA MERCADO REGULAR",
-            "INTERVALO MERCADO REGULAR",
-            "VARIAÇÃO MERCARDO REGULAR",
-            "VALOR MERCADO",
-            "VOLUME MERCADO REGULAR",
-            "FECHAMENTO ANTERIOR MERCADO REGULAR",
-            "ABERTURA MERCADO REGULAR",
-            "PREÇO LUCRO",
-            "",
-            "HISTORICO",
-            "PREÇO ABERTURA",
-            "PREÇO MAIS ALTO",
-            "PREÇO MAIS BAIXO",
-            "PREÇO FECHAMENTO",
-            "PREÇO FECHAMENTO AJUSTADO",
-            "",
-            "",
-          ]}
+          rowHeaderWidth={60}
+          rowHeaders={true}
+          // rowHeaders={[
+          //   "INFORMAÇÕES GERAIS",
+          //   "PREÇO MERCADO REGULAR",
+          //   "ALTA MERCADO REGULAR",
+          //   "BAIXA MERCADO REGULAR",
+          //   "INTERVALO MERCADO REGULAR",
+          //   "VARIAÇÃO MERCARDO REGULAR",
+          //   "VALOR MERCADO",
+          //   "VOLUME MERCADO REGULAR",
+          //   "FECHAMENTO ANTERIOR MERCADO REGULAR",
+          //   "ABERTURA MERCADO REGULAR",
+          //   "PREÇO LUCRO",
+          //   "",
+          //   "HISTORICO",
+          //   "PREÇO ABERTURA",
+          //   "PREÇO MAIS ALTO",
+          //   "PREÇO MAIS BAIXO",
+          //   "PREÇO FECHAMENTO",
+          //   "PREÇO FECHAMENTO AJUSTADO",
+          //   "",
+          //   "",
+          // ]}
           colHeaders={true}
           rowHeights={40}
           colHeights={40}
-          colWidths={150}
+          colWidths={180}
           mergeCells={[
             { row: 0, col: 0, rowspan: 1, colspan: 14 },
             { row: 11, col: 0, rowspan: 1, colspan: 14 },
+            { row: 18, col: 0, rowspan: 1, colspan: 14 },
           ]}
           className="custom-hot-table htCenter"
           licenseKey="non-commercial-and-evaluation"
@@ -298,11 +311,16 @@ export default function Demostrativo() {
               cellProperties.renderer = firstRowRenderer;
             } else if (row === 11) {
               cellProperties.renderer = firstRowRenderer;
-            } else {
+            } else if (row === 18) {
+              cellProperties.renderer = firstRowRenderer;
+            } 
+            else {
               cellProperties.renderer = "negativeValueRenderer";
             }
             return cellProperties;
           }}
+
+          
         />
       </div>
     </div>
