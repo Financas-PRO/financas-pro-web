@@ -33,7 +33,6 @@ function App() {
             <Route path="/simuladores/:id/" element={<Simuladores />} />
             <Route path="/empresa/:id/" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />
-            <Route path="/simulador/cadastrar/:id/" element={<CadastrarSimulador />} />
           </Route>   
 
           <Route element={<ProtectedRoute route="scopeDoc"/>}>
