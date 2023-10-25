@@ -19,7 +19,6 @@ img{
     padding: 35px;
 }
 
-
 .bi-person-plus-fill::before {
     content: "\f4dc";
     color: #12304A !important;

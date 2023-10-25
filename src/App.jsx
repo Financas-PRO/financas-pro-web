@@ -10,7 +10,6 @@ import EditaTurma from "./pages/editTurma/editaTurma.jsx";
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/dashboard";
 import Simuladores from "./pages/simuladores/Simuladores";
-import CadastrarSimulador from "./pages/cadSimulador/cadSimulador.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Importa from "./pages/importarAluno/importa";
 import Empresa from "./pages/empresa/empresa";
@@ -20,11 +19,14 @@ import Erro from "./pages/erro/erro";
 
 function App() {
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />  
+    <BrowserRouter>
+      <Routes>
 
-          <Route path="/" element={<Dashboard />} />   
+        <Route path="/login" element={<Login />} />
+
+        <Route element={<ProtectedRoute route="checkAuth" />}>
+
+          <Route path="/" element={<Dashboard />} />
           <Route path="/demonstrativo" element={<Demonstrativo />} />
                
           <Route element={<ProtectedRoute route="scopeAluno"/>}>
@@ -36,15 +38,21 @@ function App() {
 
           <Route element={<ProtectedRoute route="scopeDoc"/>}>
             <Route path="/importa/:id/" element={<Importa />} />
+
           </Route>
 
+          <Route element={<ProtectedRoute route="scopeDoc" />}>
+            <Route path="/importa/:id/" element={<Importa />} />
             <Route path="turma/cadastrar" element={<CadastrarTurma />} />
             <Route path="turma/gerenciar" element={<GerenciarTurma />} />
             <Route path="turma/:id/editar" element={<EditaTurma />} />
-            <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
-            <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
-            <Route path="professor/:id/editar" element={<EditaProfessor />} />
+          </Route>
 
+          <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
+          <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
+          <Route path="professor/:id/editar" element={<EditaProfessor />} />
+
+        </Route>
 
             <Route path="/erro" element={<Erro />} />
 
@@ -54,3 +62,4 @@ function App() {
 }
 
 export default App;
+
