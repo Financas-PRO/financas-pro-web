@@ -24,7 +24,6 @@ export default function Simuladores() {
         api.get(`grupo/${id}`)
         .then(res => {
             if (res.status == 200){
-                console.log(res.data);
                 setGrupos(res.data.data);
             }
         })
@@ -50,7 +49,7 @@ export default function Simuladores() {
 
 
                 <div className="cadButton">
-                    <Link to={`/simulador02/cadastrar/${id}`} className="btn-criarSi">
+                    <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
                     <i class="bi bi-bookmark-plus-fill"></i>
                         Criar nova simulação
                     </Link>

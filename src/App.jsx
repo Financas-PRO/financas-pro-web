@@ -14,7 +14,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Importa from "./pages/importarAluno/importa";
 import Empresa from "./pages/empresa/empresa";
 import Turmas from "./pages/turmas/turmas";
-import CadSimulador02 from "./pages/cadSimulador02/cadSimulador02";
+import Demonstrativo from "./pages/demonstrativo/demonstrativo";
+import Erro from "./pages/erro/erro";
 
 function App() {
   return (
@@ -26,13 +27,17 @@ function App() {
         <Route element={<ProtectedRoute route="checkAuth" />}>
 
           <Route path="/" element={<Dashboard />} />
-
-          <Route path="/turmas" element={<Turmas />} />
-
-          <Route element={<ProtectedRoute route="scopeAluno" />}>
+          <Route path="/demonstrativo" element={<Demonstrativo />} />
+               
+          <Route element={<ProtectedRoute route="scopeAluno"/>}>
             <Route path="/simuladores/:id/" element={<Simuladores />} />
-            <Route path="/empresa" element={<Empresa />} />
-            <Route path="/simulador02/cadastrar/:id/" element={<CadSimulador02 />} />
+            <Route path="/empresa/:id/" element={<Empresa />} />
+            <Route path="/turmas" element={<Turmas />} />
+          </Route>   
+
+          <Route element={<ProtectedRoute route="scopeDoc"/>}>
+            <Route path="/importa/:id/" element={<Importa />} />
+
           </Route>
 
           <Route element={<ProtectedRoute route="scopeDoc" />}>
@@ -48,9 +53,12 @@ function App() {
 
         </Route>
 
-      </Routes>
-    </BrowserRouter>
+            <Route path="/erro" element={<Erro />} />
+
+        </Routes>
+      </BrowserRouter>
   );
 }
 
 export default App;
+

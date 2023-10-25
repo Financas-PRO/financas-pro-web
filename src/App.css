@@ -53,6 +53,11 @@ body{
  
 }
 
+.table>:not(caption)>*>* {
+  color: #fff !important;
+  background-color: #12304A !important; 
+}
+
 label{
   color: #fff;
   font-weight: 500;
@@ -197,5 +202,4 @@ button{
     margin-right: 40px;
     padding: 3px;
   }
-
 }

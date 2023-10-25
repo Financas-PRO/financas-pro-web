@@ -1,0 +1,14 @@
+.cardFundo{
+    background-color: #12304A;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.bi-file-earmark-bar-graph::before {
+    content: "\f35a";
+    color: #12304A;
+}
+
+.margin-icon{
+    margin-right: 5px;
+}

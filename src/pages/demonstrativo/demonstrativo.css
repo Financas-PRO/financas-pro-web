@@ -1,0 +1,63 @@
+img{
+    margin-left: 6px;
+    position: relative;
+    bottom: 3px;
+}
+
+.img{
+    margin-right: 1rem;
+}
+
+.square{
+    padding: 30px;
+}
+
+#sidebar {
+    z-index: 1; 
+}
+
+.cardFundoDemonstrativo{
+    background-color: #12304A;
+    border-radius: 10px;
+    padding:8px;
+}
+
+.tituloDemonstrativo{
+    /* font-weight: bold; */
+    font-size: 1.3rem;
+}
+
+.bi-clipboard2::before {
+    content: "\f733";
+    color: #12304A !important;
+}
+
+
+.custom-hot-table {
+    color: black !important; /* Set the font color to black */
+    z-index: 0; 
+  }
+
+  .handsontable th{
+    background-color: #12304A !important;
+  }
+  
+  .handsontable span{
+    color: white !important;
+  }
+
+  .handsontable span.colHeader{
+    font-size: 15px;
+  }
+
+  .buttonExcel{
+    background-color: #28a745;
+    width: 100px;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    float: right;
+    margin-right: 3%;
+  }
+
+

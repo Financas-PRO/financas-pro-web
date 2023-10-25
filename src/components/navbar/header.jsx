@@ -8,6 +8,7 @@ import {
   CDBSidebarHeader,
   CDBSidebarMenu,
   CDBSidebarMenuItem,
+  
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ const HeaderCoord = () => {
   return (
     <>
       <NavLink to="/">
-        <CDBSidebarMenuItem icon="gauge-high">Dashboard</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="th">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turma/gerenciar">
         <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
@@ -33,7 +34,7 @@ const HeaderAluno = () => {
   return (
     <>
       <NavLink to="/">
-        <CDBSidebarMenuItem icon="home">Dashboard</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="th">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turmas">
         <CDBSidebarMenuItem icon="shapes">Minhas Turmas</CDBSidebarMenuItem>
@@ -49,13 +50,16 @@ const HeaderDocente = () => {
   return (
     <>
       <NavLink to="/">
-        <CDBSidebarMenuItem icon="gauge-high">Dashboard</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="th">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turmas">
         <CDBSidebarMenuItem icon="shapes">Minhas Turmas</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turma/gerenciar">
         <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink to="/demonstrativo">
+        <CDBSidebarMenuItem icon="chart-line">Demonstrativo Financeiro</CDBSidebarMenuItem>
       </NavLink>
     </>
 
@@ -90,7 +94,7 @@ const Header = () => {
 
   return (
     // <div>
-    <div style={{ display: 'flex', height: '100vh', position: 'fixed', overflow: 'scroll initial' }}>
+    <div style={{ display: 'flex', height: '100%', position: 'fixed', overflow: 'scroll initial' }}>
       <CDBSidebar textColor="#fff" backgroundColor="#12304A">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
@@ -102,6 +106,7 @@ const Header = () => {
           <CDBSidebarMenu>
             {header}
           </CDBSidebarMenu>
+          
         </CDBSidebarContent>
 
         <CDBSidebarFooter>

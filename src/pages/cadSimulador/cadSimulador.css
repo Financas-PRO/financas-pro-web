@@ -8,11 +8,13 @@ img{
     margin-right: 1rem;
 }
 
-
 .square{
     padding: 35px;
 }
 
+#sidebar {
+    z-index: 1; 
+}
 .formSimulador{
     display: flex;
     flex-direction: column;
@@ -36,16 +38,9 @@ img{
     color: #12304A !important;
 }
 
-  .alunos-checkboxes .form-check {
-    display: flex;
-    align-items: baseline; 
-  }
-  
-  .alunos-checkboxes .form-check-input {
-    margin-right: 10px; 
-  }
 
-  .alunos-checkboxes .form-check-label {
-    display: inline; 
-    margin-left: 10px; 
-  }
+.bi-person-fill::before {
+    content: "\f4da";
+    font-size: 1.2rem;
+}
+
