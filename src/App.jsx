@@ -28,7 +28,7 @@ function App() {
                
           <Route element={<ProtectedRoute route="scopeAluno"/>}>
             <Route path="/simuladores/:id/" element={<Simuladores />} />
-            <Route path="/empresa" element={<Empresa />} />
+            <Route path="/empresa/:id/" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />
             <Route path="/simulador/cadastrar/:id/" element={<CadastrarSimulador />} />
           </Route>   
