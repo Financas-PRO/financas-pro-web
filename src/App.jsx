@@ -25,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />  
 
           <Route path="/" element={<Dashboard />} />   
+          <Route path="/demonstrativo" element={<Demonstrativo />} />
                
           <Route element={<ProtectedRoute route="scopeAluno"/>}>
             <Route path="/simuladores/:id/" element={<Simuladores />} />
@@ -44,7 +45,6 @@ function App() {
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
 
-            <Route path="/demonstrativo" element={<Demonstrativo />} />
 
             <Route path="/erro" element={<Erro />} />
 

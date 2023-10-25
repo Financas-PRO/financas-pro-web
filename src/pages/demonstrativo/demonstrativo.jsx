@@ -10,10 +10,8 @@ import { registerAllModules } from "handsontable/registry";
 import { registerRenderer, textRenderer } from "handsontable/renderers";
 import ExcelJS from "exceljs"; // npm install exceljs
 import { saveAs } from "file-saver"; // npm install file-saver
-
-
-
-
+import { HyperFormula } from 'hyperformula';
+import Loading from "../../components/loading/loading";
 
 registerAllModules();
 
@@ -21,21 +19,28 @@ export default function Demostrativo() {
 
   const [acao, setAcao] = useState([]);
   const hotTableComponent = useRef([]);
+  const [loading, setLoading] = useState(false);
 
-
-  
+  const options = {
+    licenseKey: 'internal-use-in-handsontable'
+  };
+  const hfInstance = HyperFormula.buildEmpty(options);
 
   /*----------------FUNÇÃO PARA LISTAR TODOS DADOS AÇÕES SELECIONADA --------------------------- */
   useEffect(() => {
+    setLoading(true);
     api.get(`acoes/1`).then((res) => {
       //console.log(res);
       console.log(res.data.data);
       setAcao(res.data.data);
-    });
+    })
+      .finally(res => {
+        setLoading(false);
+      });
   }, []);
   /*-----------------------------------------------------------------------------------------------*/
 
-  
+
   /*----------------------------------EXPORTA POR EXCEL------------------------------------------*/
   const exportarExcel = () => {
     if (hotTableComponent.current) {
@@ -43,7 +48,7 @@ export default function Demostrativo() {
       const data = hotInstance.getData();
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet("Demonstrativo Financeiro");
-  
+
       // Adicione os dados nas colunas, pulando a primeira linha que contém os cabeçalhos de linha
       data.forEach((row, rowIndex) => {
         if (rowIndex === 0) {
@@ -58,36 +63,37 @@ export default function Demostrativo() {
           });
         }
       });
-  
+
       // Gere um nome de arquivo com uma data aleatória
       const currentDate = new Date();
       const randomDate = `${currentDate.getFullYear()}${currentDate.getMonth() + 1}${currentDate.getDate()}_${Math.floor(Math.random() * 10000)}`;
       const fileName = `Demonstrativo_${randomDate}.xlsx`;
-  
+
       // Crie um Blob a partir do arquivo Excel
       workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
-  
+
         // Use a biblioteca 'file-saver' para salvar o blob com o nome gerado
         saveAs(blob, fileName);
       });
     }
   };
-  
- /*-----------------------------------------------------------------------------------------------*/
-  
-/*--------------------------------------FORMATAÇÃO DE VALOR - R$ ---------------------------------*/
+
+  /*-----------------------------------------------------------------------------------------------*/
+
+  /*--------------------------------------FORMATAÇÃO DE VALOR - R$ ---------------------------------*/
   const formatarMoeda = (valor) => {
-    if (valor) {
-      const options = {
-        style: "currency",
-        currency: "BRL",
-      };
-      return new Intl.NumberFormat("pt-BR", options).format(valor);
-    }
-    return "";
+    // if (valor) {
+    //   const options = {
+    //     style: "currency",
+    //     currency: "BRL",
+    //   };
+    //   return new Intl.NumberFormat("pt-BR", options).format(valor);
+    // }
+    // return "";
+    return valor;
   };
   /*-----------------------------------------------------------------------------------------------*/
 
@@ -120,29 +126,29 @@ export default function Demostrativo() {
   // precisei fazer uma verificação ternaria de cada ação, onde se ação tiver propriedade ele retorna o dado se nao retorna vazio
   const hotTableData = [
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["PREÇO MERCADO REGULAR",acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
-    ["ALTA MERCADO REGULAR",acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
-    ["BAIXA MERCADO REGULAR",acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "": ""],
-    ["INTERVALO MERCADO REGULAR",acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
-    ["VARIAÇÃO MERCARDO REGULAR",acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
-    ["VALOR MERCADO",acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
-    ["VOLUME MERCADO REGULAR",acaoSelecionada? formatarMoeda(acaoSelecionada.volume_merc_regular) || "": ""],
-    ["FECHAMENTO ANTERIOR MERCADO REGULAR",acaoSelecionada? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "": ""],
-    ["ABERTURA MERCADO REGULAR",acaoSelecionada? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "": ""],
-    ["PREÇO LUCRO",acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
+    ["PREÇO MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
+    ["ALTA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
+    ["BAIXA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "" : ""],
+    ["INTERVALO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
+    ["VARIAÇÃO MERCARDO REGULAR", acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
+    ["VALOR MERCADO", acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
+    ["VOLUME MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.volume_merc_regular) || "" : ""],
+    ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "" : ""],
+    ["ABERTURA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "" : ""],
+    ["PREÇO LUCRO", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["HISTORICO",...Object.keys(historicoData)], // Adicione as datas na primeira linha
-    ["PREÇO ABERTURA",...Object.values(historicoData).map((item) => item["Preço Abertura"])],
-    ["PREÇO MAIS ALTO",...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
-    ["PREÇO MAIS BAIXO",...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
-    ["PREÇO FECHAMENTO",...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
-    ["PREÇO FECHAMENTO AJUSTADO",...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
+    ["HISTORICO", ...Object.keys(historicoData)], // Adicione as datas na primeira linha
+    ["PREÇO ABERTURA", ...Object.values(historicoData).map((item) => item["Preço Abertura"])],
+    ["PREÇO MAIS ALTO", ...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
+    ["PREÇO MAIS BAIXO", ...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
+    ["PREÇO FECHAMENTO", ...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
+    ["PREÇO FECHAMENTO AJUSTADO", ...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ...Object.keys(demonstrativosData).map((key) => [
       key.toUpperCase(), demonstrativosData[key],
     ]),
     ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    
+
   ];
   /*-----------------------------------------------------------------------------------------------*/
   /*-------------------------------------COR NA COLUNA DA PLANILHA---------------------------------*/
@@ -186,142 +192,160 @@ export default function Demostrativo() {
 
 
   return (
+
     <div className="row-page">
       <div className="col col-md-2 col-2" id="sidebar">
         <Header />
       </div>
 
       <div className="container mt-4 col-md-8 col-9">
-        <Title
-          icon="bi-bezier2"
-          titulo="Demonstrativo Financeiro"
-          subTitulo="Demonstrativo financeiro da empresa"
-        />
+        {
+          loading ? (
+            <div className="h-100 w-100 col-12 aling-items-center"> 
+              <Loading />
+            </div>
+            
+          ) :
+            (
+              <>
 
-        <div className="row mt-4 mb-4 cardFundoDemonstrativo">
-          <div className="row square">
-            <label className="mb-2 tituloDemonstrativo">
-              Informações Gerais
-            </label>
-            <div className="col col-md-4 col-12 ">
-              <label>Nome</label>
-              <input
-                type="text"
-                name="nome"
-                className="form-control"
-                value={acao[0]?.nome_completo || ""}
-                readOnly
-              />
-            </div>
-            <div className="col col-md-4 col-12 ">
-              <label>Capitalização de Mercado</label>
-              <input
-                type="text"
-                name="capitalizacao_mercado"
-                className="form-control"
-                value={formatarMoeda(acao[0]?.valor_merc) || ""}
-                readOnly
-              />
-            </div>
+                <Title
+                  icon="bi-bezier2"
+                  titulo="Demonstrativo Financeiro"
+                  subTitulo="Demonstrativo financeiro da empresa"
+                />
 
-            <div className="col col-md-4 col-12 ">
-              <label>Ultima atualização</label>
-              <input
-                type="text"
-                name="data_cotacao"
-                className="form-control"
-                value={acao[0]?.data_importacao || ""}
-                readOnly
-              />
-            </div>
-            <div className="col col-md-6 col-12 ">
-              <label>Codigo</label>
-              <input
-                type="text"
-                name="codigo"
-                className="form-control"
-                value={acao[0]?.simbolo || ""}
-                readOnly
-              />
-            </div>
-            <div className="col col-md-6 col-12 ">
-              <label>Lucro</label>
-              <input
-                type="text"
-                name="acao_atual"
-                className="form-control"
-                value={formatarMoeda(acao[0]?.preco_lucro) || ""}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="float-right mb-2">
-            <button
-              className="btn btn-success buttonExcel"
-              onClick={exportarExcel}
-            >
-              Excel
-            </button>
-          </div>
-        </div>
+                <div className="row mt-4 mb-4 cardFundoDemonstrativo">
+                  <div className="row square">
+                    <label className="mb-2 tituloDemonstrativo">
+                      Informações Gerais
+                    </label>
+                    <div className="col col-md-4 col-12 ">
+                      <label>Nome</label>
+                      <input
+                        type="text"
+                        name="nome"
+                        className="form-control"
+                        value={acao[0]?.nome_completo || ""}
+                        readOnly
+                      />
+                    </div>
+                    <div className="col col-md-4 col-12 ">
+                      <label>Capitalização de Mercado</label>
+                      <input
+                        type="text"
+                        name="capitalizacao_mercado"
+                        className="form-control"
+                        value={formatarMoeda(acao[0]?.valor_merc) || ""}
+                        readOnly
+                      />
+                    </div>
 
-        <HotTable
-          ref={hotTableComponent}
-          data={hotTableData}
-          width="100%"
-          height="auto"
-          rowHeaderWidth={60}
-          rowHeaders={true}
-          // rowHeaders={[
-          //   "INFORMAÇÕES GERAIS",
-          //   "PREÇO MERCADO REGULAR",
-          //   "ALTA MERCADO REGULAR",
-          //   "BAIXA MERCADO REGULAR",
-          //   "INTERVALO MERCADO REGULAR",
-          //   "VARIAÇÃO MERCARDO REGULAR",
-          //   "VALOR MERCADO",
-          //   "VOLUME MERCADO REGULAR",
-          //   "FECHAMENTO ANTERIOR MERCADO REGULAR",
-          //   "ABERTURA MERCADO REGULAR",
-          //   "PREÇO LUCRO",
-          //   "",
-          //   "HISTORICO",
-          //   "PREÇO ABERTURA",
-          //   "PREÇO MAIS ALTO",
-          //   "PREÇO MAIS BAIXO",
-          //   "PREÇO FECHAMENTO",
-          //   "PREÇO FECHAMENTO AJUSTADO",
-          //   "",
-          //   "",
-          // ]}
-          colHeaders={true}
-          rowHeights={40}
-          colHeights={40}
-          colWidths={180}
-          mergeCells={[
-            { row: 0, col: 0, rowspan: 1, colspan: 14 },
-            { row: 11, col: 0, rowspan: 1, colspan: 14 },
-            { row: 18, col: 0, rowspan: 1, colspan: 14 },
-          ]}
-          className="custom-hot-table htCenter"
-          licenseKey="non-commercial-and-evaluation"
-          cells={function (row, col) {
-            const cellProperties = {};
-            if (row === 0) {
-              cellProperties.renderer = firstRowRenderer;
-            } else if (row === 11) {
-              cellProperties.renderer = firstRowRenderer;
-            } else if (row === 18) {
-              cellProperties.renderer = firstRowRenderer;
-            } 
-            else {
-              cellProperties.renderer = "negativeValueRenderer";
-            }
-            return cellProperties;
-          }}
+                    <div className="col col-md-4 col-12 ">
+                      <label>Ultima atualização</label>
+                      <input
+                        type="text"
+                        name="data_cotacao"
+                        className="form-control"
+                        value={acao[0]?.data_importacao || ""}
+                        readOnly
+                      />
+                    </div>
+                    <div className="col col-md-6 col-12 ">
+                      <label>Codigo</label>
+                      <input
+                        type="text"
+                        name="codigo"
+                        className="form-control"
+                        value={acao[0]?.simbolo || ""}
+                        readOnly
+                      />
+                    </div>
+                    <div className="col col-md-6 col-12 ">
+                      <label>Lucro</label>
+                      <input
+                        type="text"
+                        name="acao_atual"
+                        className="form-control"
+                        value={formatarMoeda(acao[0]?.preco_lucro) || ""}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                  <div className="float-right mb-2">
+                    <button
+                      className="btn btn-success buttonExcel"
+                      onClick={exportarExcel}
+                    >
+                      Excel
+                    </button>
+                  </div>
+                </div>
 
-          
-        />
+                <HotTable
+                  ref={hotTableComponent}
+                  data={hotTableData}
+                  width="100%"
+                  height="auto"
+                  rowHeaderWidth={60}
+                  rowHeaders={true}
+                  formulas={{
+                    engine: hfInstance
+                  }}
+                  // rowHeaders={[
+                  //   "INFORMAÇÕES GERAIS",
+                  //   "PREÇO MERCADO REGULAR",
+                  //   "ALTA MERCADO REGULAR",
+                  //   "BAIXA MERCADO REGULAR",
+                  //   "INTERVALO MERCADO REGULAR",
+                  //   "VARIAÇÃO MERCARDO REGULAR",
+                  //   "VALOR MERCADO",
+                  //   "VOLUME MERCADO REGULAR",
+                  //   "FECHAMENTO ANTERIOR MERCADO REGULAR",
+                  //   "ABERTURA MERCADO REGULAR",
+                  //   "PREÇO LUCRO",
+                  //   "",
+                  //   "HISTORICO",
+                  //   "PREÇO ABERTURA",
+                  //   "PREÇO MAIS ALTO",
+                  //   "PREÇO MAIS BAIXO",
+                  //   "PREÇO FECHAMENTO",
+                  //   "PREÇO FECHAMENTO AJUSTADO",
+                  //   "",
+                  //   "",
+                  // ]}
+                  colHeaders={true}
+                  rowHeights={40}
+                  colHeights={40}
+                  colWidths={180}
+                  mergeCells={[
+                    { row: 0, col: 0, rowspan: 1, colspan: 14 },
+                    { row: 11, col: 0, rowspan: 1, colspan: 14 },
+                    { row: 18, col: 0, rowspan: 1, colspan: 14 },
+                  ]}
+                  className="custom-hot-table htCenter"
+                  licenseKey="non-commercial-and-evaluation"
+                  cells={function (row, col) {
+                    const cellProperties = {};
+                    if (row === 0) {
+                      cellProperties.renderer = firstRowRenderer;
+                    } else if (row === 11) {
+                      cellProperties.renderer = firstRowRenderer;
+                    } else if (row === 18) {
+                      cellProperties.renderer = firstRowRenderer;
+                    }
+                    else {
+                      cellProperties.renderer = "negativeValueRenderer";
+                    }
+                    return cellProperties;
+                  }}
+                />
+
+
+              </>
+            )
+        }
+
       </div>
     </div>
   );
