@@ -23,11 +23,12 @@ function App() {
       <Routes>
 
         <Route path="/login" element={<Login />} />
+        <Route path="/demonstrativo" element={<Demonstrativo />} />
+
 
         <Route element={<ProtectedRoute route="checkAuth" />}>
 
           <Route path="/" element={<Dashboard />} />
-          <Route path="/demonstrativo" element={<Demonstrativo />} />
                
           <Route element={<ProtectedRoute route="scopeAluno"/>}>
             <Route path="/simuladores/:id/" element={<Simuladores />} />
