@@ -16,6 +16,7 @@ import Empresa from "./pages/empresa/empresa";
 import Turmas from "./pages/turmas/turmas";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 import Erro from "./pages/erro/erro";
+import Graficos from "./pages/graficos/graficos";
 
 function App() {
   return (
@@ -33,11 +34,11 @@ function App() {
             <Route path="/simuladores/:id/" element={<Simuladores />} />
             <Route path="/empresa/:id/" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />
+            <Route path="/graficos" element={<Graficos />} />
           </Route>   
 
           <Route element={<ProtectedRoute route="scopeDoc"/>}>
             <Route path="/importa/:id/" element={<Importa />} />
-
           </Route>
 
           <Route element={<ProtectedRoute route="scopeDoc" />}>
