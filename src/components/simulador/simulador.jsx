@@ -14,11 +14,11 @@ export default function Simulador(props) {
             <div className="card-simuladores">
                 <div className="titulo-simuladores"><i className="bi bi-diagram-2"></i> {props.titulo}</div>
                 <div className="card-conteudo mt-3">
-                    <span className="etapa">{props.etapa}</span>
+                    <span className="etapa">Etapa: {props.etapa}</span>
                     <span className="nomes"><i className="bi bi-people-fill"></i>{props.nomes}</span>
                 </div>
                 <div className="footer-card">
-                    <Link className="link mt-3 mb-2">
+                    <Link className="link mt-3 mb-2" to={props.rota} replace={true}>
                         Clique aqui para retornar <i class="bi bi-arrow-right"></i>
                     </Link>
                 </div>
