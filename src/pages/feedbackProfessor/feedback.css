@@ -1,0 +1,4 @@
+.bi-clipboard-fill::before {
+    content: "\f71d";
+    color: #12304A;
+}

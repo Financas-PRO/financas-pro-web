@@ -17,6 +17,8 @@ import Turmas from "./pages/turmas/turmas";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 import Erro from "./pages/erro/erro";
 import Graficos from "./pages/graficos/graficos";
+import Analise from "./pages/analiseAluno/analise";
+import Feedback from "./pages/feedbackProfessor/feedback";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
             <Route path="/empresa/:id/" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />
             <Route path="/graficos" element={<Graficos />} />
+            <Route path="/analise" element={<Analise/>} />
+            <Route path="/feedback" element={<Feedback/>} />
           </Route>   
 
           <Route element={<ProtectedRoute route="scopeDoc"/>}>
