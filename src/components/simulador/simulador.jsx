@@ -1,5 +1,3 @@
-// Desenvolvedores: João Pontes e Leonardo Mariano
-
 import "./simulador.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";

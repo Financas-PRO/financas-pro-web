@@ -1,0 +1,4 @@
+.bi-bookmark-fill::before {
+    content: "\f199";
+    color: #12304A;
+}
