@@ -16,9 +16,11 @@ import Empresa from "./pages/empresa/empresa";
 import Turmas from "./pages/turmas/turmas";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 import Erro from "./pages/erro/erro";
+import CadSimulador from "./pages/cadSimulador/cadSimulador";
 import Graficos from "./pages/graficos/graficos";
 import Analise from "./pages/analiseAluno/analise";
 import Feedback from "./pages/feedbackProfessor/feedback";
+
 
 function App() {
   return (
@@ -26,19 +28,22 @@ function App() {
       <Routes>
 
         <Route path="/login" element={<Login />} />
+        <Route path="/demonstrativo" element={<Demonstrativo />} />
+
 
         <Route element={<ProtectedRoute route="checkAuth" />}>
 
           <Route path="/" element={<Dashboard />} />
-          <Route path="/demonstrativo" element={<Demonstrativo />} />
                
           <Route element={<ProtectedRoute route="scopeAluno"/>}>
             <Route path="/simuladores/:id/" element={<Simuladores />} />
             <Route path="/empresa/:id/" element={<Empresa />} />
             <Route path="/turmas" element={<Turmas />} />
+            <Route path="/simulador/cadastrar/:id" element={<CadSimulador/>}/>
             <Route path="/graficos" element={<Graficos />} />
             <Route path="/analise" element={<Analise/>} />
             <Route path="/feedback" element={<Feedback/>} />
+              
           </Route>   
 
           <Route element={<ProtectedRoute route="scopeDoc"/>}>
@@ -55,6 +60,8 @@ function App() {
           <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
           <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
           <Route path="professor/:id/editar" element={<EditaProfessor />} />
+          <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
+
 
         </Route>
 

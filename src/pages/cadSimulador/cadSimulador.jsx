@@ -5,13 +5,13 @@ import api from "../../services/api";
 import Header from "../../components/navbar/header";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import Select from "react-select";
 
-export default function CadSimulador02() {
+export default function CadSimulador() {
   let { id } = useParams();
   let navigate = useNavigate();
 
@@ -45,7 +45,7 @@ export default function CadSimulador02() {
             toast.success("Grupo criado com sucesso");
 
             setTimeout(() => {
-              return navigate(`/empresa/${id}`, { replace: true });
+              return navigate(`/empresa/${res.data.data.id}`, { replace: true });
             }, 4000);
           }
         })

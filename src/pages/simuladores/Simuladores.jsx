@@ -50,7 +50,7 @@ export default function Simuladores() {
 
                 <div className="cadButton">
                     <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
-                    <i class="bi bi-bookmark-plus-fill"></i>
+                    <i className="bi bi-bookmark-plus-fill"></i>
                         Criar nova simulação
                     </Link>
                 </div>
@@ -70,8 +70,9 @@ export default function Simuladores() {
                             return (
                                 <Simulador
                                     titulo={grupo.descricao}
-                                    etapa="Etapa: Gráficos"
+                                    etapa={grupo.etapa}
                                     nomes={alunos.join(", ")}
+                                    rota={grupo.rota}
                                 />
 
                             )
@@ -82,7 +83,7 @@ export default function Simuladores() {
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
                     <ButtonSalvar nome="Salvar" />
-                    <ButtonCancelar link="dashboard" nome="Cancelar" />
+                    <ButtonCancelar link="turmas" nome="Cancelar" />
                 </div>
             </div>
 
