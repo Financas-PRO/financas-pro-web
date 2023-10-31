@@ -41,8 +41,8 @@ export default function CadTurma() {
 
           Object.keys(resposta).forEach(function (index) {
             erros += resposta[index] + "\n";
-
           });
+          
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,

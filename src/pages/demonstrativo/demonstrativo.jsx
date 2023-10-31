@@ -12,14 +12,31 @@ import ExcelJS from "exceljs"; // npm install exceljs
 import { saveAs } from "file-saver"; // npm install file-saver
 import { HyperFormula } from 'hyperformula';
 import Loading from "../../components/loading/loading";
+import ButtonSalvar from "../../components/button/buttonSalvar";
+import ButtonCancelar from "../../components/button/buttonCancelar";
+import { useParams, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 registerAllModules();
 
 export default function Demostrativo() {
 
+  let { id } = useParams();
+  let navigate = useNavigate();
+
   const [acao, setAcao] = useState([]);
+  const [acaoSelecionada, setAcaoSelecionada] = useState({});
   const hotTableComponent = useRef([]);
   const [loading, setLoading] = useState(false);
+  const [planilha, setPlanilha] = useState([]);
+
+  const [grupo, setGrupo] = useState({
+    id: 1,
+    turma: {
+      id: 1
+    }
+  });
 
   const options = {
     licenseKey: 'internal-use-in-handsontable'
@@ -29,15 +46,49 @@ export default function Demostrativo() {
   /*----------------FUNÇÃO PARA LISTAR TODOS DADOS AÇÕES SELECIONADA --------------------------- */
   useEffect(() => {
     setLoading(true);
-    api.get(`acoes/1`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
+    api.get(`acoes/${id}`).then((res) => {
       setAcao(res.data.data);
+      setGrupo({
+        id: res.data.data.id,
+        turma: {
+          id: res.data.data[0].grupo.turma.id
+        }
+      });
+      setAcaoSelecionada(res.data.data[0]);
     })
       .finally(res => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    getTableData();
+  }, [acaoSelecionada])
+
+  function handleAcaoChange(e) {
+
+    const value = e.target.value;
+
+    if (hotTableComponent.current) {
+      const hotInstance = hotTableComponent.current.hotInstance;
+      const data_planilha = hotInstance.getSourceData();
+
+      let copia_dados = acao;
+
+      copia_dados.forEach(val => {
+        if (val.id == acaoSelecionada.id) {
+          val.planilha_grupo = data_planilha;
+        }
+
+        if (val.id == value) {
+          setAcaoSelecionada(val);
+        }
+      });
+
+      setAcao(copia_dados);
+
+    }
+  }
   /*-----------------------------------------------------------------------------------------------*/
 
 
@@ -95,61 +146,116 @@ export default function Demostrativo() {
     // return "";
     return valor;
   };
+
+  async function handleSubmit(e) {
+
+    if (hotTableComponent.current) {
+      const hotInstance = hotTableComponent.current.hotInstance;
+      const data = hotInstance.getSourceData();
+
+      api.put(`grupo/${grupo.id}`, { etapa: "Gráficos", planilha_grupo: data })
+        .then(async (res) => {
+          if (res.status) {
+            toast.success("Dados salvos com sucesso! Redirecionando...");
+
+            setTimeout(() => {
+              return navigate(`/analise/${grupo.id}`, { replace: true });
+            }, 1500);
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+          let resposta = error.response.data.error;
+
+          var erros = "";
+
+          Object.keys(resposta).forEach(function (index) {
+            erros += resposta[index] + "\n";
+
+          });
+          toast.error(`Erro ao Logar!\n ${erros}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            style: { whiteSpace: "pre-line" },
+          });
+        });
+
+    }
+
+  }
   /*-----------------------------------------------------------------------------------------------*/
 
   /*-------------------------------------RETORNO DOS DADOS NA PLANILHA ----------------------------*/
 
-  const acaoSelecionada = acao[0]; // Assumindo que você está pegando apenas o primeiro item da resposta da API
-
-  const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
-
-  const demonstrativosData = acaoSelecionada && acaoSelecionada.demonstrativos ? acaoSelecionada.demonstrativos : {};
 
 
-  if (acaoSelecionada && acaoSelecionada.historico) {
-    // nesta parte verifico se não ha objeto indefinido ou nulo
-    acaoSelecionada.historico.forEach((historicoItem) => {
-      // faço uma repitação para percorrer o array
-      const dataAcao = new Date(historicoItem.data_acao).toLocaleDateString(); // entao aqui para cada data sera inserido abaixo os elementos abaixo
-      historicoData[dataAcao] = {
-        "Preço Abertura": formatarMoeda(historicoItem.preco_abertura),
-        "Preço Mais Alto": formatarMoeda(historicoItem.preco_mais_alto),
-        "Preço Mais Baixo": formatarMoeda(historicoItem.preco_mais_baixo),
-        "Preço Fechamento": formatarMoeda(historicoItem.preco_fechamento),
-        "Preço Fechamento Ajustado": formatarMoeda(
-          historicoItem.preco_fechamento_ajustado
-        ),
-      };
-    });
+  function getTableData() {
+
+
+
+    if (acaoSelecionada.planilha_grupo) {
+      setPlanilha(acaoSelecionada.planilha_grupo);
+    } else {
+
+      const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
+
+      const demonstrativosData = acaoSelecionada && acaoSelecionada.demonstrativos ? acaoSelecionada.demonstrativos : {};
+
+      if (acaoSelecionada && acaoSelecionada.historico) {
+        // nesta parte verifico se não ha objeto indefinido ou nulo
+        acaoSelecionada.historico.forEach((historicoItem) => {
+          // faço uma repitação para percorrer o array
+          const dataAcao = new Date(historicoItem.data_acao).toLocaleDateString(); // entao aqui para cada data sera inserido abaixo os elementos abaixo
+          historicoData[dataAcao] = {
+            "Preço Abertura": formatarMoeda(historicoItem.preco_abertura),
+            "Preço Mais Alto": formatarMoeda(historicoItem.preco_mais_alto),
+            "Preço Mais Baixo": formatarMoeda(historicoItem.preco_mais_baixo),
+            "Preço Fechamento": formatarMoeda(historicoItem.preco_fechamento),
+            "Preço Fechamento Ajustado": formatarMoeda(
+              historicoItem.preco_fechamento_ajustado
+            ),
+          };
+        });
+      }
+      
+      const data = [
+        ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ["PREÇO MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
+        ["ALTA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
+        ["BAIXA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "" : ""],
+        ["INTERVALO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
+        ["VARIAÇÃO MERCARDO REGULAR", acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
+        ["VALOR MERCADO", acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
+        ["VOLUME MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.volume_merc_regular) || "" : ""],
+        ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "" : ""],
+        ["ABERTURA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "" : ""],
+        ["PREÇO LUCRO", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
+        ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ["HISTORICO", ...Object.keys(historicoData)], // Adicione as datas na primeira linha
+        ["PREÇO ABERTURA", ...Object.values(historicoData).map((item) => item["Preço Abertura"])],
+        ["PREÇO MAIS ALTO", ...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
+        ["PREÇO MAIS BAIXO", ...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
+        ["PREÇO FECHAMENTO", ...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
+        ["PREÇO FECHAMENTO AJUSTADO", ...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
+        ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ...Object.keys(demonstrativosData).map((key) => [
+          key.toUpperCase(), demonstrativosData[key],
+        ]),
+        ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+
+      ];
+
+      setPlanilha(data);
+    }
+
   }
-
   // precisei fazer uma verificação ternaria de cada ação, onde se ação tiver propriedade ele retorna o dado se nao retorna vazio
-  const hotTableData = [
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["PREÇO MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
-    ["ALTA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
-    ["BAIXA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "" : ""],
-    ["INTERVALO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
-    ["VARIAÇÃO MERCARDO REGULAR", acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
-    ["VALOR MERCADO", acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
-    ["VOLUME MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.volume_merc_regular) || "" : ""],
-    ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "" : ""],
-    ["ABERTURA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "" : ""],
-    ["PREÇO LUCRO", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["HISTORICO", ...Object.keys(historicoData)], // Adicione as datas na primeira linha
-    ["PREÇO ABERTURA", ...Object.values(historicoData).map((item) => item["Preço Abertura"])],
-    ["PREÇO MAIS ALTO", ...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
-    ["PREÇO MAIS BAIXO", ...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
-    ["PREÇO FECHAMENTO", ...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
-    ["PREÇO FECHAMENTO AJUSTADO", ...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ...Object.keys(demonstrativosData).map((key) => [
-      key.toUpperCase(), demonstrativosData[key],
-    ]),
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-
-  ];
   /*-----------------------------------------------------------------------------------------------*/
   /*-------------------------------------COR NA COLUNA DA PLANILHA---------------------------------*/
 
@@ -194,6 +300,8 @@ export default function Demostrativo() {
   return (
 
     <div className="row-page">
+      <ToastContainer className="toast-top-right" />
+
       <div className="col col-md-2 col-2" id="sidebar">
         <Header />
       </div>
@@ -201,19 +309,36 @@ export default function Demostrativo() {
       <div className="container mt-4 col-md-8 col-9">
         {
           loading ? (
-            <div className="h-100 w-100 col-12 aling-items-center"> 
+            <div className="h-100 w-100 col-12 aling-items-center">
               <Loading />
             </div>
-            
+
           ) :
             (
               <>
-
                 <Title
                   icon="bi-bezier2"
                   titulo="Demonstrativo Financeiro"
                   subTitulo="Demonstrativo financeiro da empresa"
                 />
+
+                <div className="row mt-2 justify-content-end align-items-center">
+                  <div className="col-md-4 col-12">
+                    <label className="mb-2 tituloDemonstrativo" style={{ color: 'black' }}>
+                      Empresa selecionada
+                    </label>
+                    <select className="form-select" onChange={handleAcaoChange}>
+                      {acao.map(dado => {
+                        return (<option value={dado.id}>{dado.nome_curto}</option>);
+                      })}
+                    </select>
+                  </div>
+
+                  <form className="col-md-8 col-12 justify-content-end d-flex text-center align-items-center" onSubmit={handleSubmit}>
+                    <ButtonCancelar nome="Voltar" link={`simuladores/${grupo.turma.id}`} />
+                    <ButtonSalvar nome="Salvar dados" />
+                  </form>
+                </div>
 
                 <div className="row mt-4 mb-4 cardFundoDemonstrativo">
                   <div className="row square">
@@ -226,7 +351,7 @@ export default function Demostrativo() {
                         type="text"
                         name="nome"
                         className="form-control"
-                        value={acao[0]?.nome_completo || ""}
+                        value={acaoSelecionada?.nome_completo || ""}
                         readOnly
                       />
                     </div>
@@ -236,7 +361,7 @@ export default function Demostrativo() {
                         type="text"
                         name="capitalizacao_mercado"
                         className="form-control"
-                        value={formatarMoeda(acao[0]?.valor_merc) || ""}
+                        value={formatarMoeda(acaoSelecionada?.valor_merc) || ""}
                         readOnly
                       />
                     </div>
@@ -247,7 +372,7 @@ export default function Demostrativo() {
                         type="text"
                         name="data_cotacao"
                         className="form-control"
-                        value={acao[0]?.data_importacao || ""}
+                        value={acaoSelecionada?.data_importacao || ""}
                         readOnly
                       />
                     </div>
@@ -257,7 +382,7 @@ export default function Demostrativo() {
                         type="text"
                         name="codigo"
                         className="form-control"
-                        value={acao[0]?.simbolo || ""}
+                        value={acaoSelecionada?.simbolo || ""}
                         readOnly
                       />
                     </div>
@@ -267,7 +392,7 @@ export default function Demostrativo() {
                         type="text"
                         name="acao_atual"
                         className="form-control"
-                        value={formatarMoeda(acao[0]?.preco_lucro) || ""}
+                        value={formatarMoeda(acaoSelecionada?.preco_lucro) || ""}
                         readOnly
                       />
                     </div>
@@ -284,7 +409,7 @@ export default function Demostrativo() {
 
                 <HotTable
                   ref={hotTableComponent}
-                  data={hotTableData}
+                  data={planilha}
                   width="100%"
                   height="auto"
                   rowHeaderWidth={60}

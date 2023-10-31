@@ -46,7 +46,7 @@ export default function Empresa() {
 
     useEffect(() => {
 
-        axios.get(`https://brapi.dev/api/quote/list?search=${busca}&sortBy=close&sortOrder=desc&limit=10`)
+        axios.get(`https://brapi.dev/api/quote/list?search=${busca}&sortBy=close&sortOrder=desc&limit=12`)
             .then(res => {
                 setResultados(res.data.stocks);
 
@@ -59,17 +59,22 @@ export default function Empresa() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        const empresa_toast = toast.loading("Buscando os dados, aguarde...")
         try {
             api
                 .post(`acoes/${id}`, { empresas: empresaSelecionada, faixa: faixa, intervalo: intervalo })
                 .then(async (res) => {
                     if (res.status) {
-                        toast.success("Informações da empresa salvo com sucesso");
+
+                        toast.update(empresa_toast, {
+                            render: "Dados salvos com sucesso!",
+                            type: "success",
+                            isLoading: false
+                        });
 
                         setTimeout(() => {
                             return navigate(`/demonstrativo/${id}`, { replace: true });
-                        }, 4000);
+                        }, 1500);
                     }
                 })
                 .catch(function (error) {
@@ -156,7 +161,7 @@ export default function Empresa() {
                         <div className="row">
                             <div className="col col-md-12 col-12">
                                 <label><i className="bi bi-search margin-icon"></i>Pesquise a empresa</label>
-                                <input className="form-control" placeholder="empresa" onChange={handleChange}></input>
+                                <input className="form-control" placeholder="Digite aqui o ativo da empresa..." onChange={handleChange}></input>
                             </div>
                             <div className="col col-md-6 col-6">
                                 <label> <i className="bi bi-calendar-range-fill margin-icon"></i>Informe a Faixa</label>
@@ -197,10 +202,10 @@ export default function Empresa() {
 
                             <div className="col col-md-12 col-12">
                                 <label><i className="bi bi-bar-chart-fill margin-icon"></i>Empresas Selecionadas</label>
-                                <input type="text"
+                                <input type="text" disabled
                                     className="form-control mb-4"
                                     placeholder="Selecionados"
-                                    value={empresaSelecionada.join(', ')} />
+                                    value={empresaSelecionada.join(' - ')} />
                             </div>
                         </div>
 
