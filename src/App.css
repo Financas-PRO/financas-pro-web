@@ -204,3 +204,7 @@ button{
     padding: 3px;
   }
 }
+
+.title .bi::before {
+  color: #12304A !important;
+}

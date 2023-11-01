@@ -94,7 +94,7 @@ const Header = () => {
 
   return (
     // <div>
-    <div style={{ display: 'flex', height: '100%', position: 'fixed', overflow: 'scroll initial' }}>
+    <div className="header">
       <CDBSidebar textColor="#fff" backgroundColor="#12304A">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>

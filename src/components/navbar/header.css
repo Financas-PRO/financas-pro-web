@@ -18,3 +18,10 @@ nav{
     border-bottom: none !important;
 
 }
+
+.header {
+    display: flex;
+    height: 100vh;
+    position: fixed; 
+    overflow: scroll initial;
+}

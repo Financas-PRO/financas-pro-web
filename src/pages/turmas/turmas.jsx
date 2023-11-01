@@ -39,7 +39,7 @@ export default function Turmas() {
             <div className="container mt-4 col-md-8">
 
                 <Title
-                    icon="bi-bezier"
+                    icon="bi-person-video3"
                     titulo="Turmas"
                     subTitulo="Selecione a sua turma" />
 

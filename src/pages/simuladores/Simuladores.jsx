@@ -45,13 +45,13 @@ export default function Simuladores() {
                 <Title
                     icon="bi-bezier2"
                     titulo="Simuladores"
-                    subTitulo="Gerenciamento dos simuladores" />
+                    subTitulo="Selecione o simulador desejado" />
 
 
                 <div className="cadButton">
                     <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
                     <i className="bi bi-bookmark-plus-fill"></i>
-                        Criar nova simulação
+                        Criar novo simulador
                     </Link>
                 </div>
 

@@ -5,7 +5,6 @@ import './dashboard.css';
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import vesti2 from '../../assets/image/carrosel/vesti2.png';
 import Title from "../../components/title/title";
 import Video from "../../components/videos/Video";
 
@@ -15,9 +14,8 @@ export default function Dashboard() {
 
         <div className="row-page">
 
-            <div className="col col-md-2 col-2" id="sidebar" >
-                <Header />
-            </div>
+            <Header />
+
 
             <div className="container mt-4 col-md-8 col-9">
 
