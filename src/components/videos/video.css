@@ -1,0 +1,24 @@
+.card-video {
+    height: auto;
+    background-color: #12304a;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px;
+  }
+
+  .card-img {
+    background-image: url("../../assets/image/vesti.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100px;
+  }
+  
+  .conteudo-titulo {
+    font-family: Poppins-bold !important;
+    font-size: 0.9rem;
+  }
+  
+  .button-assita {
+    display: flex;
+    justify-content: center;
+  }

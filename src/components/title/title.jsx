@@ -19,7 +19,7 @@ export default function Title(props) {
                     <div className="col col-md-1 col-12 icon-margin">
                         <i className={`bi ${props.icon} icon-titulo`}></i>
                     </div>
-                    <div className="col col-md-5 w-response">
+                    <div className="d-flex flex-column col col-md-5 w-response">
                         <h2 className="margin-cadastrar-titulo titulo">{props.titulo}</h2>
                         <span className="subtitulo">{props.subTitulo}</span>
                     </div>

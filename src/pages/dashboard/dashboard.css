@@ -8,7 +8,7 @@
   src: url("../public/Poppins/Poppins-Bold.ttf");
 }
 
-.bi-house-gear-fill::before {
+.bi-house-gear-fill::before, .bi-play-btn::before {
   content: "\f890";
   color: #12304a;
 }

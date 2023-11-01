@@ -16,7 +16,7 @@ export default function Turmas(props) {
             <div className="card-turma">
                 <div className="titulo-turma">{props.turma}</div>
                 <Link className="link" to={`/simuladores/${props.id}`}>
-                    Clique para ir na turma
+                    Clique para acessar a turma
                 </Link>
             </div>
         </div>

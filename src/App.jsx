@@ -41,7 +41,7 @@ function App() {
             <Route path="/turmas" element={<Turmas />} />
             <Route path="/simulador/cadastrar/:id" element={<CadSimulador/>}/>
             <Route path="/graficos" element={<Graficos />} />
-            <Route path="/analise" element={<Analise/>} />
+            <Route path="/analise/:id" element={<Analise/>} />
             <Route path="/feedback" element={<Feedback/>} />
               
           </Route>   

@@ -52,8 +52,7 @@ img{
 
   .buttonExcel{
     background-color: #28a745;
-    width: 100px;
-    max-width: 100px;
+    max-width: 170px;
     display: flex;
     justify-content: center;
     float: right;

@@ -49,7 +49,7 @@ export default function Demostrativo() {
     api.get(`acoes/${id}`).then((res) => {
       setAcao(res.data.data);
       setGrupo({
-        id: res.data.data.id,
+        id: res.data.data[0].grupo.id,
         turma: {
           id: res.data.data[0].grupo.turma.id
         }
@@ -94,6 +94,9 @@ export default function Demostrativo() {
 
   /*----------------------------------EXPORTA POR EXCEL------------------------------------------*/
   const exportarExcel = () => {
+
+    const toast_excel = toast.loading("Salvando, aguarde...");
+
     if (hotTableComponent.current) {
       const hotInstance = hotTableComponent.current.hotInstance;
       const data = hotInstance.getData();
@@ -128,6 +131,17 @@ export default function Demostrativo() {
 
         // Use a biblioteca 'file-saver' para salvar o blob com o nome gerado
         saveAs(blob, fileName);
+
+        toast.update(toast_excel, {
+          render: "Arquivo salvo.",
+          type: "success",
+          isLoading: false,
+          autoClose: 1500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true
+        });
       });
     }
   };
@@ -149,58 +163,74 @@ export default function Demostrativo() {
 
   async function handleSubmit(e) {
 
-    if (hotTableComponent.current) {
-      const hotInstance = hotTableComponent.current.hotInstance;
-      const data = hotInstance.getSourceData();
+    e.preventDefault();
 
-      api.put(`grupo/${grupo.id}`, { etapa: "Gráficos", planilha_grupo: data })
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Dados salvos com sucesso! Redirecionando...");
+    const toast_submit = toast.loading("Salvando, aguarde...")
 
-            setTimeout(() => {
-              return navigate(`/analise/${grupo.id}`, { replace: true });
-            }, 1500);
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-          let resposta = error.response.data.error;
+    api.put(`grupo/${grupo.id}`, {
+      etapa: "Análise",
+      acoes: acao
+    })
+      .then(async (res) => {
 
-          var erros = "";
+        if (res.status) {
 
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-
-          });
-          toast.error(`Erro ao Logar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
+          toast.update(toast_submit, {
+            render: "Dados salvos com sucesso! Redirecionando...",
+            type: "success",
+            isLoading: false,
+            theme: "colored",
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
+            draggable: true
           });
+
+          setTimeout(() => {
+            return navigate(`/analise/${grupo.id}`, { replace: true });
+          }, 1500);
+
+        }
+
+      })
+      .catch(function (error) {
+
+        let resposta = error.response.data.error;
+
+        var erros = "";
+
+        if (typeof resposta === 'object') {
+
+          Object.keys(resposta).forEach(function (index) {
+            erros += resposta[index] + "\n";
+          });
+
+        } else erros = resposta;
+
+        toast.update(toast_submit, {
+          render: `Erro ao salvar seu progresso.\n ${erros}`,
+          type: 'error',
+          isLoading: false,
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored"
         });
 
-    }
-
+      });
   }
   /*-----------------------------------------------------------------------------------------------*/
 
   /*-------------------------------------RETORNO DOS DADOS NA PLANILHA ----------------------------*/
 
-
-
   function getTableData() {
 
-
-
     if (acaoSelecionada.planilha_grupo) {
-      setPlanilha(acaoSelecionada.planilha_grupo);
+      Array.isArray(acaoSelecionada.planilha_grupo) ?
+        setPlanilha(acaoSelecionada.planilha_grupo) : setPlanilha(JSON.parse(acaoSelecionada.planilha_grupo));
     } else {
 
       const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
@@ -223,7 +253,7 @@ export default function Demostrativo() {
           };
         });
       }
-      
+
       const data = [
         ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
         ["PREÇO MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
@@ -397,12 +427,13 @@ export default function Demostrativo() {
                       />
                     </div>
                   </div>
-                  <div className="float-right mb-2">
+                  <div className="row justify-content-end mb-2">
                     <button
-                      className="btn btn-success buttonExcel"
+                      className="btn py-0 col-2 btn-success buttonExcel align-items-center"
                       onClick={exportarExcel}
                     >
-                      Excel
+                      <i style={{ fontSize: '1.5em', marginRight: "5px" }} className="bi bi-filetype-xlsx"></i>
+                      Exportar dados
                     </button>
                   </div>
                 </div>
@@ -466,11 +497,9 @@ export default function Demostrativo() {
                   }}
                 />
 
-
               </>
             )
         }
-
       </div>
     </div>
   );
