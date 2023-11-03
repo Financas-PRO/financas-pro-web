@@ -3,18 +3,18 @@ import "./video.css";
 
 const Video = props => {
     return (
-        <div className="col col-md-3">
-            <div className="card-video">
-                <div className="card-img"></div>
+        
+            <button className="card-video rounded-3" onClick={props.onClick}>
+                <div className="card-img" style={{backgroundImage: `url("${props.thumbnail}")`}}></div>
                 <div className="card-conteudo mt-3">
                     <span className="conteudo-titulo">{props.titulo}</span>
                     <span>{props.descricao}</span>
+                    <div className="button-assita mt-3">
+                        <span className="btn-assistir">CLIQUE PARA ASSISTIR</span>
+                    </div>
                 </div>
-                <div className="button-assita mt-3">
-                    <button onClick={props.onClick} className="btn-assitir">CLIQUE AQUI</button>
-                </div>
-            </div>
-        </div>
+            </button>
+        
     )
 }
 

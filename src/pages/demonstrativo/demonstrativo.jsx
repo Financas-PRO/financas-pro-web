@@ -146,21 +146,6 @@ export default function Demostrativo() {
     }
   };
 
-  /*-----------------------------------------------------------------------------------------------*/
-
-  /*--------------------------------------FORMATAÇÃO DE VALOR - R$ ---------------------------------*/
-  const formatarMoeda = (valor) => {
-    // if (valor) {
-    //   const options = {
-    //     style: "currency",
-    //     currency: "BRL",
-    //   };
-    //   return new Intl.NumberFormat("pt-BR", options).format(valor);
-    // }
-    // return "";
-    return valor;
-  };
-
   async function handleSubmit(e) {
 
     e.preventDefault();
@@ -228,9 +213,9 @@ export default function Demostrativo() {
 
   function getTableData() {
 
-    if (acaoSelecionada.planilha_grupo) {
+    if (acaoSelecionada.planilha_grupo || acaoSelecionada.planilha_grupo == "null") {
       Array.isArray(acaoSelecionada.planilha_grupo) ?
-        setPlanilha(acaoSelecionada.planilha_grupo) : setPlanilha(JSON.parse(acaoSelecionada.planilha_grupo));
+      setPlanilha(acaoSelecionada.planilha_grupo) : setPlanilha(JSON.parse(acaoSelecionada.planilha_grupo));
     } else {
 
       const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
@@ -243,29 +228,27 @@ export default function Demostrativo() {
           // faço uma repitação para percorrer o array
           const dataAcao = new Date(historicoItem.data_acao).toLocaleDateString(); // entao aqui para cada data sera inserido abaixo os elementos abaixo
           historicoData[dataAcao] = {
-            "Preço Abertura": formatarMoeda(historicoItem.preco_abertura),
-            "Preço Mais Alto": formatarMoeda(historicoItem.preco_mais_alto),
-            "Preço Mais Baixo": formatarMoeda(historicoItem.preco_mais_baixo),
-            "Preço Fechamento": formatarMoeda(historicoItem.preco_fechamento),
-            "Preço Fechamento Ajustado": formatarMoeda(
-              historicoItem.preco_fechamento_ajustado
-            ),
+            "Preço Abertura": historicoItem.preco_abertura,
+            "Preço Mais Alto": historicoItem.preco_mais_alto,
+            "Preço Mais Baixo": historicoItem.preco_mais_baixo,
+            "Preço Fechamento": historicoItem.preco_fechamento,
+            "Preço Fechamento Ajustado": historicoItem.preco_fechamento_ajustado
           };
         });
       }
 
       const data = [
         ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["PREÇO MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_merc_regular) || "" : ""],
-        ["ALTA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.alto_merc_regular) || "" : ""],
-        ["BAIXA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.baixo_merc_regular) || "" : ""],
+        ["PREÇO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.preco_merc_regular || "" : ""],
+        ["ALTA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.alto_merc_regular || "" : ""],
+        ["BAIXA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.baixo_merc_regular || "" : ""],
         ["INTERVALO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
         ["VARIAÇÃO MERCARDO REGULAR", acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
-        ["VALOR MERCADO", acaoSelecionada ? formatarMoeda(acaoSelecionada.valor_merc) || "" : ""],
-        ["VOLUME MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.volume_merc_regular) || "" : ""],
-        ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.fecha_ant_merc_regular) || "" : ""],
-        ["ABERTURA MERCADO REGULAR", acaoSelecionada ? formatarMoeda(acaoSelecionada.abertura_merc_regular) || "" : ""],
-        ["PREÇO LUCRO", acaoSelecionada ? formatarMoeda(acaoSelecionada.preco_lucro) || "" : ""],
+        ["VALOR MERCADO", acaoSelecionada ? acaoSelecionada.valor_merc || "" : ""],
+        ["VOLUME MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.volume_merc_regular || "" : ""],
+        ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.fecha_ant_merc_regular || "" : ""],
+        ["ABERTURA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.abertura_merc_regular || "" : ""],
+        ["PREÇO LUCRO", acaoSelecionada ? acaoSelecionada.preco_lucro || "" : ""],
         ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
         ["HISTORICO", ...Object.keys(historicoData)], // Adicione as datas na primeira linha
         ["PREÇO ABERTURA", ...Object.values(historicoData).map((item) => item["Preço Abertura"])],
@@ -332,9 +315,7 @@ export default function Demostrativo() {
     <div className="row-page">
       <ToastContainer className="toast-top-right" />
 
-      <div className="col col-md-2 col-2" id="sidebar">
         <Header />
-      </div>
 
       <div className="container mt-4 col-md-8 col-9">
         {
@@ -391,7 +372,7 @@ export default function Demostrativo() {
                         type="text"
                         name="capitalizacao_mercado"
                         className="form-control"
-                        value={formatarMoeda(acaoSelecionada?.valor_merc) || ""}
+                        value={acaoSelecionada?.valor_merc || ""}
                         readOnly
                       />
                     </div>
@@ -422,7 +403,7 @@ export default function Demostrativo() {
                         type="text"
                         name="acao_atual"
                         className="form-control"
-                        value={formatarMoeda(acaoSelecionada?.preco_lucro) || ""}
+                        value={acaoSelecionada?.preco_lucro || ""}
                         readOnly
                       />
                     </div>

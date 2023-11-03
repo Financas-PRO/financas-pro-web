@@ -41,8 +41,8 @@ export default function Turmas() {
                 <Title
                     icon="bi-person-video3"
                     titulo="Turmas"
-                    subTitulo="Selecione a sua turma" />
-
+                    subTitulo="Selecione a sua turma" 
+                />
 
                 <div className="row mt-5 cardFundoTurma">
                     {

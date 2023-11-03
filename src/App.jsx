@@ -17,7 +17,6 @@ import Turmas from "./pages/turmas/turmas";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 import Erro from "./pages/erro/erro";
 import CadSimulador from "./pages/cadSimulador/cadSimulador";
-import Graficos from "./pages/graficos/graficos";
 import Analise from "./pages/analiseAluno/analise";
 import Feedback from "./pages/feedbackProfessor/feedback";
 
@@ -28,8 +27,7 @@ function App() {
       <Routes>
 
         <Route path="/login" element={<Login />} />
-        <Route path="/demonstrativo" element={<Demonstrativo />} />
-
+        <Route path="*" element={<Erro />} />
 
         <Route element={<ProtectedRoute route="checkAuth" />}>
 
@@ -38,34 +36,28 @@ function App() {
           <Route element={<ProtectedRoute route="scopeAluno"/>}>
             <Route path="/simuladores/:id/" element={<Simuladores />} />
             <Route path="/empresa/:id/" element={<Empresa />} />
-            <Route path="/turmas" element={<Turmas />} />
             <Route path="/simulador/cadastrar/:id" element={<CadSimulador/>}/>
-            <Route path="/graficos" element={<Graficos />} />
             <Route path="/analise/:id" element={<Analise/>} />
             <Route path="/feedback" element={<Feedback/>} />
               
           </Route>   
-
-          <Route element={<ProtectedRoute route="scopeDoc"/>}>
-            <Route path="/importa/:id/" element={<Importa />} />
-          </Route>
 
           <Route element={<ProtectedRoute route="scopeDoc" />}>
             <Route path="/importa/:id/" element={<Importa />} />
             <Route path="turma/cadastrar" element={<CadastrarTurma />} />
             <Route path="turma/gerenciar" element={<GerenciarTurma />} />
             <Route path="turma/:id/editar" element={<EditaTurma />} />
+            <Route path="/importa/:id/" element={<Importa />} />
           </Route>
 
+          <Route path="/turmas" element={<Turmas />} />
           <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
           <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
           <Route path="professor/:id/editar" element={<EditaProfessor />} />
           <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
 
-
         </Route>
 
-            <Route path="/erro" element={<Erro />} />
 
         </Routes>
       </BrowserRouter>

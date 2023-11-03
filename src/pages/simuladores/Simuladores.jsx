@@ -82,8 +82,7 @@ export default function Simuladores() {
                 </div>
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                    <ButtonSalvar nome="Salvar" />
-                    <ButtonCancelar link="turmas" nome="Cancelar" />
+                    <ButtonCancelar link="turmas" nome="Voltar" />
                 </div>
             </div>
 
