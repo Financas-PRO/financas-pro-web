@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo.jsx";
+import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
 
 export default function Feedback() {
     return (
@@ -21,7 +23,11 @@ export default function Feedback() {
                 <Title
                     icon="bi-clipboard-fill"
                     titulo="Feedback"
-                    subTitulo="Gerenciamento FeedBack do Docente  " />
+                    subTitulo="Dê o feedback ao grupo, de acordo com a sua análise abaixo" 
+                />
+
+                <TabelaDemonstrativo planilha={null}/>
+                <AnaliseGrafico/>
 
             </div>
 

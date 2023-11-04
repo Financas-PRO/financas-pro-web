@@ -4,13 +4,81 @@ import { useSelector } from "react-redux";
 import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico";
 import Title from "../../components/title/title";
+import ButtonSalvar from "../../components/button/buttonSalvar";
+import ButtonCancelar from "../../components/button/buttonCancelar";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../../services/api";
+import { ToastContainer, toast } from "react-toastify";
 
 const Resumo = props => {
 
-    const acoes = useSelector(state => state.acoesReducer);
     const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
+    const analise = useSelector(state => state.analiseReducer);
 
     const [planilha, setPlanilha] = useState([]);
+
+    const navigate = useNavigate();
+
+    let { id } = useParams();
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        const toast_submit = toast.loading("Enviando seu progresso..");
+        api.post(`analise/${id}`, {
+            descricao: analise
+        })
+        .then(res => {
+
+            if (res.status) {
+
+                toast.update(toast_submit, {
+                    render: "Análise finalizada! Redirecionando...",
+                    type: "success",
+                    isLoading: false,
+                    theme: "colored",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true
+                });
+
+                setTimeout(() => {
+                    return navigate(`/turma/${id}`, { replace: true });
+                }, 2500);
+
+            }
+        })
+        .catch(error => {
+
+            let resposta = error.response.data.error;
+
+            var erros = "";
+
+            if (typeof resposta === 'object') {
+
+                Object.keys(resposta).forEach(function (index) {
+                    erros += resposta[index] + "\n";
+                });
+
+            } else erros = resposta;
+
+            toast.update(toast_submit, {
+                render: `Erro ao salvar seu progresso.\n ${erros}`,
+                type: 'error',
+                isLoading: false,
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored"
+            });
+
+        })
+
+    }
 
     function getTableData() {
 
@@ -79,9 +147,15 @@ const Resumo = props => {
             <Header />
 
             <div className="container mt-4 col-md-8 col-9">
-                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Antes de enviar sua análise, confira todo o conteúdo abaixo."/>
+                <ToastContainer />
+                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Antes de enviar sua análise, confira todo o conteúdo abaixo." />
                 <TabelaDemonstrativo planilha={planilha} />
-                <AnaliseGrafico data={null}/>
+                <AnaliseGrafico data={null} />
+
+                <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
+                    <ButtonSalvar nome="Finalizar" />
+                    <ButtonCancelar nome="Voltar" />
+                </form>
             </div>
         </div>
 

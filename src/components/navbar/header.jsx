@@ -37,7 +37,7 @@ const HeaderAluno = () => {
         <CDBSidebarMenuItem icon="bi bi-house-gear">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turmas">
-        <CDBSidebarMenuItem icon="bi bi-person-video3">Minhas Turmas</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="bi bi-person-video3">Turmas</CDBSidebarMenuItem>
       </NavLink>
     </>
 
@@ -53,7 +53,7 @@ const HeaderDocente = () => {
         <CDBSidebarMenuItem icon="bi bi-house-gear">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turmas">
-        <CDBSidebarMenuItem icon="bi bi-person-video3">Minhas Turmas</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="bi bi-person-video3">Turmas</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turma/gerenciar">
         <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>

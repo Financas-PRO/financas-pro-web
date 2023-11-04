@@ -55,9 +55,6 @@ export default function Analise() {
         navigate(`/resumo/${grupo.id}`);
     }
 
-
-    
-
     const dataPizza = [
         ["Pizza", "Popularity"],
         ["Pepperoni", 33],
@@ -129,10 +126,10 @@ export default function Analise() {
 
                                 <AnaliseGrafico data={null}/>
 
-                                <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
-                                    <ButtonSalvar nome="Salvar" />
-                                    <ButtonCancelar nome="Cancelar" link={`demonstrativo/${id}`} />
-                                </form>
+                                <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
+                                    <button className="btn-salvar" onClick={handleSubmit}>Próximo</button>
+                                    <button className="btn-cancelar">Voltar</button>
+                                </div>
 
                             </>
                         )

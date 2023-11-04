@@ -31,7 +31,7 @@ const AnaliseGrafico = props => {
             <div className="row">
                 <Editor
                     onInit={(evt, editor) => editorRef.current = editor}
-                    initialValue={analise ? analise : "Texto vazio"}
+                    initialValue={analise ? analise : "Escreva aqui sua análise"}
                     onChange={setTexto}
                 />
             </div>

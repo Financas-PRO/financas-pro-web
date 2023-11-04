@@ -11,6 +11,7 @@ import EmpresaCard from "../../components/empresa/EmpresaCard";
 import axios from "axios";
 import api from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export default function Empresa() {
 
@@ -82,19 +83,24 @@ export default function Empresa() {
 
                     var erros = "";
 
-                    Object.keys(resposta).forEach(function (index) {
-                        erros += resposta[index];
-                    });
-                    toast.error(`Erro ao gravar!\n ${erros}`, {
-                        position: "top-right",
-                        autoClose: 5000,
+                    if (typeof resposta === 'object') {
+
+                        Object.keys(resposta).forEach(function (index) {
+                            erros += resposta[index] + "\n";
+                        });
+
+                    } else erros = resposta;
+
+                    toast.update(empresa_toast, {
+                        render: `\n ${erros}`,
+                        type: 'error',
+                        isLoading: false,
+                        autoClose: 1500,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
                         draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        style: { whiteSpace: "pre-line" },
+                        theme: "colored"
                     });
                 });
         } catch (err) {
@@ -146,7 +152,7 @@ export default function Empresa() {
             <Header />
 
             <div className="container mt-4 col-md-8 col-9">
-
+                <ToastContainer />
                 <Title
                     icon="bi-file-earmark-bar-graph"
                     titulo="Empresas"

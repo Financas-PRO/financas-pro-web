@@ -5,7 +5,7 @@ import api from "../../services/api";
 import Header from "../../components/navbar/header";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
@@ -42,7 +42,7 @@ export default function CadSimulador() {
         .post(`grupo/${id}`, requestBody)
         .then(async (res) => {
           if (res.status) {
-            toast.success("Grupo criado com sucesso");
+            toast.success("Grupo criado com sucesso!");
 
             setTimeout(() => {
               return navigate(`/empresa/${res.data.data.id}`, { replace: true });
@@ -94,6 +94,7 @@ export default function CadSimulador() {
     <div className="row-page">
         <Header />
       <div className="container mt-4 col-md-8 col-9">
+        <ToastContainer/>
         <Title
           icon="bi-bezier2"
           titulo="Simulador"
@@ -104,7 +105,7 @@ export default function CadSimulador() {
           <div className="conteudoSimulador mt-5">
             <div className="row square">
               <div className="col col-md-12 col-12">
-                <i class="bi bi-bookmark-fill"></i>
+                <i className="bi bi-bookmark-fill"></i>
                 <label className="mb-2">Titulo da Simulação</label>
                 <input
                   name="descricao"

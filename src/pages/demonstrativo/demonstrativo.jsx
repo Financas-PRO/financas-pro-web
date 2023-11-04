@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setAcoes, setAcaoSelecionada } from "../../redux/action";
 import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo";
-
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Demostrativo() {
 
@@ -205,6 +205,8 @@ export default function Demostrativo() {
                   <ButtonCancelar nome="Voltar" link={`simuladores/${grupo.turma.id}`} />
                   <ButtonSalvar nome="Salvar dados" />
                 </form>
+
+                <ToastContainer/>
 
                 <TabelaDemonstrativo planilha={planilha} />
 
