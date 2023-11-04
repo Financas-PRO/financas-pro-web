@@ -212,3 +212,7 @@ button{
 .tox-notifications-container {
   display: none!important;
 }
+
+.header .fa-bi::before {
+  font-size: 23px;
+}

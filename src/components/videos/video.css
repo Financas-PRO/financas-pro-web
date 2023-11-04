@@ -1,11 +1,12 @@
 .card-video {
-  height: 13.5em;
+  height: 14.5em;
   background-color: #12304a;
   color: #fff;
   margin: 10px;
   width: 16em;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .card-video:hover{
@@ -21,7 +22,7 @@
 .card-img {
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100px;
+  height: 120px;
 }
 
 .conteudo-titulo {

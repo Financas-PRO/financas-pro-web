@@ -143,9 +143,7 @@ export default function Empresa() {
     return (
         <div className="row-page">
 
-            <div className="col col-md-2 col-2">
-                <Header />
-            </div>
+            <Header />
 
             <div className="container mt-4 col-md-8 col-9">
 

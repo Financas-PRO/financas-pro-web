@@ -12,7 +12,7 @@ export default function Turmas(props) {
 
     return (
 
-        <div className="col col-md-12 mb-4">
+        <div className="col-12 mb-4">
             <div className="card-turma">
                 <div className="titulo-turma">{props.turma}</div>
                 <Link className="link" to={`/simuladores/${props.id}`}>

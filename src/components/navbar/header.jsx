@@ -16,7 +16,7 @@ const HeaderCoord = () => {
   return (
     <>
       <NavLink to="/">
-        <CDBSidebarMenuItem icon="th">Dashboard</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem iconType='bi' icon="bi-house-gear">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turma/gerenciar">
         <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
@@ -34,10 +34,10 @@ const HeaderAluno = () => {
   return (
     <>
       <NavLink to="/">
-        <CDBSidebarMenuItem icon="th">Dashboard</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="bi bi-house-gear">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turmas">
-        <CDBSidebarMenuItem icon="shapes">Minhas Turmas</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="bi bi-person-video3">Minhas Turmas</CDBSidebarMenuItem>
       </NavLink>
     </>
 
@@ -50,16 +50,13 @@ const HeaderDocente = () => {
   return (
     <>
       <NavLink to="/">
-        <CDBSidebarMenuItem icon="th">Dashboard</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="bi bi-house-gear">Dashboard</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turmas">
-        <CDBSidebarMenuItem icon="shapes">Minhas Turmas</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="bi bi-person-video3">Minhas Turmas</CDBSidebarMenuItem>
       </NavLink>
       <NavLink to="/turma/gerenciar">
         <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
-      </NavLink>
-      <NavLink to="/demonstrativo">
-        <CDBSidebarMenuItem icon="chart-line">Demonstrativo Financeiro</CDBSidebarMenuItem>
       </NavLink>
     </>
 

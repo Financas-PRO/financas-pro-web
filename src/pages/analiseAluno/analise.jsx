@@ -11,12 +11,16 @@ import Grafico from '../../components/cardGraficos/grafico';
 import { Editor } from "@tinymce/tinymce-react";
 import api from "../../services/api";
 import Loading from "../../components/loading/loading";
+import { useDispatch, useSelector } from "react-redux";
+import { setAcoes, setAcaoSelecionada, setAnalise } from "../../redux/action.js";
+import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
 
 export default function Analise() {
 
-    const [texto, setTexto] = useState("");
+    const dispatch = useDispatch();    
+
     const [loading, setLoading] = useState(false);
-    const [acao, setAcao] = useState([]);
+
     const [grupo, setGrupo] = useState({
         id: 1,
         turma: {
@@ -29,34 +33,30 @@ export default function Analise() {
 
     useEffect(() => {
         setLoading(true);
-        api.get(`acoes/${id}`).then((res) => {
-            setAcao(res.data.data);
+        api.get(`acoes/${id}`)
+        .then((res) => {
+
+            dispatch(setAcoes(res.data.data));
+
             setGrupo({
                 id: res.data.data[0].grupo.id,
                 turma: {
                     id: res.data.data[0].grupo.turma.id
                 }
             });
-            // setAcaoSelecionada(res.data.data[0]);
         })
-            .finally(res => {
-                setLoading(false);
-            });
+        .finally(res => {
+            setLoading(false);
+        });
     }, [id]);
 
     function handleSubmit(e) {
         e.preventDefault();
-        localStorage.setItem('texto', texto);
-
         navigate(`/resumo/${grupo.id}`);
     }
 
-    const editorRef = useRef(null);
-    const getTexto = () => {
-        if (editorRef.current) {
-            setTexto(editorRef.current.getContent());
-        }
-    };
+
+    
 
     const dataPizza = [
         ["Pizza", "Popularity"],
@@ -127,21 +127,7 @@ export default function Analise() {
                                     subTitulo="Aqui, você pode analisar os resultados e escrever sua análise final"
                                 />
 
-                                <div className="row mt-5">
-                                    <Grafico grafico="PieChart" data={dataPizza} />
-                                    <Grafico grafico="ColumnChart" data={dataColumn} />
-                                    <Grafico grafico="BarChart" data={dataColumnBar} />
-                                    <Grafico grafico="LineChart" data={dataLine} />
-                                </div>
-
-                                <div className="row">
-                                    <Editor
-                                        onInit={(evt, editor) => editorRef.current = editor}
-                                        initialValue="<p>This is the initial content of the editor.</p>"
-                                        onChange={getTexto}
-
-                                    />
-                                </div>
+                                <AnaliseGrafico data={null}/>
 
                                 <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
                                     <ButtonSalvar nome="Salvar" />
