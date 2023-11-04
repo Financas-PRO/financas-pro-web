@@ -4,8 +4,13 @@
     color: #FFF;
     background-color: #EE7F01;
     display: flex;
-    justify-content: center;
     border-radius: 5px;
+    padding: 0.6em;
+}
+
+.titulo-turma:hover, .titulo-turma:hover i::before{
+    background-color: #fff;
+    color: #EE7F01!important;
 }
 
 .card-turma{

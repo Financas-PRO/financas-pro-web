@@ -8,7 +8,7 @@ export default function Simulador(props) {
 
     return (
 
-        <div className="col col-md-4 mb-3">
+        <Link className="col-md-4 mb-3" to={props.rota}>
             <div className="card-simuladores">
                 <div className="titulo-simuladores"><i className="bi bi-diagram-2"></i> {props.titulo}</div>
                 <div className="card-conteudo mt-3">
@@ -16,11 +16,11 @@ export default function Simulador(props) {
                     <span className="nomes"><i className="bi bi-people-fill"></i>{props.nomes}</span>
                 </div>
                 <div className="footer-card">
-                    <Link className="link mt-3 mb-2" to={props.rota} replace={true}>
-                        Clique aqui para retornar <i class="bi bi-arrow-right"></i>
-                    </Link>
+                    <span className="link mt-3 mb-2">
+                        Clique para retornar <i class="bi bi-arrow-right"></i>
+                    </span>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
