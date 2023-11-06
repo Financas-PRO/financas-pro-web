@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import CadastrarProfessor from "./pages/cadProfessor/cadProfessor.jsx";
@@ -23,8 +23,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import Resumo from "./pages/resumo/resumo.jsx";
 
-
 function App() {
+  
   return (
     <BrowserRouter>
       <Provider store={store}>
@@ -43,7 +43,6 @@ function App() {
               <Route path="/simulador/cadastrar/:id" element={<CadSimulador />} />
               <Route path="/analise/:id" element={<Analise />} />
               <Route path="/feedback" element={<Feedback />} />
-
             </Route>
 
             <Route element={<ProtectedRoute route="scopeDoc" />}>
@@ -59,7 +58,8 @@ function App() {
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
             <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
-            <Route path="/resumo/:id" element={<Resumo/>} />
+            <Route path="/resumo/:id" element={<Resumo />} />
+
           </Route>
 
         </Routes>

@@ -30,3 +30,31 @@ nav {
         position: fixed;
     }
   }
+
+.active li span, .active li i:before{
+    color: #ff7b10;
+    font-family: Poppins-bold;
+
+}
+
+li span {
+    font-size: 1em;
+}
+
+@keyframes nav {
+    from {border-left: solid 0.5px #ff7b10;}
+    to {border-left: solid 3.5px #ff7b10;}
+}
+
+.active li div {
+    border-left: solid 3.5px #ff7b10;
+    animation-name: nav;
+    animation-duration: 0.2s;
+    
+} 
+
+.pro-menu div[role="button"]:hover span, .pro-menu div[role="button"]:hover i:before {
+    color: #ff7b10!important;
+    transition: 0.3s;
+}
+

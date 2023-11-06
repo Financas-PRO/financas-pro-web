@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./header.css";
 import menutoledo from "../../assets/image/menu.png";
 import {
@@ -7,10 +7,11 @@ import {
   CDBSidebarFooter,
   CDBSidebarHeader,
   CDBSidebarMenu,
-  CDBSidebarMenuItem,
-  
+  CDBSidebarMenuItem
 } from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import api from '../../services/api';
+import { toast, ToastContainer } from 'react-toastify';
 
 const HeaderCoord = () => {
   return (
@@ -67,33 +68,85 @@ const HeaderDocente = () => {
 const Header = () => {
 
   const [header, setHeader] = useState();
+  const navigate = useNavigate();
+
+  function handleLogout(e) {
+    const logout_toast = toast.loading("Aguarde...");
+    api.post("logout")
+      .then(async res => {
+
+        if (res.status) {
+
+          toast.update(logout_toast, {
+              render: "Redirecionando...",
+              type: "success",
+              isLoading: false
+          });
+
+          setTimeout(() => {
+              return navigate(`/login`, { replace: true });
+          }, 1500);
+      }
+
+      })
+      .catch(error => {
+
+        let resposta = error.response.data.error;
+
+        var erros = "";
+
+        if (typeof resposta === 'object') {
+
+          Object.keys(resposta).forEach(function (index) {
+            erros += resposta[index] + "\n";
+          });
+
+        } else erros = resposta;
+
+        toast.update(logout_toast, {
+          render: `\n ${erros}`,
+          type: 'error',
+          isLoading: false,
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored"
+        });
+
+      });
+  }
 
   useEffect(() => {
-    switch(localStorage.getItem("papel")){
+    switch (localStorage.getItem("papel")) {
 
       case "Admin":
-        setHeader(<HeaderDocente/>);
-      break;
+        setHeader(<HeaderDocente />);
+        break;
 
       case "Docente":
-        setHeader(<HeaderDocente/>);
-      break;
+        setHeader(<HeaderDocente />);
+        break;
 
       case "Coordenador":
-        setHeader(<HeaderCoord/>);
-      break;
+        setHeader(<HeaderCoord />);
+        break;
 
       case "Aluno":
-        setHeader(<HeaderAluno/>);
-      break;
+        setHeader(<HeaderAluno />);
+        break;
     }
   }, [])
 
+  const [toggled, setToggled] = useState(false);
+
   return (
-    // <div>
     <div className="header">
-      <CDBSidebar textColor="#fff" backgroundColor="#12304A">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+      <ToastContainer/>
+
+      <CDBSidebar toggled={toggled} textColor="#fff" backgroundColor="#12304A">
+        <CDBSidebarHeader prefix={<i onClick={(e) => { toggled ? setToggled(false) : setToggled(true) }} className="fa fa-bars fa-large"></i>} >
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
             <img className="aguia-menu" src={menutoledo} alt='aguia' />
           </a>
@@ -103,14 +156,16 @@ const Header = () => {
           <CDBSidebarMenu>
             {header}
           </CDBSidebarMenu>
-          
+
         </CDBSidebarContent>
 
         <CDBSidebarFooter>
-          <CDBSidebarMenuItem icon="user-slash">Logout</CDBSidebarMenuItem>
+          <CDBSidebarMenuItem onClick={handleLogout} icon="user-slash">Sair</CDBSidebarMenuItem>
         </CDBSidebarFooter>
 
       </CDBSidebar>
+
+
     </div>
   );
 };
