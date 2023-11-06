@@ -1,23 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./analise.css";
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
-import ButtonSalvar from "../../components/button/buttonSalvar";
-import ButtonCancelar from "../../components/button/buttonCancelar";
-import Grafico from '../../components/cardGraficos/grafico';
-import { Editor } from "@tinymce/tinymce-react";
 import api from "../../services/api";
 import Loading from "../../components/loading/loading";
-import { useDispatch, useSelector } from "react-redux";
-import { setAcoes, setAcaoSelecionada, setAnalise } from "../../redux/action.js";
+import { useDispatch } from "react-redux";
+import { setAcoes } from "../../redux/action.js";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Analise() {
 
-    const dispatch = useDispatch();    
+    const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
 
@@ -34,25 +31,82 @@ export default function Analise() {
     useEffect(() => {
         setLoading(true);
         api.get(`acoes/${id}`)
-        .then((res) => {
+            .then((res) => {
 
-            dispatch(setAcoes(res.data.data));
+                dispatch(setAcoes(res.data.data));
 
-            setGrupo({
-                id: res.data.data[0].grupo.id,
-                turma: {
-                    id: res.data.data[0].grupo.turma.id
-                }
+                setGrupo({
+                    id: res.data.data[0].grupo.id,
+                    turma: {
+                        id: res.data.data[0].grupo.turma.id
+                    }
+                });
+            })
+            .finally(res => {
+                setLoading(false);
             });
-        })
-        .finally(res => {
-            setLoading(false);
-        });
     }, [id]);
 
     function handleSubmit(e) {
         e.preventDefault();
         navigate(`/resumo/${grupo.id}`);
+    }
+
+    function handleEtapaSubmit(e) {
+        e.preventDefault();
+
+        const toast_submit = toast.loading("Enviando seu progresso..");
+
+        api.post(`atualizarEtapa/${id}`, { etapa: "Demonstrativo" })
+            .then(res => {
+
+                if (res.status) {
+
+                    toast.update(toast_submit, {
+                        render: "Progresso salvo! Redirecionando...",
+                        type: "success",
+                        isLoading: false,
+                        theme: "colored",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true
+                    });
+
+                    setTimeout(() => {
+                        return navigate(`/demonstrativo/${id}`);
+                    }, 1500);
+
+                }
+            })
+            .catch(error => {
+
+                let resposta = error.response.data.error;
+
+                var erros = "";
+
+                if (typeof resposta === 'object') {
+
+                    Object.keys(resposta).forEach(function (index) {
+                        erros += resposta[index] + "\n";
+                    });
+
+                } else erros = resposta;
+
+                toast.update(toast_submit, {
+                    render: `Erro ao salvar seu progresso.\n ${erros}`,
+                    type: 'error',
+                    isLoading: false,
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored"
+                });
+
+            })
     }
 
     const dataPizza = [
@@ -118,17 +172,18 @@ export default function Analise() {
                     ) :
                         (
                             <>
+                                <ToastContainer />
                                 <Title
                                     icon="bi-bookmark-fill"
                                     titulo="Análise"
                                     subTitulo="Aqui, você pode analisar os resultados e escrever sua análise final"
                                 />
 
-                                <AnaliseGrafico data={null}/>
+                                <AnaliseGrafico data={null} />
 
                                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
                                     <button className="btn-salvar" onClick={handleSubmit}>Próximo</button>
-                                    <button className="btn-cancelar">Voltar</button>
+                                    <button className="btn-cancelar" onClick={handleEtapaSubmit}>Voltar para o demonstrativo</button>
                                 </div>
 
                             </>

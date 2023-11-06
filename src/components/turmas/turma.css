@@ -9,11 +9,43 @@
 }
 
 .titulo-turma:hover, .titulo-turma:hover i::before{
-    background-color: #fff;
     color: #EE7F01!important;
+    transition: 0.4s;
+}
+
+.titulo-turma:hover {
+    background-color: #FFF;
+}
+
+.titulo-turma:hover .animacao {
+    display: block;
+
 }
 
 .card-turma{
-    background-color: #FFF;
+    background-color: #8d6f6f;
     border-radius: 14px;
 }
+
+
+
+@keyframes arrow {
+    from {left: 0px;}
+    to {left: 15px;}
+  }
+
+  .animacao {
+    animation-name: arrow;
+    position: relative;
+    left: 0px;
+    animation-duration: 0.6s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    font-size: 25px;
+
+  }
+
+  .animacao {
+    display: none;
+  }
+
