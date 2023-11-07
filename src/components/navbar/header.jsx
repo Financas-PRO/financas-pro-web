@@ -22,13 +22,14 @@ import { setToggle } from '../../redux/action';
 const header_aluno = [
   {
     rota: "/",
-    icone: "Dashboard",
-    titulo: "bi bi-house-gear"
+    icone: "bi bi-house-gear",
+    titulo: "Dashboard"
+    
   },
   {
     rota: "/turmas",
-    icone: "Turmas",
-    titulo: "bi bi-person-video3"
+    icone: "bi bi-person-video3",
+    titulo: "Turmas"
   },
 
 ]

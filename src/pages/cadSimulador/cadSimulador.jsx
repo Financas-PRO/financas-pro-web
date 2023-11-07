@@ -117,7 +117,7 @@ export default function CadSimulador() {
                 />
               </div>
               <div className="col col-md-12 col-12 mb-4">
-                <i class="bi bi-person-fill"></i>
+                <i className="bi bi-person-fill"></i>
                 <label className="mb-2">Participantes: </label>
                 <Select
                   isMulti
