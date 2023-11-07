@@ -38,10 +38,10 @@ function App() {
             <Route path="/" element={<Dashboard />} />
 
             <Route element={<ProtectedRoute route="scopeAluno" />}>
-              <Route path="/simuladores/:id/" element={<Simuladores />} />
               <Route path="/empresa/:id/" element={<Empresa />} />
               <Route path="/simulador/cadastrar/:id" element={<CadSimulador />} />
               <Route path="/analise/:id" element={<Analise />} />
+              <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
             </Route>
 
             <Route element={<ProtectedRoute route="scopeDoc" />}>
@@ -49,16 +49,15 @@ function App() {
               <Route path="turma/cadastrar" element={<CadastrarTurma />} />
               <Route path="turma/gerenciar" element={<GerenciarTurma />} />
               <Route path="turma/:id/editar" element={<EditaTurma />} />
-              <Route path="/importa/:id/" element={<Importa />} />
             </Route>
 
             <Route path="/turmas" element={<Turmas />} />
             <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
             <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
-            <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
             <Route path="/resumo/:id" element={<Resumo />} />
             <Route path="/feedback/:id" element={<Feedback />} />
+            <Route path="/simuladores/:id/" element={<Simuladores />} />
 
           </Route>
 

@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
 import Video from "../../components/videos/Video";
-import api from "../../services/api";
+import Grafico from "../../components/cardGraficos/grafico";
 
 export default function Dashboard() {
 
@@ -18,9 +18,43 @@ export default function Dashboard() {
         .then(async(res) => {
             let dados = await res.json();
             setVideos(dados);
-            console.log(dados);
         })
     }, [])
+    const dataPizza = [
+        ["Corrigid", "Popularity"],
+        ["Corrigido", 33],
+        ["Pendente", 26]
+    ];
+
+    const dataColumnBar = [
+        [
+            "Element",
+            "Density",
+            { role: "style" },
+            {
+                sourceColumn: 0,
+                role: "annotation",
+                type: "string",
+                calc: "stringify",
+            },
+        ],
+        ["Copper", 8.94, "#b87333", null],
+        ["Silver", 10.49, "silver", null],
+        ["Gold", 19.3, "gold", null],
+        ["Platinum", 21.45, "color: #e5e4e2", null],
+    ];
+
+    const dataLine = [
+        ["x", "dogs", "cats"],
+        [0, 0, 0],
+        [1, 10, 5],
+        [2, 23, 15],
+        [3, 17, 9],
+        [4, 18, 10],
+        [5, 9, 5],
+        [6, 11, 3],
+        [7, 27, 19],
+    ];
     return (
 
 
@@ -36,6 +70,10 @@ export default function Dashboard() {
                     titulo="Dashboard"
                     subTitulo=""
                 />
+
+                <div className="row justify-content-center">
+                    <Grafico titulo="Relação de feedbacks" grafico="PieChart" data={dataPizza} />
+                </div>
 
 
                 <Title

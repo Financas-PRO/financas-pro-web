@@ -7,7 +7,11 @@ import {
   CDBSidebarFooter,
   CDBSidebarHeader,
   CDBSidebarMenu,
-  CDBSidebarMenuItem
+  CDBSidebarMenuItem,
+  CDBNavbar,
+  CDBNavToggle,
+  CDBNavBrand
+
 } from 'cdbreact';
 import { NavLink, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
@@ -15,61 +19,41 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToggle } from '../../redux/action';
 
-const HeaderCoord = () => {
-  return (
-    <>
-      <NavLink to="/">
-        <CDBSidebarMenuItem iconType='bi' icon="bi-house-gear">Dashboard</CDBSidebarMenuItem>
-      </NavLink>
-      <NavLink to="/turma/gerenciar">
-        <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
-      </NavLink>
-      <NavLink to="/professor/gerenciar">
-        <CDBSidebarMenuItem icon="table">Gerenciamento Docente</CDBSidebarMenuItem>
-      </NavLink>
-    </>
+const header_aluno = [
+  {
+    rota: "/",
+    icone: "Dashboard",
+    titulo: "bi bi-house-gear"
+  },
+  {
+    rota: "/turmas",
+    icone: "Turmas",
+    titulo: "bi bi-person-video3"
+  },
 
-  );
-}
+]
 
-const HeaderAluno = () => {
-
-  return (
-    <>
-      <NavLink to="/">
-        <CDBSidebarMenuItem icon="bi bi-house-gear">Dashboard</CDBSidebarMenuItem>
-      </NavLink>
-      <NavLink to="/turmas">
-        <CDBSidebarMenuItem icon="bi bi-person-video3">Turmas</CDBSidebarMenuItem>
-      </NavLink>
-    </>
-
-  );
-
-}
-
-const HeaderDocente = () => {
-
-  return (
-    <>
-      <NavLink to="/">
-        <CDBSidebarMenuItem icon="bi bi-house-gear">Dashboard</CDBSidebarMenuItem>
-      </NavLink>
-      <NavLink to="/turmas">
-        <CDBSidebarMenuItem icon="bi bi-person-video3">Turmas</CDBSidebarMenuItem>
-      </NavLink>
-      <NavLink to="/turma/gerenciar">
-        <CDBSidebarMenuItem icon="table">Gerenciamento Turma</CDBSidebarMenuItem>
-      </NavLink>
-    </>
-
-  );
-
-}
+const header_docente = [
+  {
+    rota: "/",
+    icone: "bi bi-house-gear ",
+    titulo: "Dashboard"
+  },
+  {
+    rota: "/turmas",
+    icone: "bi bi-person-video3",
+    titulo: "Turmas"
+  },
+  {
+    rota: "/turma/gerenciar",
+    icone: "bi bi-table",
+    titulo: "Gerenciamento de turmas"
+  }
+]
 
 const Header = () => {
 
-  const [header, setHeader] = useState();
+  const [header, setHeader] = useState([]);
   const navigate = useNavigate();
 
   const toggled = useSelector(state => state.toggleReducer);
@@ -83,15 +67,15 @@ const Header = () => {
         if (res.status) {
 
           toast.update(logout_toast, {
-              render: "Redirecionando...",
-              type: "success",
-              isLoading: false
+            render: "Redirecionando...",
+            type: "success",
+            isLoading: false
           });
 
           setTimeout(() => {
-              return navigate(`/login`, { replace: true });
+            return navigate(`/login`);
           }, 1500);
-      }
+        }
 
       })
       .catch(error => {
@@ -123,53 +107,90 @@ const Header = () => {
       });
   }
 
+  const SideBar = () => {
+
+    return (
+      <div className="header">
+        <ToastContainer />
+
+        <CDBSidebar toggled={toggled} textColor="#fff" backgroundColor="#12304A">
+          <CDBSidebarHeader prefix={<i onClick={(e) => { toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true)) }} className="fa fa-bars fa-large"></i>} >
+            <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+              <img className="aguia-menu" src={menutoledo} alt='aguia' />
+            </a>
+          </CDBSidebarHeader>
+
+          <CDBSidebarContent className="sidebar-content">
+            <CDBSidebarMenu>
+              {header.map(item => {
+                return (
+                  <NavLink to={item.rota}>
+                    <CDBSidebarMenuItem icon={item.icone}>{item.titulo}</CDBSidebarMenuItem>
+                  </NavLink>
+                );
+              })}
+            </CDBSidebarMenu>
+
+          </CDBSidebarContent>
+
+          <CDBSidebarFooter>
+            <CDBSidebarMenuItem onClick={handleLogout} icon="user-slash">Sair</CDBSidebarMenuItem>
+          </CDBSidebarFooter>
+
+        </CDBSidebar>
+
+
+      </div>
+    )
+
+  }
+
+  const NavBar = () => {
+    return (
+      <div className='navbar-mobile container-fluid' style={{ display: 'none' }}>
+        <CDBNavbar className='justify-content-start'>
+          <CDBNavToggle
+            onClick={() => toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true))}
+          />
+
+          <CDBNavBrand href="/">
+            <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+              <img className="aguia-menu img-fluid" style={{height: "2em", marginLeft: "1em"}} src={menutoledo} alt='aguia' />
+            </a>
+          </CDBNavBrand>
+
+        </CDBNavbar>
+      </div>
+
+    )
+  }
+
   useEffect(() => {
     switch (localStorage.getItem("papel")) {
 
       case "Admin":
-        setHeader(<HeaderDocente />);
+        setHeader(header_docente);
         break;
 
       case "Docente":
-        setHeader(<HeaderDocente />);
+        setHeader(header_docente);
         break;
 
       case "Coordenador":
-        setHeader(<HeaderCoord />);
+        setHeader(header_docente);
         break;
 
       case "Aluno":
-        setHeader(<HeaderAluno />);
+        setHeader(header_aluno);
         break;
     }
   }, [])
 
   return (
-    <div className="header">
-      <ToastContainer/>
-
-      <CDBSidebar toggled={toggled} textColor="#fff" backgroundColor="#12304A">
-        <CDBSidebarHeader  prefix={<i onClick={(e) => { toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true)) }} className="fa fa-bars fa-large"></i>} >
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            <img className="aguia-menu" src={menutoledo} alt='aguia' />
-          </a>
-        </CDBSidebarHeader>
-
-        <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu>
-            {header}
-          </CDBSidebarMenu>
-
-        </CDBSidebarContent>
-
-        <CDBSidebarFooter>
-          <CDBSidebarMenuItem onClick={handleLogout} icon="user-slash">Sair</CDBSidebarMenuItem>
-        </CDBSidebarFooter>
-
-      </CDBSidebar>
-
-
-    </div>
+    <>
+      <NavBar />
+      <SideBar />
+    </>
   );
 };
 

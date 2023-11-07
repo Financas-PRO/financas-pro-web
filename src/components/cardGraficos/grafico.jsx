@@ -6,14 +6,14 @@ import { Chart } from "react-google-charts";
 export default function Grafico(props) {
 
     const options = {
-        //title: "Gráfico de Pizza",
+        title: props.titulo,
         sliceVisibilityThreshold: 0.2,
     };
     
     return (
         <div className="col col-md-6 col-12 mb-3">
             <div className="card-simuladores">
-                <div className="titulo-graficos"><i className="bi bi-bar-chart-line"></i>Gráficos</div>
+                <div className="titulo-graficos"><i className="bi bi-bar-chart-line"></i>{ props.titulo}</div>
                 <div className="card-conteudoGrafico mt-3">
                     <Chart
                         chartType={props.grafico}
