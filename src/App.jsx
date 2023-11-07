@@ -42,7 +42,6 @@ function App() {
               <Route path="/empresa/:id/" element={<Empresa />} />
               <Route path="/simulador/cadastrar/:id" element={<CadSimulador />} />
               <Route path="/analise/:id" element={<Analise />} />
-              <Route path="/feedback" element={<Feedback />} />
             </Route>
 
             <Route element={<ProtectedRoute route="scopeDoc" />}>
@@ -59,6 +58,7 @@ function App() {
             <Route path="professor/:id/editar" element={<EditaProfessor />} />
             <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
             <Route path="/resumo/:id" element={<Resumo />} />
+            <Route path="/feedback/:id" element={<Feedback />} />
 
           </Route>
 

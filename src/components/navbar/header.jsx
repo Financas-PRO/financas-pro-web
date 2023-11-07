@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./header.css";
 import menutoledo from "../../assets/image/menu.png";
 import {
@@ -12,6 +12,8 @@ import {
 import { NavLink, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { toast, ToastContainer } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToggle } from '../../redux/action';
 
 const HeaderCoord = () => {
   return (
@@ -69,6 +71,9 @@ const Header = () => {
 
   const [header, setHeader] = useState();
   const navigate = useNavigate();
+
+  const toggled = useSelector(state => state.toggleReducer);
+  const dispatch = useDispatch();
 
   function handleLogout(e) {
     const logout_toast = toast.loading("Aguarde...");
@@ -139,14 +144,12 @@ const Header = () => {
     }
   }, [])
 
-  const [toggled, setToggled] = useState(false);
-
   return (
     <div className="header">
       <ToastContainer/>
 
       <CDBSidebar toggled={toggled} textColor="#fff" backgroundColor="#12304A">
-        <CDBSidebarHeader prefix={<i onClick={(e) => { toggled ? setToggled(false) : setToggled(true) }} className="fa fa-bars fa-large"></i>} >
+        <CDBSidebarHeader  prefix={<i onClick={(e) => { toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true)) }} className="fa fa-bars fa-large"></i>} >
           <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
             <img className="aguia-menu" src={menutoledo} alt='aguia' />
           </a>

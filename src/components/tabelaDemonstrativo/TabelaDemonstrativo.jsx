@@ -233,6 +233,7 @@ const TabelaDemonstrativo = props => {
                 formulas={{
                     engine: hfInstance
                 }}
+                readOnly={props.readonly ? 1 : 0}
                 colHeaders={true}
                 rowHeights={40}
                 colHeights={40}

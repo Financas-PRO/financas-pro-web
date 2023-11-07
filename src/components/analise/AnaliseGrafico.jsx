@@ -33,6 +33,7 @@ const AnaliseGrafico = props => {
                     onInit={(evt, editor) => editorRef.current = editor}
                     initialValue={analise ? analise : "Escreva aqui sua análise"}
                     onChange={setTexto}
+                    disabled={props.readonly ? 1 : 0}
                 />
             </div>
         </>

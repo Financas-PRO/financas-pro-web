@@ -16,3 +16,13 @@ export const setAnalise = (newState) => ({
     type: "SET ANALISE",
     newState
 })
+
+export const setToggle = (newState) => ({
+    type: "SET TOGGLE",
+    newState
+})
+
+export const setUser = (newState) => ({
+    type: "SET USER",
+    newState
+})

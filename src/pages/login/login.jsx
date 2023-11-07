@@ -6,10 +6,16 @@ import "react-toastify/dist/ReactToastify.css";
 import toledo from '../../assets/image/toledo.png'
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/action";
 
 export default function Login(){
 
   const [login, setLogin] = useState({});
+
+  const user = useSelector(state => state.userReducer);
+
+  const dispatch = useDispatch();
 
   let navigate = useNavigate();
 
@@ -23,6 +29,7 @@ export default function Login(){
           if (res.status) {
             toast.success("Login realizado com sucesso");
             localStorage.setItem('papel', res.data.scope);
+            dispatch(setUser(res.data));
 
             setTimeout(() => {
               return navigate("/", { replace: true });
