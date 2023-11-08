@@ -10,6 +10,10 @@ import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import Select from "react-select";
+import { useSelector } from "react-redux";
+
+
+
 
 export default function CadSimulador() {
   let { id } = useParams();
@@ -18,12 +22,36 @@ export default function CadSimulador() {
   const [descricao, setDescricao] = useState("");
   const [alunosSelecionados, setAlunosSelecionados] = useState([]);
   const [alunosSelecionadosAtual, setAlunosSelecionadosAtual] = useState([]);
+  const [usuarioFixo, setUsuarioFixo] = useState(null);
+  // precisei usar o redux para retornar as informações do usuario logado
+  const user = useSelector(state => state.userReducer);
+
+  console.log("tela cadSimulador:",user);
 
   useEffect(() => {
     api.get(`relacaoTurma/${id}`).then((res) => {
       setAlunosSelecionados(res.data.data);
+      if (user) {
+        const IdUsuarioLogado = user.id;
+        // aqui esta fazendo uma verificação dos id do usuario de todos os alunos que estao na lista do select
+        // se meu id do usuario logado for identico ao id do usuario do aluno na list ele vai returnar true
+        const VerificarIdUsuario = res.data.data.filter((elemento) => {
+          const aluno = elemento.aluno;
+          if (aluno && aluno.user && aluno.user.id === IdUsuarioLogado) {
+            return true;
+          }
+          return false;
+        });
+        setAlunosSelecionadosAtual(VerificarIdUsuario);
+        //aqui vai definir o usuário fixo com base no usuário logado que esta returnando do meu user redux
+        const usuarioFixoEncontrado = VerificarIdUsuario.find(
+          (elemento) => elemento.aluno.user && elemento.aluno.user.id === IdUsuarioLogado
+        );
+        setUsuarioFixo(usuarioFixoEncontrado);
+      }
     });
-  }, [id]);
+  }, [id, user]);
+
 
   async function handleSubmit(e) {
     const selectedAlunoIds = alunosSelecionadosAtual.map(
@@ -80,15 +108,25 @@ export default function CadSimulador() {
     setDescricao(valor);
   }
 
+
   function handleChangeSelect(selectedOptions) {
     const selectedIds = selectedOptions.map((option) => option.value);
-
     const novosAlunosSelecionadosAtual = alunosSelecionados.filter((aluno) =>
       selectedIds.includes(aluno.aluno.id)
     );
-
+    // aqui esta fazendo uma verificação se usuario logado esta fixo no meu select se nao estiver
+    // ela faz outra verificação para deixa como selecionado e nao permiter remover
+    const usuarioFixoSelecionado = novosAlunosSelecionadosAtual.some(
+      (aluno) => aluno.aluno.id === usuarioFixo.aluno.id
+    );
+    if (!usuarioFixoSelecionado) {
+      novosAlunosSelecionadosAtual.push(usuarioFixo);
+    }
+  
     setAlunosSelecionadosAtual(novosAlunosSelecionadosAtual);
   }
+  
+
 
   return (
     <div className="row-page">

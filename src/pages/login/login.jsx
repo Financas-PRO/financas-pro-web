@@ -29,7 +29,7 @@ export default function Login(){
           if (res.status) {
             toast.success("Login realizado com sucesso");
             localStorage.setItem('papel', res.data.scope);
-            dispatch(setUser(res.data));
+            dispatch(setUser(res.data.user));
 
             setTimeout(() => {
               return navigate("/", { replace: true });
