@@ -4,7 +4,7 @@ import Header from "../../components/navbar/header.jsx";
 import img from "../../assets/image/erro.png";
 
 
-export default function Erro() {
+export default function Error403() {
     return (
         <div className="row-page">
 

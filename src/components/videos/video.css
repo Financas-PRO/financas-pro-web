@@ -1,24 +1,43 @@
 .card-video {
-    height: auto;
-    background-color: #12304a;
-    color: #fff;
-    border-radius: 5px;
-    margin: 10px;
-  }
+  height: 14.5em;
+  background-color: #12304a;
+  color: #fff;
+  margin: 10px;
+  width: 16em;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
-  .card-img {
-    background-image: url("../../assets/image/vesti.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100px;
-  }
-  
-  .conteudo-titulo {
-    font-family: Poppins-bold !important;
-    font-size: 0.9rem;
-  }
-  
-  .button-assita {
-    display: flex;
-    justify-content: center;
-  }
+.card-video:hover{
+  background-color: #ff7b10;
+  transition: 0.5s;
+}
+
+.card-video:hover .btn-assistir{
+  background-color: #12304a!important;
+  transition: 0.5s;
+}
+
+.card-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 120px;
+}
+
+.conteudo-titulo {
+  font-family: Poppins-bold !important;
+  font-size: 0.9rem;
+}
+
+.button-assita {
+  display: flex;
+  justify-content: center;
+}
+
+.card-conteudo {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  padding: 8px;
+}

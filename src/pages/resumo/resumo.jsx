@@ -1,40 +1,84 @@
-import React, { useState, useEffect, useReducer, useRef } from "react";
-import "./feedback.css";
-import Header from "../../components/navbar/header.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Header from "../../components/navbar/header";
+import { useSelector } from "react-redux";
+import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo";
+import AnaliseGrafico from "../../components/analise/AnaliseGrafico";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
-import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo.jsx";
-import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
-import { setAcoes } from "../../redux/action";
-import Loading from "../../components/loading/loading";
-import { Editor } from "@tinymce/tinymce-react";
+import { ToastContainer, toast } from "react-toastify";
 
-export default function Feedback() {
-    const dispatch = useDispatch();
+const Resumo = props => {
 
-    const [loading, setLoading] = useState(false);
+    const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
+    const analise = useSelector(state => state.analiseReducer);
+
     const [planilha, setPlanilha] = useState([]);
 
-    const editorRef = useRef(null);
-    const [feedback, setFeedback] = useState("");
-
-    const [grupo, setGrupo] = useState({
-        id: 1,
-        turma: {
-            id: 1
-        }
-    });
-
     const navigate = useNavigate();
+
     let { id } = useParams();
 
-    const acaoSelecionada = useReducer(state => state.acaoSelecionada);
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        const toast_submit = toast.loading("Enviando seu progresso..");
+        api.post(`analise/${id}`, {
+            descricao: analise
+        })
+        .then(res => {
+
+            if (res.status) {
+
+                toast.update(toast_submit, {
+                    render: "Análise finalizada! Redirecionando...",
+                    type: "success",
+                    isLoading: false,
+                    theme: "colored",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true
+                });
+
+                setTimeout(() => {
+                    return navigate(`/turma/${id}`, { replace: true });
+                }, 2500);
+
+            }
+        })
+        .catch(error => {
+
+            let resposta = error.response.data.error;
+
+            var erros = "";
+
+            if (typeof resposta === 'object') {
+
+                Object.keys(resposta).forEach(function (index) {
+                    erros += resposta[index] + "\n";
+                });
+
+            } else erros = resposta;
+
+            toast.update(toast_submit, {
+                render: `Erro ao salvar seu progresso.\n ${erros}`,
+                type: 'error',
+                isLoading: false,
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored"
+            });
+
+        })
+
+    }
 
     function getTableData() {
 
@@ -94,87 +138,29 @@ export default function Feedback() {
     }
 
     useEffect(() => {
-        setLoading(true);
-        api.get(`acoes/${id}`)
-            .then((res) => {
-
-                dispatch(setAcoes(res.data.data));
-
-                setGrupo({
-                    id: res.data.data[0].grupo.id,
-                    turma: {
-                        id: res.data.data[0].grupo.turma.id
-                    }
-                });
-            })
-            .finally(res => {
-                setLoading(false);
-            });
-    }, [id]);
-
-    useEffect(() => {
         getTableData();
-    }, [acaoSelecionada])
-
-    function setFeedbackTexto(){
-        if (editorRef.current) {
-            setFeedback(editorRef.current.getContent());
-        }
-        console.log(analise);
-    }
-
+    }, [acaoSelecionada]);
 
     return (
+
         <div className="row-page">
             <Header />
+
             <div className="container mt-4 col-md-8 col-9">
+                <ToastContainer />
+                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Antes de enviar sua análise, confira todo o conteúdo abaixo." />
+                <TabelaDemonstrativo planilha={planilha} />
+                <AnaliseGrafico data={null} />
 
-                {
-                    loading ? (
-                        <div className="h-100 w-100 col-12 aling-items-center">
-                            <Loading />
-                        </div>
-
-                    ) :
-                        (
-                            <>
-
-                                <Title
-                                    icon="bi-clipboard-fill"
-                                    titulo="Feedback"
-                                    subTitulo="Dê o feedback ao grupo, de acordo com a sua análise abaixo"
-                                />
-
-                                <TabelaDemonstrativo planilha={planilha} readonly={1} />
-                                <AnaliseGrafico readonly={1} />
-
-                                <div className="row mt-5">
-
-                                    <div className="col-12">
-                                        <h3>Escreva aqui seu feedback</h3>
-                                    </div>
-
-                                    <div className="col-12" id="feedback">
-                                        <Editor
-                                            onInit={(evt, editor) => editorRef.current = editor}
-                                            initialValue={feedback ? feedback : "Escreva aqui sua análise"}
-                                            onChange={setFeedbackTexto}
-                                        />
-                                    </div>
-
-                                </div>
-
-                            </>
-
-
-                        )
-                }
+                <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
+                    <ButtonSalvar nome="Finalizar" />
+                    <ButtonCancelar nome="Voltar" />
+                </form>
             </div>
-
-
-
-
-
         </div>
-    );
+
+
+    )
 }
+
+export default Resumo;

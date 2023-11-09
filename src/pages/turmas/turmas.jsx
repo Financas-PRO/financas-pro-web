@@ -17,23 +17,21 @@ export default function Turmas() {
 
     useEffect(() => {
         api.get(`turma`)
-        .then((res) => {
-          //console.log(res);
-          console.log(res.data.data);
-          setTurmas(res.data.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-      }, []);
-      
+            .then((res) => {
+                //console.log(res);
+                console.log(res.data.data);
+                setTurmas(res.data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
     return (
 
         <div className="row-page">
 
-            <div className="col col-md-2">
-                <Header />
-            </div>
+            <Header />
 
 
             <div className="container mt-4 col-md-8">
@@ -41,18 +39,18 @@ export default function Turmas() {
                 <Title
                     icon="bi-person-video3"
                     titulo="Turmas"
-                    subTitulo="Selecione a sua turma" />
-
+                    subTitulo="Selecione a sua turma"
+                />
 
                 <div className="row mt-5 cardFundoTurma">
                     {
                         turmas.map((turma) => {
-                           return ( <Turma turma={turma.descricao} id={turma.id}/> );
+                            return (<Turma turma={turma.descricao} id={turma.id} docente={turma.docente.nome} />);
                         })
                     }
-                    
+
                 </div>
-                
+
             </div>
         </div>
 
