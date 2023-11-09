@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useReducer, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./feedback.css";
 import Header from "../../components/navbar/header.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo.jsx";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
-import { setAcoes } from "../../redux/action";
+import { setAcaoSelecionada, setAcoes } from "../../redux/action";
 import Loading from "../../components/loading/loading";
 import { Editor } from "@tinymce/tinymce-react";
+import axios from "axios";
+import tratarErro from "../../util/tratarErro";
 
 export default function Feedback() {
     const dispatch = useDispatch();
@@ -23,6 +25,7 @@ export default function Feedback() {
 
     const editorRef = useRef(null);
     const [feedback, setFeedback] = useState("");
+    const [feedbackObj, setFeedbackObj] = useState({});
 
     const [grupo, setGrupo] = useState({
         id: 1,
@@ -31,10 +34,36 @@ export default function Feedback() {
         }
     });
 
-    const navigate = useNavigate();
     let { id } = useParams();
 
-    const acaoSelecionada = useReducer(state => state.acaoSelecionada);
+    const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
+    const user = useSelector(state => state.userReducer);
+
+    const FeedbackDocente = (props) => {
+        return (
+            <div className="row mt-5">
+
+                <div className="col-12">
+                    <h3>Escreva aqui seu feedback</h3>
+                </div>
+
+                <div className="col-12" id="feedback">
+                    <Editor
+                        onInit={(evt, editor) => editorRef.current = editor}
+                        initialValue={feedback ? feedback : "Escreva aqui sua análise"}
+                        onChange={setFeedbackTexto}
+                        readonly={props.readonly}
+                    />
+                </div>
+
+                <div className="col-12 form-control">
+                    <label >Nota:</label>
+                    <input type="number" className="form-control"/>
+                </div>
+
+            </div>
+        )
+    }
 
     function getTableData() {
 
@@ -94,35 +123,50 @@ export default function Feedback() {
     }
 
     useEffect(() => {
-        setLoading(true);
-        api.get(`acoes/${id}`)
-            .then((res) => {
-
-                dispatch(setAcoes(res.data.data));
-
-                setGrupo({
-                    id: res.data.data[0].grupo.id,
-                    turma: {
-                        id: res.data.data[0].grupo.turma.id
-                    }
-                });
-            })
-            .finally(res => {
-                setLoading(false);
-            });
-    }, [id]);
+        getTableData();
+    }, [acaoSelecionada]);
 
     useEffect(() => {
-        getTableData();
-    }, [acaoSelecionada])
 
-    function setFeedbackTexto(){
+        setLoading(true);
+
+        axios.all([
+            api.get(`acoes/${id}`),
+            api.get(`feedback/${id}`)
+        ])
+            .then(axios.spread((res1, res2) => {
+                dispatch(setAcoes(res1.data.data));
+                dispatch(setAcaoSelecionada(res1.data.data[0]));
+
+                setGrupo({
+                    id: res1.data.data[0].grupo.id,
+                    turma: {
+                        id: res1.data.data[0].grupo.turma.id
+                    }
+                });
+
+                setFeedback(res2.data.data.descricao);
+
+            }))
+            .catch(error => {
+                let erros = tratarErro(error.response.data.error);
+
+            })
+            .finally(data => {
+                setLoading(false);
+            });
+
+    }, [id]);
+
+    function setFeedbackTexto() {
         if (editorRef.current) {
             setFeedback(editorRef.current.getContent());
         }
-        console.log(analise);
     }
 
+    function handleSubmit(e){
+
+    }
 
     return (
         <div className="row-page">
@@ -142,38 +186,37 @@ export default function Feedback() {
                                 <Title
                                     icon="bi-clipboard-fill"
                                     titulo="Feedback"
-                                    subTitulo="Dê o feedback ao grupo, de acordo com a sua análise abaixo"
+                                    subTitulo={user.tipo_de_usuario.id == 3 ? 
+                                    "Aqui, você terá acesso ao feedback do docente" :
+                                    "Dê o feedback ao grupo, de acordo com a sua análise abaixo"}
                                 />
 
                                 <TabelaDemonstrativo planilha={planilha} readonly={1} />
                                 <AnaliseGrafico readonly={1} />
 
-                                <div className="row mt-5">
+                                {
+                                    feedback ? ( <FeedbackDocente readonly={true} /> )
+                                    : user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2 ? ( <FeedbackDocente readonly={false}/> ) : (
+                                        <div className="col-12 mt-3">
+                                            <h3>Aguardando feedback do professor!</h3>
+                                        </div>
+                                    ) 
+                                }
 
-                                    <div className="col-12">
-                                        <h3>Escreva aqui seu feedback</h3>
-                                    </div>
-
-                                    <div className="col-12" id="feedback">
-                                        <Editor
-                                            onInit={(evt, editor) => editorRef.current = editor}
-                                            initialValue={feedback ? feedback : "Escreva aqui sua análise"}
-                                            onChange={setFeedbackTexto}
-                                        />
-                                    </div>
-
-                                </div>
+                                {
+                                    (user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2) && !feedback ? 
+                                    (
+                                        <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
+                                            <ButtonSalvar nome="Enviar feedback"/>
+                                            <ButtonCancelar nome="Voltar"/>
+                                        </form>
+                                    ) : void(0)
+                                }
 
                             </>
-
-
                         )
                 }
             </div>
-
-
-
-
 
         </div>
     );

@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function CadTurma() {
 
@@ -34,14 +35,8 @@ export default function CadTurma() {
           }
         })
         .catch(function (error) {
-          console.log(error)
-          let resposta = error.response.data.error;
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
+          let erros = tratarErro(error.response.data.error);
 
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",

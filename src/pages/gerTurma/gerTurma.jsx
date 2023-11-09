@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
+import tratarErro from "../../util/tratarErro";
 
 export default function GerTurma() {
   const [turmas, setTurmas] = useState({});
@@ -73,13 +74,9 @@ export default function GerTurma() {
           }
         })
         .catch(function (error) {
-          let resposta = error.response.data.errors;
+          
+          let erros = tratarErro(error.response.data.error);
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
           toast.error(`Erro ao alterar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,

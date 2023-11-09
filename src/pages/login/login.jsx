@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/action";
+import tratarErro from "../../util/tratarErro";
 
 export default function Login(){
 
@@ -37,15 +38,9 @@ export default function Login(){
           }
         })
         .catch(function (error) {
-          console.log(error)
-          let resposta = error.response.data.error;
+          
+          let erros = tratarErro(error.response.data.error);
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-            
-          });
           toast.error(`Erro ao Logar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,

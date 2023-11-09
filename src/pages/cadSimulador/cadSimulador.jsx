@@ -11,9 +11,7 @@ import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
 import Select from "react-select";
 import { useSelector } from "react-redux";
-
-
-
+import tratarErro from "../../util/tratarErro";
 
 export default function CadSimulador() {
   let { id } = useParams();
@@ -78,14 +76,9 @@ export default function CadSimulador() {
           }
         })
         .catch(function (error) {
-          console.log(error);
-          let resposta = error.response.data.error;
+          
+          let erros = tratarErro(error.response.data.error);
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
           toast.error(`Erro ao criar Grupo!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,

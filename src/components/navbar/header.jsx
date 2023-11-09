@@ -18,6 +18,7 @@ import api from '../../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToggle } from '../../redux/action';
+import tratarErro from '../../util/tratarErro';
 
 const header_aluno = [
   {
@@ -81,18 +82,8 @@ const Header = () => {
       })
       .catch(error => {
 
-        let resposta = error.response.data.error;
-
-        var erros = "";
-
-        if (typeof resposta === 'object') {
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
-
-        } else erros = resposta;
-
+        let erros = tratarErro(error.response.data.error);
+        
         toast.update(logout_toast, {
           render: `\n ${erros}`,
           type: 'error',

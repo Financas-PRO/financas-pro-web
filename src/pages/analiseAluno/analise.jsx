@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setAcoes } from "../../redux/action.js";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
 import { ToastContainer, toast } from "react-toastify";
+import tratarErro from "../../util/tratarErro";
 
 export default function Analise() {
 
@@ -82,17 +83,7 @@ export default function Analise() {
             })
             .catch(error => {
 
-                let resposta = error.response.data.error;
-
-                var erros = "";
-
-                if (typeof resposta === 'object') {
-
-                    Object.keys(resposta).forEach(function (index) {
-                        erros += resposta[index] + "\n";
-                    });
-
-                } else erros = resposta;
+                let erros = tratarErro(error.response.data.error);
 
                 toast.update(toast_submit, {
                     render: `Erro ao salvar seu progresso.\n ${erros}`,

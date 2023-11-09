@@ -12,6 +12,7 @@ import axios from "axios";
 import api from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import tratarErro from "../../util/tratarErro";
 
 export default function Empresa() {
 
@@ -79,17 +80,8 @@ export default function Empresa() {
                     }
                 })
                 .catch(function (error) {
-                    let resposta = error.response.data.error;
 
-                    var erros = "";
-
-                    if (typeof resposta === 'object') {
-
-                        Object.keys(resposta).forEach(function (index) {
-                            erros += resposta[index] + "\n";
-                        });
-
-                    } else erros = resposta;
+                    let erros = tratarErro(error.response.data.error);
 
                     toast.update(empresa_toast, {
                         render: `\n ${erros}`,

@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function Importa() {
 
@@ -53,14 +54,8 @@ export default function Importa() {
           }
         })
         .catch(function (error) {
-          console.log(error)
-          let resposta = error.response.data.error;
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index];
-          });
+          let erros = tratarErro(error.response.data.error);
 
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",

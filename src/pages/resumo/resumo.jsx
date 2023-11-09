@@ -9,6 +9,7 @@ import ButtonCancelar from "../../components/button/buttonCancelar";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
+import tratarErro from "../../util/tratarErro";
 
 const Resumo = props => {
 
@@ -52,17 +53,7 @@ const Resumo = props => {
         })
         .catch(error => {
 
-            let resposta = error.response.data.error;
-
-            var erros = "";
-
-            if (typeof resposta === 'object') {
-
-                Object.keys(resposta).forEach(function (index) {
-                    erros += resposta[index] + "\n";
-                });
-
-            } else erros = resposta;
+            let erros = tratarErro(error.response.data.error);
 
             toast.update(toast_submit, {
                 render: `Erro ao salvar seu progresso.\n ${erros}`,

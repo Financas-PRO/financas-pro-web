@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function CadProfessor() {
   const [professor, setProfessor] = useState({});
@@ -49,13 +50,9 @@ export default function CadProfessor() {
           }
         })
         .catch(function (error) {
-          let resposta = error.response.data.error;
 
-          var erros = "";
+          let erros = tratarErro(error.response.data.error);
 
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index];
-          });
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,
