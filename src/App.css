@@ -87,6 +87,7 @@ td{
 }
 
 .subtitulo{
+  font-size: 15px;
   color: #12304A !important;
 }
 
@@ -97,12 +98,12 @@ td{
 
 .title{
   display: flex;
-  flex-wrap: wrap;
 }
 
 
 .icon-titulo{
   font-size: 3rem;
+  margin-right: 10px;
 }
 
 .buttons{
@@ -167,7 +168,7 @@ button{
   border-color: #b7660a;
 }
 
-.btn-assitir{
+.btn-assistir{
   width: 100%;
   font-family: Poppins-bold;
   font-size: 1rem;
@@ -202,4 +203,16 @@ button{
     margin-right: 40px;
     padding: 3px;
   }
+}
+
+.title .bi::before {
+  color: #12304A !important;
+}
+
+.tox-notifications-container {
+  display: none!important;
+}
+
+.header .fa-bi::before {
+  font-size: 23px;
 }

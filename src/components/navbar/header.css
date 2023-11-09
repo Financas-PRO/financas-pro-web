@@ -1,20 +1,80 @@
-nav{
+nav {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 
     color: #fff;
     background-color: #12304A;
-    
+
     font-style: italic;
 }
 
-.aguia-menu{
-   margin-left: 45px;
+.aguia-menu {
+    margin-left: 45px;
     height: 75%;
 }
 
-.jGeaPm{
+.jGeaPm {
     border-bottom: none !important;
+}
 
+.header {
+    display: flex;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+@media only screen and (max-width: 720px) {
+
+    .header {
+        position: fixed;
+        z-index: 999;
+    }
+
+    .header .toggled {
+        width: 0 !important;
+        min-width: 0 !important;
+    }
+
+    .navbar-mobile {
+        display: block !important;
+        padding: 0 !important;
+        position: fixed;
+        z-index: 999;
+    }
+
+}
+
+.active li span,
+.active li i:before {
+    color: #ff7b10;
+    font-family: Poppins-bold;
+}
+
+li span {
+    font-size: 1em;
+}
+
+@keyframes nav {
+    from {
+        border-left: solid 0.5px #ff7b10;
+    }
+
+    to {
+        border-left: solid 3.5px #ff7b10;
+    }
+}
+
+.active li div {
+    border-left: solid 3.5px #ff7b10;
+    animation-name: nav;
+    animation-duration: 0.2s;
+
+}
+
+.pro-menu div[role="button"]:hover span,
+.pro-menu div[role="button"]:hover i:before {
+    color: #ff7b10 !important;
+    transition: 0.3s;
 }

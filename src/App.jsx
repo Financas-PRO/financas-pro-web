@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import CadastrarProfessor from "./pages/cadProfessor/cadProfessor.jsx";
@@ -17,51 +17,54 @@ import Turmas from "./pages/turmas/turmas";
 import Demonstrativo from "./pages/demonstrativo/demonstrativo";
 import Erro from "./pages/erro/erro";
 import CadSimulador from "./pages/cadSimulador/cadSimulador";
+import Analise from "./pages/analiseAluno/analise";
+import Feedback from "./pages/feedbackProfessor/feedback";
+import { Provider } from "react-redux";
+import store from "./redux/store.js";
+import Resumo from "./pages/resumo/resumo.jsx";
 
 function App() {
+  
   return (
     <BrowserRouter>
-      <Routes>
+      <Provider store={store}>
+        <Routes>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/demonstrativo" element={<Demonstrativo />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Erro />} />
 
+          <Route element={<ProtectedRoute route="checkAuth" />}>
 
-        <Route element={<ProtectedRoute route="checkAuth" />}>
+            <Route path="/" element={<Dashboard />} />
 
-          <Route path="/" element={<Dashboard />} />
-               
-          <Route element={<ProtectedRoute route="scopeAluno"/>}>
-            <Route path="/simuladores/:id/" element={<Simuladores />} />
-            <Route path="/empresa/:id/" element={<Empresa />} />
+            <Route element={<ProtectedRoute route="scopeAluno" />}>
+              <Route path="/empresa/:id/" element={<Empresa />} />
+              <Route path="/simulador/cadastrar/:id" element={<CadSimulador />} />
+              <Route path="/analise/:id" element={<Analise />} />
+              <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
+            </Route>
+
+            <Route element={<ProtectedRoute route="scopeDoc" />}>
+              <Route path="/importa/:id/" element={<Importa />} />
+              <Route path="turma/cadastrar" element={<CadastrarTurma />} />
+              <Route path="turma/gerenciar" element={<GerenciarTurma />} />
+              <Route path="turma/:id/editar" element={<EditaTurma />} />
+            </Route>
+
             <Route path="/turmas" element={<Turmas />} />
-            <Route path="/simulador/cadastrar/:id" element={<CadSimulador/>}/>
-          </Route>   
-
-          <Route element={<ProtectedRoute route="scopeDoc"/>}>
-            <Route path="/importa/:id/" element={<Importa />} />
+            <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
+            <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
+            <Route path="professor/:id/editar" element={<EditaProfessor />} />
+            <Route path="/resumo/:id" element={<Resumo />} />
+            <Route path="/feedback/:id" element={<Feedback />} />
+            <Route path="/simuladores/:id/" element={<Simuladores />} />
 
           </Route>
-
-          <Route element={<ProtectedRoute route="scopeDoc" />}>
-            <Route path="/importa/:id/" element={<Importa />} />
-            <Route path="turma/cadastrar" element={<CadastrarTurma />} />
-            <Route path="turma/gerenciar" element={<GerenciarTurma />} />
-            <Route path="turma/:id/editar" element={<EditaTurma />} />
-          </Route>
-
-          <Route path="professor/cadastrar" element={<CadastrarProfessor />} />
-          <Route path="professor/gerenciar" element={<GerenciarProfessor />} />
-          <Route path="professor/:id/editar" element={<EditaProfessor />} />
-          <Route path="/demonstrativo/:id" element={<Demonstrativo />} />
-
-
-        </Route>
-
-            <Route path="/erro" element={<Erro />} />
 
         </Routes>
-      </BrowserRouter>
+      </Provider>
+
+    </BrowserRouter>
   );
 }
 

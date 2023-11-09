@@ -22,36 +22,33 @@ export default function Simuladores() {
 
     useEffect(() => {
         api.get(`grupo/${id}`)
-        .then(res => {
-            if (res.status == 200){
-                setGrupos(res.data.data);
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+            .then(res => {
+                if (res.status == 200) {
+                    setGrupos(res.data.data);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }, [id])
 
     return (
         <div className="row-page">
 
-            <div className="col col-md-2">
-                <Header />
-            </div>
-
+            <Header />
 
             <div className="container mt-4 col-md-8">
 
                 <Title
                     icon="bi-bezier2"
                     titulo="Simuladores"
-                    subTitulo="Gerenciamento dos simuladores" />
+                    subTitulo="Selecione o simulador desejado" />
 
 
                 <div className="cadButton">
                     <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
-                    <i className="bi bi-bookmark-plus-fill"></i>
-                        Criar nova simulação
+                        <i className="bi bi-bookmark-plus-fill"></i>
+                        Criar novo simulador
                     </Link>
                 </div>
 
@@ -78,12 +75,11 @@ export default function Simuladores() {
                             )
                         })
                     }
-                    
+
                 </div>
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                    <ButtonSalvar nome="Salvar" />
-                    <ButtonCancelar link="turmas" nome="Cancelar" />
+                    <ButtonCancelar link="turmas" nome="Voltar" />
                 </div>
             </div>
 

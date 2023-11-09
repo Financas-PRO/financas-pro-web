@@ -5,6 +5,13 @@
     display: flex;
     justify-content: center;
     border-radius: 5px;
+}  
+
+.card-simuladores:hover .titulo-simuladores{
+    background-color: #fff;
+    transition: 0.4s;
+    color: black;
+
 }
 
 .card-simuladores{
@@ -13,8 +20,13 @@
     border-radius: 14px;
 }
 
+.card-simuladores:hover {
+    background-color: #EE7F01;
+    transition: 0.4s;
+}
+
 .etapa{
-    font-size: 0.60rem;
+    font-size: 0.70rem;
     color: #000;
 }
 

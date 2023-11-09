@@ -157,9 +157,7 @@ export default function EditaProfessor() {
   return (
     <>
       <div className="row-page">
-        <div className="col col-md-2">
-          <Header />
-        </div>
+        <Header />
         <div className="container mt-4 col-md-8">
 
           <Title
