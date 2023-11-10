@@ -32,47 +32,59 @@ export default function Importa() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const importa_toast = toast.loading("Importando os alunos, por favor aguarde...");
+
     const data = new FormData();
     data.append("card", cardFile);
 
-    console.log(cardFile);
+    api
+      .post(`importarAlunos/${id}`, { txt: cardFile }, {
+        headers: {
+          'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+        }
+      })
+      .then(async (res) => {
+        if (res.status) {
 
-    try {
-      api
-        .post(`importarAlunos/${id}`, { txt: cardFile }, {
-          headers: {
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-          }
-        })
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Alunos importados com sucesso! Recarregando a página...");
-
-            setTimeout(() => {
-              return navigate(0);
-            }, 2000);
-          }
-        })
-        .catch(function (error) {
-
-          let erros = tratarErro(error.response.data.error);
-
-          toast.error(`Erro ao cadastrar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
+          toast.update(importa_toast, {
+            render: "Alunos importados com sucesso! Recarregando a página......",
+            type: "success",
+            isLoading: false,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
+            theme: "colored"
           });
-        });
 
-    } catch (err) {
-      console.log(err);
-    }
+          setTimeout(() => {
+            return navigate(0);
+          }, 2000);
+        }
+      })
+      .catch(function (error) {
+
+        let erros = tratarErro(error.response.data.error);
+
+        toast.update(importa_toast,
+
+        {
+          render: `Erro ao importar!\n ${erros}`, 
+          type: "error",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          style: { whiteSpace: "pre-line" },
+          isLoading: false
+        });
+      });
+
+
   }
 
   // FUNÇÃO PARA LISTAR OS DADOS IMPORTADOS

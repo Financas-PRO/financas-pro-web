@@ -16,6 +16,9 @@ import Loading from "../../components/loading/loading";
 import { Editor } from "@tinymce/tinymce-react";
 import axios from "axios";
 import tratarErro from "../../util/tratarErro";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { setAnalise } from "../../redux/action";
 
 export default function Feedback() {
     const dispatch = useDispatch();
@@ -23,9 +26,9 @@ export default function Feedback() {
     const [loading, setLoading] = useState(false);
     const [planilha, setPlanilha] = useState([]);
 
-    const editorRef = useRef(null);
+    const editorRef = useRef("");
     const [feedback, setFeedback] = useState("");
-    const [feedbackObj, setFeedbackObj] = useState({});
+    const [nota, setNota] = useState(0);
 
     const [grupo, setGrupo] = useState({
         id: 1,
@@ -35,6 +38,8 @@ export default function Feedback() {
     });
 
     let { id } = useParams();
+
+    const navigate = useNavigate();
 
     const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
     const user = useSelector(state => state.userReducer);
@@ -56,10 +61,10 @@ export default function Feedback() {
                     />
                 </div>
 
-                <div className="col-12 form-control">
-                    <label >Nota:</label>
-                    <input type="number" className="form-control"/>
-                </div>
+                {/* <form className="col-12">
+                    <label className="text-black">Nota:</label>
+                    <input name="nota" onChange={setNotaValue} type="number" className="form-control" />
+                </form> */}
 
             </div>
         )
@@ -129,12 +134,13 @@ export default function Feedback() {
     useEffect(() => {
 
         setLoading(true);
-
+        setFeedback("");
         axios.all([
             api.get(`acoes/${id}`),
-            api.get(`feedback/${id}`)
+            api.get(`feedback/${id}`),
+            api.get(`analise/${id}`)
         ])
-            .then(axios.spread((res1, res2) => {
+            .then(axios.spread((res1, res2, res3) => {
                 dispatch(setAcoes(res1.data.data));
                 dispatch(setAcaoSelecionada(res1.data.data[0]));
 
@@ -146,6 +152,8 @@ export default function Feedback() {
                 });
 
                 setFeedback(res2.data.data.descricao);
+
+                dispatch(setAnalise(res3.data.data.descricao));
 
             }))
             .catch(error => {
@@ -164,8 +172,58 @@ export default function Feedback() {
         }
     }
 
-    function handleSubmit(e){
+    function setNotaValue(e) {
 
+        let nota = e.target.value;
+        setNota(nota);
+    }
+
+    function handleSubmit(e) {
+
+        e.preventDefault();
+
+        const toast_feedback = toast.loading("Enviando o feedback, aguarde...");
+
+        api.post(`feedback/${id}`, { 'descricao': feedback, 'nota': nota })
+            .then(res => {
+
+                toast.update(toast_feedback, {
+                    render: "Enviado com sucesso!",
+                    type: 'success',
+                    isLoading: false,
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored"
+                });
+
+                setTimeout(() => {
+                    return navigate(`/simuladores/${grupo.turma.id}`);
+                }, 1500);
+
+            })
+            .catch(error => {
+
+                let erros = tratarErro(error.response.data.error);
+
+                toast.update(toast_feedback, {
+                    render: `\n ${erros}`,
+                    type: 'error',
+                    isLoading: false,
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored"
+                });
+
+            })
+            .finally(data => {
+
+            });
     }
 
     return (
@@ -186,31 +244,31 @@ export default function Feedback() {
                                 <Title
                                     icon="bi-clipboard-fill"
                                     titulo="Feedback"
-                                    subTitulo={user.tipo_de_usuario.id == 3 ? 
-                                    "Aqui, você terá acesso ao feedback do docente" :
-                                    "Dê o feedback ao grupo, de acordo com a sua análise abaixo"}
+                                    subTitulo={user.tipo_de_usuario.id == 3 ?
+                                        "Aqui, você terá acesso ao feedback do docente" :
+                                        "Dê o feedback ao grupo, de acordo com a sua análise abaixo"}
                                 />
 
                                 <TabelaDemonstrativo planilha={planilha} readonly={1} />
                                 <AnaliseGrafico readonly={1} />
 
                                 {
-                                    feedback ? ( <FeedbackDocente readonly={true} /> )
-                                    : user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2 ? ( <FeedbackDocente readonly={false}/> ) : (
-                                        <div className="col-12 mt-3">
-                                            <h3>Aguardando feedback do professor!</h3>
-                                        </div>
-                                    ) 
+                                    feedback ? (<FeedbackDocente readonly={true} />)
+                                        : user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2 ? (<FeedbackDocente readonly={false} />) : (
+                                            <div className="col-12 mt-3">
+                                                <h3>Aguardando feedback do professor!</h3>
+                                            </div>
+                                        )
                                 }
 
                                 {
-                                    (user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2) && !feedback ? 
-                                    (
-                                        <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
-                                            <ButtonSalvar nome="Enviar feedback"/>
-                                            <ButtonCancelar nome="Voltar"/>
-                                        </form>
-                                    ) : void(0)
+                                    (user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2) && !feedback ?
+                                        (
+                                            <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
+                                                <ButtonSalvar nome="Enviar feedback" />
+                                                <ButtonCancelar nome="Voltar" />
+                                            </form>
+                                        ) : void (0)
                                 }
 
                             </>

@@ -11,7 +11,6 @@ import {
   CDBNavbar,
   CDBNavToggle,
   CDBNavBrand
-
 } from 'cdbreact';
 import { NavLink, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
@@ -25,7 +24,7 @@ const header_aluno = [
     rota: "/",
     icone: "bi bi-house-gear",
     titulo: "Dashboard"
-    
+
   },
   {
     rota: "/turmas",
@@ -48,8 +47,8 @@ const header_docente = [
   },
   {
     rota: "/turma/gerenciar",
-    icone: "bi bi-table",
-    titulo: "Gerenciamento de turmas"
+    icone: "bi bi-people-fill",
+    titulo: "Gerenciar Turmas"
   }
 ]
 
@@ -83,7 +82,7 @@ const Header = () => {
       .catch(error => {
 
         let erros = tratarErro(error.response.data.error);
-        
+
         toast.update(logout_toast, {
           render: `\n ${erros}`,
           type: 'error',
@@ -119,7 +118,7 @@ const Header = () => {
                   <NavLink to={item.rota}>
                     <CDBSidebarMenuItem icon={item.icone}>{item.titulo}</CDBSidebarMenuItem>
                   </NavLink>
-                );
+                )
               })}
             </CDBSidebarMenu>
 
@@ -132,7 +131,7 @@ const Header = () => {
         </CDBSidebar>
 
 
-      </div>
+      </div >
     )
 
   }
@@ -147,7 +146,7 @@ const Header = () => {
 
           <CDBNavBrand href="/">
             <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-              <img className="aguia-menu img-fluid" style={{height: "2em", marginLeft: "1em"}} src={menutoledo} alt='aguia' />
+              <img className="aguia-menu img-fluid" style={{ height: "2em", marginLeft: "1em" }} src={menutoledo} alt='aguia' />
             </a>
           </CDBNavBrand>
 

@@ -2,10 +2,8 @@ nav {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-
     color: #fff;
     background-color: #12304A;
-
     font-style: italic;
 }
 
@@ -30,6 +28,7 @@ nav {
     .header {
         position: fixed;
         z-index: 999;
+
     }
 
     .header .toggled {
@@ -40,8 +39,9 @@ nav {
     .navbar-mobile {
         display: block !important;
         padding: 0 !important;
-        position: fixed;
-        z-index: 999;
+        position: sticky;
+        top: 0;
+        z-index: 9999;
     }
 
 }
@@ -52,8 +52,12 @@ nav {
     font-family: Poppins-bold;
 }
 
+.header i::before {
+    color: #fff;
+}
+
 li span {
-    font-size: o.9em;
+    font-size: 0.9em;
 }
 
 @keyframes nav {

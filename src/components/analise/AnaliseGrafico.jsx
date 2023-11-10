@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import Grafico from "../cardGraficos/grafico";
 import { useDispatch, useSelector } from "react-redux";
 import { setAnalise } from "../../redux/action";
