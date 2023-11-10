@@ -42,9 +42,9 @@ export default function GerTurma() {
     setBusca(
       turmas.filter(
         (f) =>
-          f.ano.includes(buscando) ||
-          f.semestre.includes(buscando) ||
-          f.descricao.includes(buscando)
+          f.descricao.toLowerCase().includes(buscando) ||
+          f.ano.toString().includes(buscando) ||
+          f.semestre.toString().includes(buscando)
       )
     );
   };
@@ -103,6 +103,12 @@ export default function GerTurma() {
   var turmaDetalhe = "";
 
   turmaDetalhe = busca.map((item, index) => {
+
+    const statusClass = item.ativo === 1 ? "ativo" : "inativo";
+    const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
+
+    // console.log(`item.ativo: ${item.ativo}`);
+
     return (
       <tr key={index}>
         <td>
@@ -110,7 +116,10 @@ export default function GerTurma() {
         </td>
         <td>{item.descricao}</td>
         <td>{item.ano}</td>
-        <td>{item.semestre}</td>
+        <td className="text-center">{item.semestre}</td>
+        <td>
+          <span className={`status ${statusClass}`}>{statusText}</span>
+        </td>
         <td>
           <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{ width: 'auto', borderRadius: '7px' }}>
             <i className="bi bi-arrow-bar-up"></i>
@@ -180,6 +189,7 @@ export default function GerTurma() {
                         <th>DESCRIÇÃO</th>
                         <th>ANO</th>
                         <th>SEMESTRE</th>
+                        <th>STATUS</th>
                         <th>IMPORTAR</th>
                         <th>EDITAR</th>
                         <th>INATIVAR</th>
