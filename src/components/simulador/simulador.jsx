@@ -17,7 +17,7 @@ export default function Simulador(props) {
                 </div>
                 <div className="footer-card">
                     <span className="link mt-3 mb-2">
-                        Clique para retornar <i class="bi bi-arrow-right"></i>
+                        Clique para retornar <i className="bi bi-arrow-right"></i>
                     </span>
                 </div>
             </div>

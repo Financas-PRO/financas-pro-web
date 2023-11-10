@@ -224,7 +224,7 @@ export default function Empresa() {
                                         stock={empresa.stock}
                                         click={e => { e.preventDefault(); handleClick(empresa.stock) }}
                                         key={icone.id}
-                                        imagem={empresas.includes(empresa.stock) ? <i class="bi bi-check"></i> : <i class="bi bi-plus"></i>}
+                                        imagem={empresas.includes(empresa.stock) ? <i className="bi bi-check"></i> : <i className="bi bi-plus"></i>}
                                         onChange={() => handleSelecao(simbolo)} />);
                                 })
                             }
