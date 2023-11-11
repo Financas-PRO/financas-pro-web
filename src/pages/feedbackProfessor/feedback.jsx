@@ -19,17 +19,17 @@ import tratarErro from "../../util/tratarErro";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { setAnalise } from "../../redux/action";
+import { CDBModal } from "cdbreact";
 
 export default function Feedback() {
+
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
     const [planilha, setPlanilha] = useState([]);
-
-    const editorRef = useRef("");
-    const [feedback, setFeedback] = useState("");
-    const [nota, setNota] = useState(0);
-
+    const [feedback, setFeedback] = useState({ descricao: null, nota: null });
+    const [avaliado, setAvaliado] = useState(false);
+    const [modal, setModal] = useState(0);
     const [grupo, setGrupo] = useState({
         id: 1,
         turma: {
@@ -37,36 +37,44 @@ export default function Feedback() {
         }
     });
 
-    let { id } = useParams();
-
-    const navigate = useNavigate();
+    const editorRef = useRef("");
 
     const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
     const user = useSelector(state => state.userReducer);
 
+    let { id } = useParams();
+
+    const navigate = useNavigate();
+
     const FeedbackDocente = (props) => {
         return (
-            <div className="row mt-5">
-
-                <div className="col-12">
-                    <h3>Escreva aqui seu feedback</h3>
+            <>
+                <div className="row">
+                    <h3>Avaliação do docente</h3>
                 </div>
 
-                <div className="col-12" id="feedback">
+                <div className="row mt-2">
                     <Editor
                         onInit={(evt, editor) => editorRef.current = editor}
-                        initialValue={feedback ? feedback : "Escreva aqui sua análise"}
-                        onChange={setFeedbackTexto}
-                        readonly={props.readonly}
+                        initialValue={feedback.descricao ? feedback.descricao : "Escreva aqui sua análise"}
+                        disabled={props.readonly}
+                        onChange={handleDescricaoChange}
                     />
+
                 </div>
 
-                {/* <form className="col-12">
-                    <label className="text-black">Nota:</label>
-                    <input name="nota" onChange={setNotaValue} type="number" className="form-control" />
-                </form> */}
+                <div className="row mt-3">
+                    <label className="form-label text-black">Nota</label>
+                    <input value={feedback.nota} type="number" disabled={avaliado ? 1 : 0} onChange={handleNotaChange} className="form-control" />
+                </div>
 
-            </div>
+                <div className="buttons justify-content-end mb-5 mt-4">
+                    {(user.tipo_de_usuario.id === 1 || user.tipo_de_usuario.id === 2) && !avaliado ?
+                        (<button className="btn-salvar" onClick={handleSubmit}>Salvar</button>) : void (0)}
+                    <button className="btn-cancelar" onClick={() => { setModal(0) }}>Fechar</button>
+                </div>
+            </>
+
         )
     }
 
@@ -134,7 +142,6 @@ export default function Feedback() {
     useEffect(() => {
 
         setLoading(true);
-        setFeedback("");
         axios.all([
             api.get(`acoes/${id}`),
             api.get(`feedback/${id}`),
@@ -151,7 +158,10 @@ export default function Feedback() {
                     }
                 });
 
-                setFeedback(res2.data.data.descricao);
+                if (res2.data.data.nota) {
+                    setAvaliado(true);
+                    setFeedback({ descricao: res2.data.data.descricao, nota: res2.data.data.nota });
+                }
 
                 dispatch(setAnalise(res3.data.data.descricao));
 
@@ -166,16 +176,18 @@ export default function Feedback() {
 
     }, [id]);
 
-    function setFeedbackTexto() {
-        if (editorRef.current) {
-            setFeedback(editorRef.current.getContent());
-        }
+    function handleNotaChange(e) {
+
+        e.preventDefault();
+
+        setFeedback({ ...feedback, nota: parseFloat(e.target.value) });
+        console.log(feedback);
     }
 
-    function setNotaValue(e) {
+    function handleDescricaoChange(e) {
+        setFeedback({ ...feedback, descricao: editorRef.current.getContent() });
+        console.log(feedback);
 
-        let nota = e.target.value;
-        setNota(nota);
     }
 
     function handleSubmit(e) {
@@ -184,7 +196,7 @@ export default function Feedback() {
 
         const toast_feedback = toast.loading("Enviando o feedback, aguarde...");
 
-        api.post(`feedback/${id}`, { 'descricao': feedback, 'nota': nota })
+        api.post(`feedback/${id}`, feedback)
             .then(res => {
 
                 toast.update(toast_feedback, {
@@ -221,9 +233,7 @@ export default function Feedback() {
                 });
 
             })
-            .finally(data => {
 
-            });
     }
 
     return (
@@ -249,27 +259,20 @@ export default function Feedback() {
                                         "Dê o feedback ao grupo, de acordo com a sua análise abaixo"}
                                 />
 
+                                <CDBModal isOpen={modal} toggle={() => { setModal(1) }} centered fade>
+                                    <div className="container p-4">
+                                        <FeedbackDocente readonly={avaliado ? 1 : 0} />
+                                    </div>
+                                </CDBModal>
+
+                                <div className="row justify-content-end">
+                                    <button onClick={() => { setModal(1) }} className={`col-md-4 col-12 ${avaliado ? 'btn btn-success' : 'btn btn-warning'}`}>
+                                        Situação: {avaliado ? 'Avaliado' : "Aguardando professor"}
+                                    </button>
+                                </div>
+
                                 <TabelaDemonstrativo planilha={planilha} readonly={1} />
                                 <AnaliseGrafico readonly={1} />
-
-                                {
-                                    feedback ? (<FeedbackDocente readonly={true} />)
-                                        : user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2 ? (<FeedbackDocente readonly={false} />) : (
-                                            <div className="col-12 mt-3">
-                                                <h3>Aguardando feedback do professor!</h3>
-                                            </div>
-                                        )
-                                }
-
-                                {
-                                    (user.tipo_de_usuario.id == 1 || user.tipo_de_usuario.id == 2) && !feedback ?
-                                        (
-                                            <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
-                                                <ButtonSalvar nome="Enviar feedback" />
-                                                <ButtonCancelar nome="Voltar" />
-                                            </form>
-                                        ) : void (0)
-                                }
 
                             </>
                         )

@@ -21,13 +21,14 @@ nav {
     height: 100vh;
     position: sticky;
     top: 0;
+    z-index: 99999;
 }
 
 @media only screen and (max-width: 720px) {
 
     .header {
         position: fixed;
-        z-index: 999;
+        z-index: ;
 
     }
 
