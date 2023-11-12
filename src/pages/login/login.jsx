@@ -99,7 +99,7 @@ export default function Login() {
               onChange={handleChange}
             />
 
-            <button className="btn btn-warning mt-4">Entrar</button>
+            <button className="btn btn-warning w-100 mt-4">Entrar</button>
           </form>
 
           <span className="mt-5">Toledo Prudente</span>

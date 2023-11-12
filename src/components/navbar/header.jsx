@@ -49,6 +49,11 @@ const header_docente = [
     rota: "/turma/gerenciar",
     icone: "bi bi-people-fill",
     titulo: "Gerenciar Turmas"
+  },
+  {
+    rota: "/notas",
+    icone: "bi bi-table",
+    titulo: "Relação de notas"
   }
 ]
 
