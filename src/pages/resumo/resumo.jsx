@@ -46,7 +46,7 @@ const Resumo = props => {
                 });
 
                 setTimeout(() => {
-                    return navigate(`/turma/${id}`, { replace: true });
+                    return navigate(`/turmas`);
                 }, 2500);
 
             }
@@ -145,7 +145,7 @@ const Resumo = props => {
 
                 <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
                     <ButtonSalvar nome="Finalizar" />
-                    <ButtonCancelar nome="Voltar" />
+                    <ButtonCancelar nome="Voltar" link={`analise/${id}`} />
                 </form>
             </div>
         </div>
