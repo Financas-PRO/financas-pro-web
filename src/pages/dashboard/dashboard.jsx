@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Simulador from "../../components/simulador/simulador.jsx";
 import api from "../../services/api.jsx";
+import { CDBModal, CDBModalBody } from "cdbreact";
 
 export default function Dashboard() {
 
@@ -19,9 +20,11 @@ export default function Dashboard() {
 
     const user = useSelector(state => state.userReducer);
 
-    const [relacaoProfessor, setRelacaoProfessor] = useState({ corrigidos: 0, pendentes: 0 });
+    const [relacaoProfessor, setRelacaoProfessor] = useState({ concluidos: 0, pendencias: 0 });
+    const [videoId, setVideoId] = useState('');
+    const [modal, setModal] = useState(false);
 
-    const [grupos, setGrupos] = useState([]); 
+    const [grupos, setGrupos] = useState([]);
 
     const RelacaoProfessor = () => {
         return (
@@ -36,7 +39,7 @@ export default function Dashboard() {
                             <span>Pendentes</span>
                         </div>
                         <div className="col-2">
-                            <span>{relacaoProfessor.pendentes}</span>
+                            <span>{relacaoProfessor.pendencias}</span>
                         </div>
                     </div>
 
@@ -48,10 +51,10 @@ export default function Dashboard() {
                             <span className=""><i className="bi bi-check2-circle"></i></span>
                         </div>
                         <div className="col-8 mr-3 ">
-                            <span>Corrigidos</span>
+                            <span>Concluídos</span>
                         </div>
                         <div className="col-2">
-                            <span>{relacaoProfessor.corrigidos}</span>
+                            <span>{relacaoProfessor.concluidos}</span>
                         </div>
                     </div>
 
@@ -65,28 +68,28 @@ export default function Dashboard() {
         return (
             <div className="row mt-5 cardFundo">
 
-                    {
-                        grupos.slice(0,3).map(grupo => {
+                {
+                    grupos.map(grupo => {
 
-                            let alunos = [];
+                        let alunos = [];
 
-                            grupo.alunos.forEach(aluno => {
-                                alunos.push(aluno.nome);
-                            });
+                        grupo.alunos.forEach(aluno => {
+                            alunos.push(aluno.nome);
+                        });
 
-                            return (
-                                <Simulador
-                                    titulo={grupo.descricao}
-                                    etapa={grupo.etapa}
-                                    nomes={alunos.join(", ")}
-                                    rota={grupo.rota}
-                                />
+                        return (
+                            <Simulador
+                                titulo={grupo.descricao}
+                                etapa={grupo.etapa}
+                                nomes={alunos.join(", ")}
+                                rota={grupo.rota}
+                            />
 
-                            )
-                        })
-                    }
+                        )
+                    })
+                }
 
-                </div>
+            </div>
         );
     };
 
@@ -94,19 +97,42 @@ export default function Dashboard() {
         fetch('videos.json')
             .then(async (res) => {
                 let dados = await res.json();
-                setVideos(dados);
+                let videos_filtrados = [];
+
+                switch (user.tipo_de_usuario.id) {
+                    case 1:
+                        videos_filtrados = dados.filter((video) => { return video.usuario === "Coordenador" || video.usuario === "Docente" });
+                        break;
+                    case 2:
+                        videos_filtrados = dados.filter((video) => { return video.usuario === "Docente" });
+                        break;
+                    case 3:
+                        videos_filtrados = dados.filter((video) => { return video.usuario === "Aluno" });
+                        break;
+                }
+                setVideos(videos_filtrados);
             });
     }, []);
 
-    function getSituacao(){
-        console.log("Do nothing.");
-    }
-
-    function getGrupos(){
-        api.get(`grupo/1`)
+    function getDashboard() {
+        api.get(`dashboard`)
             .then(res => {
                 if (res.status == 200) {
-                    setGrupos(res.data.data);
+                    switch (user.tipo_de_usuario.id) {
+                        case 1:
+                            setRelacaoProfessor(res.data.data);
+                            break;
+
+                        case 2:
+                            setRelacaoProfessor(res.data.data);
+                            break;
+
+                        case 3:
+                            setGrupos(res.data.data);
+                            break;
+
+                        default:
+                    }
                 }
             })
             .catch(err => {
@@ -116,22 +142,16 @@ export default function Dashboard() {
 
     useEffect(() => {
 
-        switch (user.tipo_de_usuario.id){
-            case 1:
-                getSituacao();
-            break;
+        getDashboard();
 
-            case 2:
-                getSituacao();
-            break;
+    }, [user.tipo_de_usuario.id]);
 
-            case 3:
-                getGrupos();
-            break;
+    function handleModal(codigoVideo) {
 
-            default:
-        }
-    }, [user.tipo_de_usuario.id])
+        setModal(true);
+
+        setVideoId(codigoVideo);
+    }
 
     return (
 
@@ -149,7 +169,21 @@ export default function Dashboard() {
                     subTitulo={user.tipo_de_usuario.id === 1 || user.tipo_de_usuario.id === 2 ? "Situação de correções" : "Últimas atualizações"}
                 />
 
-                { user.tipo_de_usuario.id === 1 || user.tipo_de_usuario.id === 2 ? (<RelacaoProfessor/>) : (<RelacaoAluno/>)}
+                <CDBModal size="lg" isOpen={modal} toggle={() => { setModal(1) }} centered fade>
+                    <CDBModalBody className="bg-toledo p-4" >
+                        <div className="container">
+                            <iframe src={`https://www.youtube.com/embed/${videoId}`} width="100%" height="500px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                        </div>
+
+                        <div className="buttons justify-content-end mt-4">
+                            <button className="btn-cancelar" onClick={() => { setModal(0) }}>Fechar</button>
+                        </div>
+
+                    </CDBModalBody>
+
+                </CDBModal>
+
+                {user.tipo_de_usuario.id === 1 || user.tipo_de_usuario.id === 2 ? (<RelacaoProfessor />) : (<RelacaoAluno />)}
 
                 <Title
                     icon="bi-play-btn"
@@ -159,14 +193,14 @@ export default function Dashboard() {
                 <div className="row mt-5 align-items-center justify-content-center">
                     {
                         videos.map(video => {
-                            return (
-                                <Video
-                                    titulo={video.titulo}
-                                    descricao={video.descricao}
-                                    onClick={video.id}
-                                    thumbnail={video.thumbnail}
-                                />
-                            )
+
+                            return (<Video
+                                titulo={video.titulo}
+                                descricao={video.descricao}
+                                onClick={(e) => { handleModal(video.codigo) }}
+                                codigo={video.codigo}
+                            />);
+
                         })
                     }
 

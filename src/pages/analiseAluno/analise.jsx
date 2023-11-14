@@ -100,55 +100,6 @@ export default function Analise() {
             })
     }
 
-    const dataPizza = [
-        ["Pizza", "Popularity"],
-        ["Pepperoni", 33],
-        ["Hawaiian", 26],
-        ["Mushroom", 22],
-        ["Sausage", 10],
-        ["Anchovies", 9],
-    ];
-
-
-    const dataColumn = [
-        ["Element", "Density", { role: "style" }],
-        ["Copper", 8.94, "#b87333"],
-        ["Silver", 10.49, "silver"],
-        ["Gold", 19.3, "gold"],
-        ["Platinum", 21.45, "color: #e5e4e2"],
-    ];
-
-    const dataColumnBar = [
-        [
-            "Element",
-            "Density",
-            { role: "style" },
-            {
-                sourceColumn: 0,
-                role: "annotation",
-                type: "string",
-                calc: "stringify",
-            },
-        ],
-        ["Copper", 8.94, "#b87333", null],
-        ["Silver", 10.49, "silver", null],
-        ["Gold", 19.3, "gold", null],
-        ["Platinum", 21.45, "color: #e5e4e2", null],
-    ];
-
-    const dataLine = [
-        ["x", "dogs", "cats"],
-        [0, 0, 0],
-        [1, 10, 5],
-        [2, 23, 15],
-        [3, 17, 9],
-        [4, 18, 10],
-        [5, 9, 5],
-        [6, 11, 3],
-        [7, 27, 19],
-    ];
-
-
     return (
         <div className="row-page">
 

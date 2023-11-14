@@ -22,8 +22,6 @@ const AnaliseGrafico = props => {
     return (
         <>
             <div className="row mt-5">
-                <Grafico grafico="PieChart" data={props.data} />
-                <Grafico grafico="ColumnChart" data={props.data} />
                 <Grafico grafico="BarChart" data={props.data} />
                 <Grafico grafico="LineChart" data={props.data} />
             </div>
