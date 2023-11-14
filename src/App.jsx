@@ -22,6 +22,7 @@ import Feedback from "./pages/feedbackProfessor/feedback";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import Resumo from "./pages/resumo/resumo.jsx";
+import Notas from "./pages/notasAluno/notas";
 
 function App() {
   
@@ -49,6 +50,7 @@ function App() {
               <Route path="turma/cadastrar" element={<CadastrarTurma />} />
               <Route path="turma/gerenciar" element={<GerenciarTurma />} />
               <Route path="turma/:id/editar" element={<EditaTurma />} />
+              <Route path="/notas" element={<Notas />} />
             </Route>
 
             <Route path="/turmas" element={<Turmas />} />

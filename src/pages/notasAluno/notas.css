@@ -1,0 +1,11 @@
+.labelselect{
+    font-family: Poppins-bold;
+    color: #12304A;
+    font-size: 1.2rem;
+}
+
+.bi-clipboard-plus::before {
+    content: "\f28e";
+    color: #12304A;
+    margin-right: 5px;
+}
