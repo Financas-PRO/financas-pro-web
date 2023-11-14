@@ -266,7 +266,8 @@ export default function Feedback() {
                                 </CDBModal>
 
                                 <div className="row justify-content-end">
-                                    <button onClick={() => { setModal(1) }} className={`col-md-4 col-12 ${avaliado ? 'btn btn-success' : 'btn btn-warning'}`}>
+                                    <button onClick={() => { avaliado || user.tipo_de_usuario.id != 3 ? setModal(1) : void(0)}} 
+                                        className={`col-md-4 col-12 ${avaliado ? 'btn btn-success' : 'btn btn-warning'}`}>
                                         Situação: {avaliado ? 'Avaliado' : "Aguardando professor"}
                                     </button>
                                 </div>
