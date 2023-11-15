@@ -144,7 +144,7 @@ const TabelaDemonstrativo = props => {
             <div className="row mt-2 align-items-center">
                 <div className="col-md-12 col-12">
                     <label className="mb-2 tituloDemonstrativo">
-                        <i class="bi bi-building"></i>
+                        <i className="bi bi-building"></i>
                         Empresa selecionada
                     </label>
                     <select className="form-select" onChange={handleAcaoChange}>

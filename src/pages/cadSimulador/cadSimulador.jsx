@@ -134,7 +134,7 @@ export default function CadSimulador() {
           <div className="conteudoSimulador mt-5">
             <div className="row square">
               <div className="col col-md-12 col-12">
-                <i class="bi bi-bookmark-plus-fill"></i>
+                <i className="bi bi-bookmark-plus-fill"></i>
                 <label className="mb-2">Titulo da Simulação</label>
                 <input
                   name="descricao"

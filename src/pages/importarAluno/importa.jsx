@@ -124,7 +124,7 @@ export default function Importa() {
 
           <div className="mt-4">
             <form onSubmit={handleSubmit}>
-              <i class="bi bi-arrow-down-circle"></i>
+              <i className="bi bi-arrow-down-circle"></i>
               <label className="form-label labelImport">Informe o arquivo</label>
 
               <input

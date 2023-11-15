@@ -73,6 +73,7 @@ export default function Simuladores() {
 
                             return (
                                 <Simulador
+                                    key={grupo.id}
                                     titulo={grupo.descricao}
                                     etapa={grupo.etapa}
                                     nomes={alunos.join(", ")}

@@ -89,7 +89,7 @@ export default function CadTurma() {
                   />
                 </div>
                 <div className="col col-md-6 col-12">
-                  <i class="bi bi-calendar-plus-fill"></i>
+                  <i className="bi bi-calendar-plus-fill"></i>
                   <label>Semestre</label>
                   <select
                     onChange={handleChange}
@@ -102,7 +102,7 @@ export default function CadTurma() {
                   </select>
                 </div>
                 <div className="col col-md-6 col-12 mb-5">
-                  <i class="bi bi-calendar-plus-fill"></i>
+                  <i className="bi bi-calendar-plus-fill"></i>
                   <label>Ano</label>
                   <input
                     onChange={handleChange}

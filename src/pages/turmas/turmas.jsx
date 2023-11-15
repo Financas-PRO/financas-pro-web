@@ -42,7 +42,14 @@ export default function Turmas() {
                 <div className="row mt-5 cardFundoTurma">
                     {
                         turmas.map((turma) => {
-                            return (<Turma turma={turma.descricao} id={turma.id} docente={turma.docente.nome} />);
+                            return (
+                                <Turma 
+                                    key={turma.id}
+                                    turma={turma.descricao} 
+                                    id={turma.id} 
+                                    docente={turma.docente.nome} 
+                                />
+                            );
                         })
                     }
 

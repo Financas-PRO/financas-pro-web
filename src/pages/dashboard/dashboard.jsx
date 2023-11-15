@@ -79,6 +79,7 @@ export default function Dashboard() {
 
                         return (
                             <Simulador
+                                key={grupo}
                                 titulo={grupo.descricao}
                                 etapa={grupo.etapa}
                                 nomes={alunos.join(", ")}
@@ -193,12 +194,15 @@ export default function Dashboard() {
                     {
                         videos.map(video => {
 
-                            return (<Video
+                            return (
+                            <Video
+                                key={video.titulo}
                                 titulo={video.titulo}
                                 descricao={video.descricao}
                                 onClick={(e) => { handleModal(video.codigo) }}
                                 codigo={video.codigo}
-                            />);
+                            />
+                            );
 
                         })
                     }
