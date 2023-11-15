@@ -24,7 +24,7 @@ export default function CadSimulador() {
   // precisei usar o redux para retornar as informações do usuario logado
   const user = useSelector(state => state.userReducer);
 
-  console.log("tela cadSimulador:",user);
+  console.log("tela cadSimulador:", user);
 
   useEffect(() => {
     api.get(`relacaoTurma/${id}`).then((res) => {
@@ -68,7 +68,7 @@ export default function CadSimulador() {
         .post(`grupo/${id}`, requestBody)
         .then(async (res) => {
           if (res.status) {
-            toast.success("Grupo criado com sucesso!");
+            toast.success("Simulador criado com sucesso!");
 
             setTimeout(() => {
               return navigate(`/empresa/${res.data.data.id}`, { replace: true });
@@ -76,7 +76,7 @@ export default function CadSimulador() {
           }
         })
         .catch(function (error) {
-          
+
           let erros = tratarErro(error.response.data.error);
 
           toast.error(`Erro ao criar Grupo!\n ${erros}`, {
@@ -115,17 +115,17 @@ export default function CadSimulador() {
     if (!usuarioFixoSelecionado) {
       novosAlunosSelecionadosAtual.push(usuarioFixo);
     }
-  
+
     setAlunosSelecionadosAtual(novosAlunosSelecionadosAtual);
   }
-  
+
 
 
   return (
     <div className="row-page">
-        <Header />
+      <Header />
       <div className="container mt-4 col-md-8 col-9">
-        <ToastContainer/>
+        <ToastContainer />
         <Title
           icon="bi-bezier2"
           titulo="Simulador"
@@ -136,7 +136,7 @@ export default function CadSimulador() {
           <div className="conteudoSimulador mt-5">
             <div className="row square">
               <div className="col col-md-12 col-12">
-                <i className="bi bi-bookmark-fill"></i>
+                <i class="bi bi-bookmark-plus-fill"></i>
                 <label className="mb-2">Titulo da Simulação</label>
                 <input
                   name="descricao"
@@ -175,8 +175,9 @@ export default function CadSimulador() {
             </div>
           </div>
           <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
-            <ButtonSalvar nome="Salvar" />
             <ButtonCancelar link={`simuladores/${id}`} nome="Cancelar" />
+            <ButtonSalvar nome="Salvar" />
+
           </div>
         </form>
       </div>

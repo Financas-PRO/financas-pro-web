@@ -139,13 +139,13 @@ const Resumo = props => {
 
             <div className="container mt-4 col-md-8 col-9">
                 <ToastContainer />
-                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Antes de enviar sua análise, confira todo o conteúdo abaixo." />
+                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Resumo análise, confira todo o conteúdo abaixo." />
                 <TabelaDemonstrativo planilha={planilha} readonly={true}/>
                 <AnaliseGrafico data={null} readonly={true}/>
 
                 <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
-                    <ButtonSalvar nome="Finalizar" />
                     <ButtonCancelar nome="Voltar" link={`analise/${id}`} />
+                    <ButtonSalvar nome="Finalizar" />
                 </form>
             </div>
         </div>

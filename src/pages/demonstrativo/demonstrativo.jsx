@@ -203,7 +203,7 @@ export default function Demostrativo() {
 
                 <form className="col-12 justify-content-end d-flex text-center align-items-center" onSubmit={handleSubmit}>
                   <ButtonCancelar nome="Voltar" link={`simuladores/${grupo.turma.id}`} />
-                  <ButtonSalvar nome="Salvar dados" />
+                  <ButtonSalvar nome="Salvar" />
                 </form>
 
                 <ToastContainer/>

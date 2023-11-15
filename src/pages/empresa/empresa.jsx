@@ -227,8 +227,8 @@ export default function Empresa() {
 
                     </div>
                     <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                        <ButtonSalvar nome="Salvar" />
                         <ButtonCancelar link={`simuladores/${grupo.turma.id}`} nome="Cancelar" />
+                        <ButtonSalvar nome="Salvar" />
                     </div>
                 </form>
 

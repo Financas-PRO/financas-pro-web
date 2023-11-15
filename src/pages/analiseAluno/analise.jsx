@@ -124,8 +124,8 @@ export default function Analise() {
                                 <AnaliseGrafico data={null} />
 
                                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                                    <button className="btn-salvar" onClick={handleSubmit}>Próximo</button>
-                                    <button className="btn-cancelar" onClick={handleEtapaSubmit}>Voltar para o demonstrativo</button>
+                                    <button className="btn-cancelar" onClick={handleEtapaSubmit}>Voltar</button>
+                                    <button className="btn-salvar" onClick={handleSubmit}>Salvar</button>
                                 </div>
 
                             </>

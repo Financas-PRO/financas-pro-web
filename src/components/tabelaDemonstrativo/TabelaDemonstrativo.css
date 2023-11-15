@@ -1,0 +1,9 @@
+.tituloDemonstrativo{
+    font-family: Poppins-bold;
+    color: #12304A;
+}
+
+.bi-building::before {
+    content: "\f1dd";
+    color: #12304A;
+}

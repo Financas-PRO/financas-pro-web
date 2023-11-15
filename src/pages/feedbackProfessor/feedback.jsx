@@ -50,7 +50,7 @@ export default function Feedback() {
         return (
             <>
                 <div className="row">
-                    <h3>Avaliação do docente</h3>
+                    <h3 className="titulo_modal"><i class="bi bi-bookmark-fill">Avaliação do docente</i></h3>
                 </div>
 
                 <div className="row mt-2">
@@ -64,8 +64,15 @@ export default function Feedback() {
                 </div>
 
                 <div className="row mt-3">
-                    <label className="form-label text-black">Nota</label>
-                    <input value={feedback.nota} type="number" disabled={avaliado ? 1 : 0} onChange={handleNotaChange} className="form-control" />
+                    <label className="form-label nota_texto">
+                        <i className="bi bi-journal-text nota_margin"></i>
+                        Nota
+                    </label>
+                    <input value={feedback.nota}
+                        type="number"
+                        disabled={avaliado ? 1 : 0}
+                        onChange={handleNotaChange}
+                        className="form-control nota" />
                 </div>
 
                 <div className="buttons justify-content-end mb-5 mt-4">
@@ -256,7 +263,7 @@ export default function Feedback() {
                                     titulo="Feedback"
                                     subTitulo={user.tipo_de_usuario.id == 3 ?
                                         "Aqui, você terá acesso ao feedback do docente" :
-                                        "Dê o feedback ao grupo, de acordo com a sua análise abaixo"}
+                                        "Dê o feedback ao grupo, de acordo com a sua análise"}
                                 />
 
                                 <CDBModal isOpen={modal} toggle={() => { setModal(1) }} centered fade>
@@ -266,9 +273,9 @@ export default function Feedback() {
                                 </CDBModal>
 
                                 <div className="row justify-content-end">
-                                    <button onClick={() => { avaliado || user.tipo_de_usuario.id != 3 ? setModal(1) : void(0)}} 
+                                    <button onClick={() => { avaliado || user.tipo_de_usuario.id != 3 ? setModal(1) : void (0) }}
                                         className={`col-md-4 col-12 ${avaliado ? 'btn btn-success' : 'btn btn-warning'}`}>
-                                        Situação: {avaliado ? 'Avaliado' : "Aguardando professor"}
+                                        <b>Situação:</b> {avaliado ? 'Avaliado' : "Aguardando professor"}
                                     </button>
                                 </div>
 

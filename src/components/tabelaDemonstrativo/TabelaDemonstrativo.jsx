@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import './TabelaDemonstrativo.css';
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
 import { registerRenderer, textRenderer } from "handsontable/renderers";
@@ -141,8 +142,9 @@ const TabelaDemonstrativo = props => {
         <>
         <ToastContainer/>
             <div className="row mt-2 align-items-center">
-                <div className="col-md-4 col-12">
-                    <label className="mb-2 tituloDemonstrativo" style={{ color: 'black' }}>
+                <div className="col-md-12 col-12">
+                    <label className="mb-2 tituloDemonstrativo">
+                        <i class="bi bi-building"></i>
                         Empresa selecionada
                     </label>
                     <select className="form-select" onChange={handleAcaoChange}>
