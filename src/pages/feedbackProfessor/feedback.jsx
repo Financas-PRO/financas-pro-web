@@ -67,7 +67,7 @@ export default function Feedback() {
                         <i className="bi bi-journal-text nota_margin"></i>
                         Nota
                     </label>
-                    <input value={feedback.nota}
+                    <input defaultValue={feedback.nota}
                         type="number"
                         disabled={avaliado ? 1 : 0}
                         onChange={handleNotaChange}

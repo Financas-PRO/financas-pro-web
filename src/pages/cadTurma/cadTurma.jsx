@@ -85,6 +85,7 @@ export default function CadTurma() {
                     type="text"
                     name="descricao"
                     className="form-control"
+                    maxLength={50}
                   />
                 </div>
                 <div className="col col-md-6 col-12">

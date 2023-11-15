@@ -18,7 +18,7 @@ export default function EditaTurma() {
     ano: "",
     semestre: "",
     id_curso: "",
-    turma: ""
+    descricao: ""
   });
   let { id } = useParams();
   let navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function EditaTurma() {
 
     api.get(`turma/${id}`).then((res) => {
       setTurmas({
-        turma: res.data.data.descricao,
+        descricao: res.data.data.descricao,
         semestre: res.data.data.semestre,
         ano: res.data.data.ano,
       });
@@ -102,10 +102,9 @@ export default function EditaTurma() {
                   <input
                     onChange={handleChange}
                     type="text"
-                    name="turma"
+                    name="descricao"
                     className="form-control"
-                    maxLength="1"
-                    value={turmas.turma}
+                    defaultValue={turmas.descricao}
                   />
                 </div>
                 <div className="col col-md-6 col-12">
@@ -139,8 +138,8 @@ export default function EditaTurma() {
               </div>
             </div>
             <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
-              <ButtonSalvar nome="Salvar" />
               <ButtonCancelar link="turma/gerenciar" nome="Cancelar" />
+              <ButtonSalvar nome="Salvar" />
             </div>
           </form>
         </div>
