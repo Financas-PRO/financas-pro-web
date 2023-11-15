@@ -60,8 +60,6 @@ export default function Login() {
     const nome = e.target.name;
     const valor = e.target.value.trim();
     setLogin({ ...login, [nome]: valor });
-
-    console.log(login);
   }
 
 

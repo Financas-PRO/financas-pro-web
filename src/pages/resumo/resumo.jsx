@@ -144,7 +144,7 @@ const Resumo = props => {
                 <AnaliseGrafico data={null} readonly={true}/>
 
                 <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
-                    <ButtonCancelar nome="Voltar" link={`analise/${id}`} />
+                    <ButtonCancelar nome="Cancelar" link={`analise/${id}`} />
                     <ButtonSalvar nome="Finalizar" />
                 </form>
             </div>

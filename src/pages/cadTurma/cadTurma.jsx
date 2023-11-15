@@ -52,7 +52,6 @@ export default function CadTurma() {
         });
 
     } catch (err) {
-      console.log(turmas);
     }
   }
 
@@ -60,8 +59,6 @@ export default function CadTurma() {
     const nome = e.target.name;
     const valor = e.target.value.trim();
     setTurmas({ ...turmas, [nome]: valor, id_docente: 1 });
-
-    console.log(turmas);
   }
 
   return (

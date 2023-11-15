@@ -202,7 +202,7 @@ export default function Demostrativo() {
                 />
 
                 <form className="col-12 justify-content-end d-flex text-center align-items-center mt-5" onSubmit={handleSubmit}>
-                  <ButtonCancelar nome="Voltar" link={`simuladores/${grupo.turma.id}`} />
+                  <ButtonCancelar nome="Cancelar" link={`simuladores/${grupo.turma.id}`} />
                   <ButtonSalvar nome="Salvar" />
                 </form>
 

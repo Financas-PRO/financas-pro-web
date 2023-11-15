@@ -54,7 +54,6 @@ export default function Empresa() {
 
             })
             .catch(err => {
-                console.log(err);
             })
 
     }, [busca]);
@@ -103,15 +102,11 @@ export default function Empresa() {
     function handleChangeFaixa(e) {
         const valor = e.target.value;
         setFaixa(valor);
-
-        console.log(valor);
     }
 
     function handleChangeIntervalo(e) {
         const valor = e.target.value;
         setItervalo(valor);
-
-        console.log(valor);
     }
 
     function handleChange(e) {
@@ -121,7 +116,6 @@ export default function Empresa() {
     function handleClick(simbolo) {
         setIcone(!icone)
         setEmpresas([...empresas, simbolo]);
-        console.log(empresas)
 
         if (empresas.includes(simbolo)) {
             setEmpresas(empresas.filter(empresa => empresa !== simbolo))
@@ -134,7 +128,6 @@ export default function Empresa() {
             setEmpresaSelecionada([...empresaSelecionada, simbolo]);
         }
 
-        console.log(empresaSelecionada)
     }
 
 

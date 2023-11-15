@@ -24,8 +24,6 @@ export default function CadProfessor() {
   }
   useEffect(() => {
     api.get(`tipoDeUsuario`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setTipoDeUsuario(res.data.data);
 
     });
@@ -66,7 +64,6 @@ export default function CadProfessor() {
           });
         });
     } catch (err) {
-      console.log(professor);
     }
   }
 
@@ -120,7 +117,6 @@ export default function CadProfessor() {
 
     setProfessor({ ...professor, [name]: valor });
 
-    console.log(professor);
   }
 
   return (

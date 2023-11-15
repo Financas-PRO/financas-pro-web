@@ -55,7 +55,6 @@ const AnaliseGrafico = props => {
         if (editorRef.current) {
             dispatch(setAnalise(editorRef.current.getContent()));
         }
-        console.log(analise);
     };
 
     const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
@@ -113,7 +112,6 @@ const AnaliseGrafico = props => {
 
     useEffect(() => {
         trocarGraficos();
-        console.log(data);
     }, [acaoSelecionada])
 
     return (

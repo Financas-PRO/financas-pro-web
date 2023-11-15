@@ -26,7 +26,6 @@ export default function EditaTurma() {
   useEffect(() => {
 
     api.get(`turma/${id}`).then((res) => {
-      console.log(setTurmas);
       setTurmas({
         turma: res.data.data.descricao,
         semestre: res.data.data.semestre,
@@ -51,7 +50,6 @@ export default function EditaTurma() {
           }
         })
         .catch(function (error) {
-          console.log(error)
           let resposta = error.response.data.error;
 
           var erros = "";
@@ -74,7 +72,6 @@ export default function EditaTurma() {
         });
 
     } catch (err) {
-      console.log(turmas);
     }
   }
 
@@ -82,8 +79,6 @@ export default function EditaTurma() {
     const nome = e.target.name;
     const valor = e.target.value.trim();
     setTurmas({ ...turmas, [nome]: valor });
-
-    console.log(turmas);
   }
 
   return (

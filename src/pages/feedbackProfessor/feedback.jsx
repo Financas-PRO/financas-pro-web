@@ -143,8 +143,6 @@ export default function Feedback() {
 
     useEffect(() => {
         getTableData();
-        // trocarGraficos();
-        // console.log(data);
     }, [acaoSelecionada]);
 
     useEffect(() => {
@@ -188,12 +186,10 @@ export default function Feedback() {
         e.preventDefault();
 
         setFeedback({ ...feedback, nota: parseFloat(e.target.value) });
-        console.log(feedback);
     }
 
     function handleDescricaoChange(e) {
         setFeedback({ ...feedback, descricao: editorRef.current.getContent() });
-        console.log(feedback);
 
     }
 

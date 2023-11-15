@@ -23,8 +23,6 @@ export default function GerTurma() {
   }
   useEffect(() => {
     api.get(`turma`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setTurmas(res.data.data);
       setBusca(res.data.data);
     });
@@ -90,7 +88,6 @@ export default function GerTurma() {
           });
         });
     } catch (err) {
-      console.log(turmas);
     }
   };
   {
@@ -106,8 +103,6 @@ export default function GerTurma() {
 
     const statusClass = item.ativo === 1 ? "ativo" : "inativo";
     const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
-
-    // console.log(`item.ativo: ${item.ativo}`);
 
     return (
       <tr key={index}>

@@ -21,8 +21,6 @@ export default function GerProfessor() {
   }
   useEffect(() => {
     api.get(`docente`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setDocentes(res.data.data);
       setBusca(res.data.data);
 
@@ -87,7 +85,6 @@ export default function GerProfessor() {
           });
         });
     } catch (err) {
-      console.log(docentes);
     }
   };
   {
@@ -102,8 +99,6 @@ export default function GerProfessor() {
   docenteDetalhe = busca.map((item, index) => {
     const statusClass = item.ativo === 1 ? "ativo" : "inativo";
     const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
-
-    console.log(`item.ativo: ${item.ativo}`);
 
     return (
       <tr key={index}>

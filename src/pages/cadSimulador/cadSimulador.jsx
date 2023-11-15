@@ -24,8 +24,6 @@ export default function CadSimulador() {
   // precisei usar o redux para retornar as informações do usuario logado
   const user = useSelector(state => state.userReducer);
 
-  console.log("tela cadSimulador:", user);
-
   useEffect(() => {
     api.get(`relacaoTurma/${id}`).then((res) => {
       setAlunosSelecionados(res.data.data);
@@ -92,7 +90,7 @@ export default function CadSimulador() {
           });
         });
     } catch (err) {
-      console.log(descricao);
+
     }
   }
 

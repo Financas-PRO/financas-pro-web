@@ -34,10 +34,7 @@ export default function EditaProfessor() {
   }
   useEffect(() => {
     api.get(`tipoDeUsuario`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setTipoDeUsuario(res.data.data);
-
     });
   }, []);
   {
@@ -97,7 +94,6 @@ export default function EditaProfessor() {
           });
         });
     } catch (err) {
-      console.log(professor);
     }
   }
 
@@ -151,7 +147,6 @@ export default function EditaProfessor() {
 
     setProfessor({ ...professor, [name]: valor });
 
-    console.log(professor);
   }
 
   return (
