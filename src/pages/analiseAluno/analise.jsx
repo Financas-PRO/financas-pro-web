@@ -121,7 +121,7 @@ export default function Analise() {
                                     subTitulo="Aqui, você pode analisar os resultados e escrever sua análise final"
                                 />
 
-                                <AnaliseGrafico data={null} />
+                                <AnaliseGrafico/>
 
                                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
                                     <button className="btn-cancelar" onClick={handleEtapaSubmit}>Voltar</button>
