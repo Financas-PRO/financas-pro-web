@@ -16,31 +16,58 @@ export default function Notas() {
 
     const [classes, setClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
-
-    let { id } = useParams();
+    const [alunos, setAlunos] = useState([]);
 
     useEffect(() => {
-        
-            api.get(`turma`).then((res) => {
-                const data = res.data.data;
-              
-                if (Array.isArray(data)) {
-                    setClasses(data);
-                } else {
-                    console.error('A API não retornou um array:', data);
-                }
-            })
+
+        api.get(`turma`).then((res) => {
+            const data = res.data.data;
+
+            if (Array.isArray(data)) {
+                setClasses(data);
+            } else {
+                console.error('A API não retornou um array:', data);
+            }
+        })
             .catch((error) => {
                 console.error('Erro ao carregar as turmas:', error);
             });
-        
+
     }, []);
+
 
     const handleTurmaChange = (e) => {
         const selectedClassId = parseInt(e.target.value);
         const selectedClass = classes.find((cls) => cls.id === selectedClassId);
         setSelectedClass(selectedClass);
+
+        api.get(`notas/${selectedClassId}`).then((res) => {
+            setAlunos(res.data.data);
+            console.log(alunos)
+
+        })
+
     };
+
+    var alunos_nota = ""
+
+    alunos_nota = alunos.map((item, index) => {
+        return (
+            <tr key={index}>
+                <td>
+                    <strong>{item.id}</strong>
+                </td>
+                <td>{item.nome}</td>
+                <td>{item.ra}</td>
+                <td>{item.curso}</td>
+                <td>{item.nota}</td>
+            </tr>
+        )
+
+    });
+
+
+
 
     return (
         <div className="row-page">
@@ -57,31 +84,31 @@ export default function Notas() {
 
                 <div className="row mt-5">
                     <div className="col col-md-12 col-12">
-                        <label className="form-label labelselect"><i class="bi bi-clipboard-plus"></i>Selecione uma turma</label>
+                        <select className="form-control" onChange={handleTurmaChange}>
+                            <option value="">Selecione uma turma</option>
+                            {classes.map((cls) => (
+                                <option key={cls.id} value={cls.id}>
+                                    {cls.descricao}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
 
-
-
-                        <div>
-
-                            <select onChange={handleTurmaChange}>
-                                <option value="">Selecione uma turma</option>
-                                {classes.map((cls) => (
-                                    <option key={cls.id} value={cls.id}>
-                                        {cls.descricao}
-                                    </option>
-                                ))}
-                            </select>
-
-                            {selectedClass && (
-                                <div>
-                                    <h2>Informações da Turma Selecionada</h2>
-                                    <p>Descrição da Turma: {selectedClass.descricao}</p>
-                                   
-                                </div>
-                            )}
-                        </div>
-
-
+                <div className="card-body">
+                    <div className="table-responsive">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NOME</th>
+                                    <th>R.A.</th>
+                                    <th>CURSO</th>
+                                    <th>NOTA</th>
+                                </tr>
+                            </thead>
+                            <tbody>{alunos_nota}</tbody>
+                        </table>
                     </div>
                 </div>
             </div>
