@@ -28,7 +28,7 @@ nav {
 
     .header {
         position: fixed;
-        z-index: ;
+        /* z-index: ; */
 
     }
 
@@ -83,3 +83,16 @@ li span {
     color: #ff7b10 !important;
     transition: 0.3s;
 }
+
+
+@media (max-width: 600px) {
+    
+    .navbar-toggler {
+
+        background-color: #fff;
+
+    }
+}
+
+
+

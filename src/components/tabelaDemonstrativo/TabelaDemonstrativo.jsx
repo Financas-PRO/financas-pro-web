@@ -214,7 +214,7 @@ const TabelaDemonstrativo = props => {
                         />
                     </div>
                 </div>
-                <div className="row justify-content-end mb-2">
+                <div className="row mb-2 excel_row">
                     <button
                         className="btn py-0 col-2 btn-success buttonExcel align-items-center"
                         onClick={exportarExcel}

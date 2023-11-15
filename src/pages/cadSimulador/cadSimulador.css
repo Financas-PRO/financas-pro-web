@@ -1,21 +1,22 @@
-img{
+img {
     margin-left: 6px;
     position: relative;
     bottom: 3px;
 }
 
-.img{
+.img {
     margin-right: 1rem;
 }
 
-.square{
+.square {
     padding: 35px;
 }
 
 #sidebar {
-    z-index: 1; 
+    z-index: 1;
 }
-.formSimulador{
+
+.formSimulador {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,3 +46,13 @@ img{
 }
 
 
+@media (max-width: 600px) {
+
+    .conteudoSimulador{
+        width: 100%;
+    }
+
+    .square {
+        padding: 15px;
+    }
+}

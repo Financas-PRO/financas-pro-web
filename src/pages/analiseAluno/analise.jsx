@@ -118,7 +118,7 @@ export default function Analise() {
                                 <Title
                                     icon="bi-bookmark-fill"
                                     titulo="Análise"
-                                    subTitulo="Aqui, você pode analisar os resultados e escrever sua análise final"
+                                    subTitulo="Análise os resultados e escrever sua análise final"
                                 />
 
                                 <AnaliseGrafico/>

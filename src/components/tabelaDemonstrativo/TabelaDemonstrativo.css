@@ -7,3 +7,18 @@
     content: "\f1dd";
     color: #12304A;
 }
+
+.excel_row{
+    display: flex;
+    justify-content: end;
+}
+
+
+@media (max-width: 600px) {
+   
+    .excel_row{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+}

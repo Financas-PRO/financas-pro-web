@@ -1,5 +1,11 @@
-
 .bi-bezier2::before {
     content: "\f18c";
     color: #12304A !important;
+}
+
+
+@media (max-width: 600px) {
+    .titulo{
+        width: min-content;
+    }
 }
