@@ -159,7 +159,7 @@ const TabelaDemonstrativo = props => {
 
             <div className="row mt-4 mb-4 cardFundoDemonstrativo">
                 <div className="row square">
-                    <label className="mb-2 tituloDemonstrativo">
+                    <label className="mb-2 informacoes_empresa">
                         Informações Gerais
                     </label>
                     <div className="col col-md-4 col-12 ">
