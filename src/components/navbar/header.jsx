@@ -57,6 +57,34 @@ const header_docente = [
   }
 ]
 
+const header_coord = [
+  {
+    rota: "/",
+    icone: "bi bi-house-gear ",
+    titulo: "Dashboard"
+  },
+  {
+    rota: "/turmas",
+    icone: "bi bi-person-video3",
+    titulo: "Turmas"
+  },
+  {
+    rota: "/turma/gerenciar",
+    icone: "bi bi-people-fill",
+    titulo: "Gerenciar Turmas"
+  },
+  {
+    rota: "/professor/gerenciar",
+    icone: "bi bi-person-badge",
+    titulo: "Gerenciar Docentes"
+  },
+  {
+    rota: "/notas",
+    icone: "bi bi-table",
+    titulo: "Relação de notas"
+  }
+]
+
 const Header = () => {
 
   const [header, setHeader] = useState([]);
@@ -164,16 +192,12 @@ const Header = () => {
   useEffect(() => {
     switch (localStorage.getItem("papel")) {
 
-      case "Admin":
-        setHeader(header_docente);
-        break;
-
       case "Docente":
         setHeader(header_docente);
         break;
 
       case "Coordenador":
-        setHeader(header_docente);
+        setHeader(header_coord);
         break;
 
       case "Aluno":

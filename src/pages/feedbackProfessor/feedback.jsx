@@ -71,7 +71,8 @@ export default function Feedback() {
                         type="number"
                         disabled={avaliado ? 1 : 0}
                         onChange={handleNotaChange}
-                        className="form-control nota" />
+                        className="form-control nota"
+                        maxLength={10} />
                 </div>
 
                 <div className="buttons justify-content-end mb-5 mt-4">

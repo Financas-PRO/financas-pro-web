@@ -24,8 +24,8 @@ export default function CadProfessor() {
   }
   useEffect(() => {
     api.get(`tipoDeUsuario`).then((res) => {
-      setTipoDeUsuario(res.data.data);
-
+      let tipos = res.data.data.filter(item => { return item.id != 3});
+      setTipoDeUsuario(tipos);
     });
   }, []);
   {

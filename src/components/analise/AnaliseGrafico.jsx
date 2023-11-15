@@ -62,7 +62,7 @@ const AnaliseGrafico = props => {
     function trocarGraficos(){
 
             const dados = {
-                labels:  acaoSelecionada.historico.slice(0,10).map(item => { return item.data_acao }),
+                labels:  acaoSelecionada.historico.slice(0,10).map(item => { return new Date(item.data_acao).toLocaleDateString()  }),
                 datasets: [
                     {
                         label: "Preço Abertura", // Setting up the label for the dataset
@@ -118,7 +118,7 @@ const AnaliseGrafico = props => {
         <>
             <div className="row mt-5">
                  <Grafico titulo="Histórico de ações" grafico="LineChart" data={data} />
-                 <Grafico titulo="Histórico de demonstrativos" grafico="LineChart" data={dataDividendo} />
+                 <Grafico titulo="Histórico de dividendos" grafico="LineChart" data={dataDividendo} />
             </div>
 
             <div className="row">
