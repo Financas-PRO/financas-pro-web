@@ -1,29 +1,19 @@
 import "./grafico.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Chart } from "react-google-charts";
+import Chart from "chart.js/auto"; // Importing the Chart.js library
+import { Line } from 'react-chartjs-2';
 
 export default function Grafico(props) {
 
-    const options = {
-        title: props.titulo,
-        sliceVisibilityThreshold: 0.2,
-    };
-    
+
     return (
         <div className="col col-md-6 col-12 mb-3">
             <div className="card-simuladores">
-                <div className="titulo-graficos"><i className="bi bi-bar-chart-line"></i>{ props.titulo}</div>
+                <div className="titulo-graficos"><i className="bi bi-bar-chart-line"></i>{props.titulo}</div>
                 <div className="card-conteudoGrafico mt-3">
-                    <Chart
-                        chartType={props.grafico}
-                        data={props.data}
-                        options={options}
-                        width={"100%"}
-                        height={"300px"}
-                    />
+                        <Line data={props.data} />
                 </div>
-
             </div>
         </div>
 

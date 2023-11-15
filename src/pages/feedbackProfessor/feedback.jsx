@@ -36,7 +36,6 @@ export default function Feedback() {
             id: 1
         }
     });
-
     const editorRef = useRef("");
 
     const acaoSelecionada = useSelector(state => state.acaoSelecionadaReducer);
@@ -137,6 +136,8 @@ export default function Feedback() {
 
     useEffect(() => {
         getTableData();
+        // trocarGraficos();
+        // console.log(data);
     }, [acaoSelecionada]);
 
     useEffect(() => {
@@ -150,7 +151,6 @@ export default function Feedback() {
             .then(axios.spread((res1, res2, res3) => {
                 dispatch(setAcoes(res1.data.data));
                 dispatch(setAcaoSelecionada(res1.data.data[0]));
-
                 setGrupo({
                     id: res1.data.data[0].grupo.id,
                     turma: {
