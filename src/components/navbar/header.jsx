@@ -145,7 +145,7 @@ const Header = () => {
     return (
       <div className='navbar-mobile container-fluid' style={{ display: 'none' }}>
         <CDBNavbar className='justify-content-start'>
-          <CDBNavToggle
+          <CDBNavToggle style={{backgroundColor: '#fff'}}
             onClick={() => toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true))}
           />
 

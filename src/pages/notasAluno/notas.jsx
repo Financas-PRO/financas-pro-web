@@ -43,8 +43,6 @@ export default function Notas() {
 
         api.get(`notas/${selectedClassId}`).then((res) => {
             setAlunos(res.data.data);
-            console.log(alunos)
-
         })
 
     };

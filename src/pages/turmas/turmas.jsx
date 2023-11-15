@@ -18,12 +18,9 @@ export default function Turmas() {
     useEffect(() => {
         api.get(`turma`)
             .then((res) => {
-                //console.log(res);
-                console.log(res.data.data);
                 setTurmas(res.data.data);
             })
             .catch((err) => {
-                console.log(err);
             });
     }, []);
 

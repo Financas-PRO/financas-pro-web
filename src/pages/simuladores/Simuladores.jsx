@@ -28,7 +28,6 @@ export default function Simuladores() {
                 }
             })
             .catch(err => {
-                console.log(err);
             });
     }, [id])
 
@@ -79,7 +78,7 @@ export default function Simuladores() {
                 </div>
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                    <ButtonCancelar link="turmas" nome="Voltar" />
+                    <ButtonCancelar link="turmas" nome="Anterior" />
                 </div>
             </div>
 

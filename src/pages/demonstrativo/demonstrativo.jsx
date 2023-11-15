@@ -201,9 +201,9 @@ export default function Demostrativo() {
                   subTitulo="Demonstrativo financeiro da empresa"
                 />
 
-                <form className="col-12 justify-content-end d-flex text-center align-items-center" onSubmit={handleSubmit}>
-                  <ButtonCancelar nome="Voltar" link={`simuladores/${grupo.turma.id}`} />
-                  <ButtonSalvar nome="Salvar dados" />
+                <form className="col-12 justify-content-end d-flex text-center align-items-center mt-5" onSubmit={handleSubmit}>
+                  <ButtonCancelar nome="Cancelar" link={`simuladores/${grupo.turma.id}`} />
+                  <ButtonSalvar nome="Salvar" />
                 </form>
 
                 <ToastContainer/>

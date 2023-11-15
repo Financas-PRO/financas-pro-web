@@ -1,0 +1,30 @@
+.tituloDemonstrativo{
+    font-family: Poppins-bold;
+    color: #12304A;
+}
+
+.informacoes_empresa{
+    font-family: Poppins-bold;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.bi-building::before {
+    content: "\f1dd";
+    color: #12304A;
+}
+
+.excel_row{
+    display: flex;
+    justify-content: end;
+}
+
+
+@media (max-width: 600px) {
+   
+    .excel_row{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+}

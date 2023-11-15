@@ -3,3 +3,9 @@
     color: #12304A;
     font-size: 1.2rem;
 }
+
+.bi-arrow-down-circle::before {
+    content: "\f119";
+    color: #12304A;
+    font-size: 22px;
+}

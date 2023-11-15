@@ -23,7 +23,7 @@ const ProtectedRoute = (props) => {
 
       }).catch(err => {
         setComponente(<Navigate to="/login"></Navigate>);
-        console.log(err);
+
       });
     }
 

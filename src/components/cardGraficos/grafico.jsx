@@ -9,8 +9,8 @@ export default function Grafico(props) {
 
     return (
         <div className="col col-md-6 col-12 mb-3">
-            <div className="card-simuladores">
-                <div className="titulo-graficos"><i className="bi bi-bar-chart-line"></i>{props.titulo}</div>
+            <div className="card-graficos">
+                <div className="titulo-graficos"><i className="bi bi-bar-chart-line"></i>{ props.titulo}</div>
                 <div className="card-conteudoGrafico mt-3">
                         <Line data={props.data} />
                 </div>
