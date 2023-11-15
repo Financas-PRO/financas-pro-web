@@ -5,8 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 import Title from "../../components/title/title";
-import ButtonSalvar from "../../components/button/buttonSalvar";
-import ButtonCancelar from "../../components/button/buttonCancelar";
 import TabelaDemonstrativo from "../../components/tabelaDemonstrativo/TabelaDemonstrativo.jsx";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
 import { useDispatch, useSelector } from "react-redux";

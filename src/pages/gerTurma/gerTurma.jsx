@@ -106,26 +106,23 @@ export default function GerTurma() {
 
     return (
       <tr key={index}>
-        <td>
-          <strong>{item.id}</strong>
-        </td>
         <td>{item.descricao}</td>
-        <td>{item.ano}</td>
+        <td className="text-center">{item.ano}</td>
         <td className="text-center">{item.semestre}</td>
         <td>
           <span className={`status ${statusClass}`}>{statusText}</span>
         </td>
-        <td>
+        <td className="text-center">
           <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{ width: 'auto', borderRadius: '7px' }}>
             <i className="bi bi-arrow-bar-up"></i>
           </Link>
         </td>
-        <td>
+        <td className="text-center">
           <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{ width: 'auto', borderRadius: '7px' }}>
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>
-        <td>
+        <td className="text-center"> 
           <button
             type="button"
             onClick={(e) => deletarTurma(e, item.id)}
@@ -180,14 +177,13 @@ export default function GerTurma() {
                   <table className="table table-striped">
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>DESCRIÇÃO</th>
-                        <th>ANO</th>
-                        <th>SEMESTRE</th>
+                        <th className="text-center">ANO</th>
+                        <th className="text-center">SEMESTRE</th>
                         <th>STATUS</th>
-                        <th>IMPORTAR</th>
-                        <th>EDITAR</th>
-                        <th>INATIVAR</th>
+                        <th className="text-center">IMPORTAR</th>
+                        <th className="text-center">EDITAR</th>
+                        <th className="text-center">INATIVAR</th>
                       </tr>
                     </thead>
                     <tbody>{turmaDetalhe}</tbody>

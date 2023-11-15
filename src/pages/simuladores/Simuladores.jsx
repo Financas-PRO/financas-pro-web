@@ -12,6 +12,7 @@ import ButtonCancelar from "../../components/button/buttonCancelar";
 import Simulador from "../../components/simulador/simulador";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 export default function Simuladores() {
@@ -19,6 +20,7 @@ export default function Simuladores() {
     let { id } = useParams();
 
     const [grupos, setGrupos] = useState([]);
+    const user = useSelector(state => state.userReducer);
 
     useEffect(() => {
         api.get(`grupo/${id}`)
@@ -45,10 +47,16 @@ export default function Simuladores() {
 
 
                 <div className="cadButton">
-                    <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
-                        <i className="bi bi-bookmark-plus-fill"></i>
-                        Criar novo simulador
-                    </Link>
+                    {
+                        user.tipo_de_usuario.id === 3 ? 
+                            (
+                                <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
+                                    <i className="bi bi-bookmark-plus-fill"></i>
+                                    Criar novo simulador
+                                </Link>
+                            ): void(0) 
+                    }
+
                 </div>
 
 

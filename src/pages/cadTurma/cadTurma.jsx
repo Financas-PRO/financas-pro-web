@@ -58,7 +58,7 @@ export default function CadTurma() {
   function handleChange(e) {
     const nome = e.target.name;
     const valor = e.target.value.trim();
-    setTurmas({ ...turmas, [nome]: valor, id_docente: 1 });
+    setTurmas({ ...turmas, [nome]: valor});
   }
 
   return (

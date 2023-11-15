@@ -52,9 +52,6 @@ export default function Notas() {
     alunos_nota = alunos.map((item, index) => {
         return (
             <tr key={index}>
-                <td>
-                    <strong>{item.id}</strong>
-                </td>
                 <td>{item.nome}</td>
                 <td>{item.ra}</td>
                 <td>{item.curso}</td>
@@ -98,7 +95,6 @@ export default function Notas() {
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>NOME</th>
                                     <th>R.A.</th>
                                     <th>CURSO</th>
