@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
 import tratarErro from "../../util/tratarErro";
+import { async } from "q";
 
 export default function GerProfessor() {
   const [docentes, setDocentes] = useState([]);
@@ -51,42 +52,53 @@ export default function GerProfessor() {
   {
     /*FUNÇÃO INATIVAR DOCENTE */
   }
-  const deletarDocente = (e, id) => {
+  
+  const deletarDocente = async (e, id) => {
     e.preventDefault();
 
-    const NoClick = e.currentTarget;
-    NoClick.innerText = "Inativando...";
-
     try {
-      api
-        .delete(`docente/${id}`)
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Docente inativo com sucesso");
-            NoClick.closest("tr").remove();
-            setTimeout(() => {
-              return navigate("/professor/gerenciar", { replace: true });
-            }, 1000);
-          }
-        })
-        .catch(function (error) {
-          let erros = tratarErro(error.response.data.error);
+      const response = await api.delete(`docente/${id}`);
 
-          toast.error(`Erro ao alterar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
-          });
+      if (response.status === 200) {
+        const updatedDocentes = docentes.map((docente) => {
+          if (docente.id === id) {
+            // Inverte o status da turma (se estava ativo, torna inativo e vice-versa)
+            docente.ativo = docente.ativo === 1 ? 0 : 1;
+          }
+          return docente;
         });
-    } catch (err) {
+
+        setDocentes(updatedDocentes);
+
+        toast.success(
+          `Docente ${
+            docentes.find((d) => d.id === id).ativo === 1
+              ? "ativado"
+              : "inativado"
+          } com sucesso`
+        );
+
+        setTimeout(() => {
+          return navigate("/professor/gerenciar", { replace: true });
+        }, 1000);
+      }
+    }catch (error) {
+      let erros = tratarErro(error.response.data.error);
+
+      toast.error(`Erro ao alterar!\n ${erros}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        style: { whiteSpace: "pre-line" },
+      });
     }
   };
+
   {
     /*-----------------------------------------------------------------------------------------------*/
   }
