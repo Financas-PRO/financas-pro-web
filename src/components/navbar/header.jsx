@@ -148,7 +148,7 @@ const Header = () => {
             <CDBSidebarMenu>
               {header.map(item => {
                 return (
-                  <NavLink to={item.rota}>
+                  <NavLink key={item.rota} to={item.rota}>
                     <CDBSidebarMenuItem icon={item.icone}>{item.titulo}</CDBSidebarMenuItem>
                   </NavLink>
                 )

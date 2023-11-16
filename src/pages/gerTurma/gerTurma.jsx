@@ -55,11 +55,10 @@ export default function GerTurma() {
   }
   const deletarTurma = async (e, id) => {
     e.preventDefault();
-  
+
     try {
-     
       const response = await api.delete(`turma/${id}`);
-  
+
       if (response.status === 200) {
         const updatedTurmas = turmas.map((turma) => {
           if (turma.id === id) {
@@ -68,18 +67,24 @@ export default function GerTurma() {
           }
           return turma;
         });
-  
+
         setTurmas(updatedTurmas);
-  
-        toast.success(`Turma ${turmas.find((t) => t.id === id).ativo === 1 ? "ativada" : "inativada"} com sucesso`);
-  
+
+        toast.success(
+          `Turma ${
+            turmas.find((t) => t.id === id).ativo === 1
+              ? "ativada"
+              : "inativada"
+          } com sucesso`
+        );
+
         setTimeout(() => {
           return navigate("/turma/gerenciar", { replace: true });
         }, 1000);
       }
     } catch (error) {
       let erros = tratarErro(error.response.data.error);
-  
+
       toast.error(`Erro ao alterar!\n ${erros}`, {
         position: "top-right",
         autoClose: 5000,
@@ -91,9 +96,8 @@ export default function GerTurma() {
         theme: "colored",
         style: { whiteSpace: "pre-line" },
       });
-    } 
+    }
   };
-  
 
   {
     /*-----------------------------------------------------------------------------------------------*/
@@ -105,7 +109,6 @@ export default function GerTurma() {
   var turmaDetalhe = "";
 
   turmaDetalhe = busca.map((item, index) => {
-
     const statusClass = item.ativo === 1 ? "ativo" : "inativo";
     const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
 
@@ -118,16 +121,24 @@ export default function GerTurma() {
           <span className={`status ${statusClass}`}>{statusText}</span>
         </td>
         <td className="text-center">
-          <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{ width: 'auto', borderRadius: '7px' }}>
+          <Link
+            to={`/importa/${item.id}`}
+            className="btn btn-primary"
+            style={{ width: "auto", borderRadius: "7px" }}
+          >
             <i className="bi bi-arrow-bar-up"></i>
           </Link>
         </td>
         <td className="text-center">
-          <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{ width: 'auto', borderRadius: '7px' }}>
+          <Link
+            to={`/turma/${item.id}/editar`}
+            className="btn btn-warning"
+            style={{ width: "auto", borderRadius: "7px" }}
+          >
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>
-        <td className="text-center"> 
+        <td className="text-center">
           <button
             type="button"
             onClick={(e) => deletarTurma(e, item.id)}
@@ -147,7 +158,6 @@ export default function GerTurma() {
   return (
     <>
       <div className="row-page">
-
         <Header />
 
         <div className="container mt-4 col-md-8 col-8 ">
@@ -156,7 +166,8 @@ export default function GerTurma() {
           <Title
             icon="bi-book-fill"
             titulo="Gerenciamento"
-            subTitulo="Gerenciamento das Turma cadastradas" />
+            subTitulo="Gerenciamento das Turma cadastradas"
+          />
 
           <div className="row">
             <div className="col col-md-8 col-12 mt-5">
