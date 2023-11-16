@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function Importa() {
 
@@ -31,53 +32,59 @@ export default function Importa() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const importa_toast = toast.loading("Importando os alunos, por favor aguarde...");
+
     const data = new FormData();
     data.append("card", cardFile);
 
-    console.log(cardFile);
+    api
+      .post(`importarAlunos/${id}`, { txt: cardFile }, {
+        headers: {
+          'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+        }
+      })
+      .then(async (res) => {
+        if (res.status) {
 
-    try {
-      api
-        .post(`importarAlunos/${id}`, { txt: cardFile }, {
-          headers: {
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-          }
-        })
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Alunos importados com sucesso! Recarregando a página...");
-
-            setTimeout(() => {
-              return navigate(0);
-            }, 2000);
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-          let resposta = error.response.data.error;
-
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index];
-          });
-
-          toast.error(`Erro ao cadastrar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
+          toast.update(importa_toast, {
+            render: "Alunos importados com sucesso! Recarregando a página......",
+            type: "success",
+            isLoading: false,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
+            theme: "colored"
           });
-        });
 
-    } catch (err) {
-      console.log(err);
-    }
+          setTimeout(() => {
+            return navigate(0);
+          }, 2000);
+        }
+      })
+      .catch(function (error) {
+
+        let erros = tratarErro(error.response.data.error);
+
+        toast.update(importa_toast,
+
+        {
+          render: `Erro ao importar!\n ${erros}`, 
+          type: "error",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          style: { whiteSpace: "pre-line" },
+          isLoading: false
+        });
+      });
+
+
   }
 
   // FUNÇÃO PARA LISTAR OS DADOS IMPORTADOS
@@ -117,6 +124,7 @@ export default function Importa() {
 
           <div className="mt-4">
             <form onSubmit={handleSubmit}>
+              <i className="bi bi-arrow-down-circle"></i>
               <label className="form-label labelImport">Informe o arquivo</label>
 
               <input

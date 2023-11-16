@@ -11,20 +11,20 @@ import {
   CDBNavbar,
   CDBNavToggle,
   CDBNavBrand
-
 } from 'cdbreact';
 import { NavLink, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToggle } from '../../redux/action';
+import tratarErro from '../../util/tratarErro';
 
 const header_aluno = [
   {
     rota: "/",
     icone: "bi bi-house-gear",
     titulo: "Dashboard"
-    
+
   },
   {
     rota: "/turmas",
@@ -47,8 +47,41 @@ const header_docente = [
   },
   {
     rota: "/turma/gerenciar",
+    icone: "bi bi-people-fill",
+    titulo: "Gerenciar Turmas"
+  },
+  {
+    rota: "/notas",
     icone: "bi bi-table",
-    titulo: "Gerenciamento de turmas"
+    titulo: "Relação de notas"
+  }
+]
+
+const header_coord = [
+  {
+    rota: "/",
+    icone: "bi bi-house-gear ",
+    titulo: "Dashboard"
+  },
+  {
+    rota: "/turmas",
+    icone: "bi bi-person-video3",
+    titulo: "Turmas"
+  },
+  {
+    rota: "/turma/gerenciar",
+    icone: "bi bi-people-fill",
+    titulo: "Gerenciar Turmas"
+  },
+  {
+    rota: "/professor/gerenciar",
+    icone: "bi bi-person-badge",
+    titulo: "Gerenciar Docentes"
+  },
+  {
+    rota: "/notas",
+    icone: "bi bi-table",
+    titulo: "Relação de notas"
   }
 ]
 
@@ -81,17 +114,7 @@ const Header = () => {
       })
       .catch(error => {
 
-        let resposta = error.response.data.error;
-
-        var erros = "";
-
-        if (typeof resposta === 'object') {
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
-
-        } else erros = resposta;
+        let erros = tratarErro(error.response.data.error);
 
         toast.update(logout_toast, {
           render: `\n ${erros}`,
@@ -125,10 +148,10 @@ const Header = () => {
             <CDBSidebarMenu>
               {header.map(item => {
                 return (
-                  <NavLink to={item.rota}>
+                  <NavLink key={item.rota} to={item.rota}>
                     <CDBSidebarMenuItem icon={item.icone}>{item.titulo}</CDBSidebarMenuItem>
                   </NavLink>
-                );
+                )
               })}
             </CDBSidebarMenu>
 
@@ -141,7 +164,7 @@ const Header = () => {
         </CDBSidebar>
 
 
-      </div>
+      </div >
     )
 
   }
@@ -150,13 +173,13 @@ const Header = () => {
     return (
       <div className='navbar-mobile container-fluid' style={{ display: 'none' }}>
         <CDBNavbar className='justify-content-start'>
-          <CDBNavToggle
+          <CDBNavToggle style={{backgroundColor: '#fff'}}
             onClick={() => toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true))}
           />
 
           <CDBNavBrand href="/">
             <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-              <img className="aguia-menu img-fluid" style={{height: "2em", marginLeft: "1em"}} src={menutoledo} alt='aguia' />
+              <img className="aguia-menu img-fluid" style={{ height: "2em", marginLeft: "1em" }} src={menutoledo} alt='aguia' />
             </a>
           </CDBNavBrand>
 
@@ -169,16 +192,12 @@ const Header = () => {
   useEffect(() => {
     switch (localStorage.getItem("papel")) {
 
-      case "Admin":
-        setHeader(header_docente);
-        break;
-
       case "Docente":
         setHeader(header_docente);
         break;
 
       case "Coordenador":
-        setHeader(header_docente);
+        setHeader(header_coord);
         break;
 
       case "Aluno":

@@ -55,3 +55,35 @@
     }
 }
 
+.dashboard-relacao span {
+  font-size: 1.5em!important;
+  color: #12304A!important;
+}
+
+.dashboard-relacao i::before {
+  font-size: 1.7em;
+  color: #12304A!important;
+
+}
+
+.card-relacao {
+  max-width: 15em!important;
+  background-color: #fff;
+  border-radius: 0.3em;
+  text-align: center;
+}
+
+.card-pendente:hover, .card-pendente:hover span, .card-pendente:hover i::before{
+  background-color: #ff7b10;
+  color: white!important;
+
+}
+
+.card-corrigidos:hover, .card-corrigidos:hover span, .card-corrigidos:hover i::before {
+  background-color: green;
+  color: white!important;
+}
+
+.bg-toledo {
+  background-color: #12304A;
+}

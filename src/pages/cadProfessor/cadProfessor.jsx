@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function CadProfessor() {
   const [professor, setProfessor] = useState({});
@@ -23,10 +24,8 @@ export default function CadProfessor() {
   }
   useEffect(() => {
     api.get(`tipoDeUsuario`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
-      setTipoDeUsuario(res.data.data);
-
+      let tipos = res.data.data.filter(item => { return item.id != 3});
+      setTipoDeUsuario(tipos);
     });
   }, []);
   {
@@ -49,13 +48,9 @@ export default function CadProfessor() {
           }
         })
         .catch(function (error) {
-          let resposta = error.response.data.error;
 
-          var erros = "";
+          let erros = tratarErro(error.response.data.error);
 
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index];
-          });
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,
@@ -69,7 +64,6 @@ export default function CadProfessor() {
           });
         });
     } catch (err) {
-      console.log(professor);
     }
   }
 
@@ -123,7 +117,6 @@ export default function CadProfessor() {
 
     setProfessor({ ...professor, [name]: valor });
 
-    console.log(professor);
   }
 
   return (

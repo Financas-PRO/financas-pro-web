@@ -12,6 +12,7 @@ import ButtonCancelar from "../../components/button/buttonCancelar";
 import Simulador from "../../components/simulador/simulador";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 export default function Simuladores() {
@@ -19,6 +20,7 @@ export default function Simuladores() {
     let { id } = useParams();
 
     const [grupos, setGrupos] = useState([]);
+    const user = useSelector(state => state.userReducer);
 
     useEffect(() => {
         api.get(`grupo/${id}`)
@@ -28,7 +30,6 @@ export default function Simuladores() {
                 }
             })
             .catch(err => {
-                console.log(err);
             });
     }, [id])
 
@@ -46,10 +47,16 @@ export default function Simuladores() {
 
 
                 <div className="cadButton">
-                    <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
-                        <i className="bi bi-bookmark-plus-fill"></i>
-                        Criar novo simulador
-                    </Link>
+                    {
+                        user.tipo_de_usuario.id === 3 ? 
+                            (
+                                <Link to={`/simulador/cadastrar/${id}`} className="btn-criarSi">
+                                    <i className="bi bi-bookmark-plus-fill"></i>
+                                    Criar novo simulador
+                                </Link>
+                            ): void(0) 
+                    }
+
                 </div>
 
 
@@ -66,6 +73,7 @@ export default function Simuladores() {
 
                             return (
                                 <Simulador
+                                    key={grupo.id}
                                     titulo={grupo.descricao}
                                     etapa={grupo.etapa}
                                     nomes={alunos.join(", ")}
@@ -79,7 +87,7 @@ export default function Simuladores() {
                 </div>
 
                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                    <ButtonCancelar link="turmas" nome="Voltar" />
+                    <ButtonCancelar link="turmas" nome="Anterior" />
                 </div>
             </div>
 

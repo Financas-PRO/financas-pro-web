@@ -1,9 +1,9 @@
 .card-video {
-  height: 14.5em;
+  height: 16.5em;
   background-color: #12304a;
   color: #fff;
-  margin: 10px;
-  width: 16em;
+  margin: 20px;
+  width: 20em;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -22,7 +22,7 @@
 .card-img {
   background-repeat: no-repeat;
   background-size: cover;
-  height: 120px;
+  height: 9.5em;
 }
 
 .conteudo-titulo {

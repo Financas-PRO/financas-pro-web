@@ -7,16 +7,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import api from "../../services/api";
 import Loading from "../../components/loading/loading";
-import { useDispatch } from "react-redux";
-import { setAcoes } from "../../redux/action.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setAcaoSelecionada, setAcoes } from "../../redux/action.js";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
 import { ToastContainer, toast } from "react-toastify";
+import tratarErro from "../../util/tratarErro";
 
 export default function Analise() {
 
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
+    const acao = useSelector((state) => state.acoesReducer);
+    const acaoSelecionada = useSelector((state) => state.acaoSelecionadaReducer);
 
     const [grupo, setGrupo] = useState({
         id: 1,
@@ -41,11 +44,29 @@ export default function Analise() {
                         id: res.data.data[0].grupo.turma.id
                     }
                 });
+
+                dispatch(setAcaoSelecionada(res.data.data[0]));
+
             })
             .finally(res => {
                 setLoading(false);
             });
     }, [id]);
+
+    function handleAcaoChange(e){
+
+        const value = e.target.value;
+
+        let copia_dados = acao;
+
+        copia_dados.forEach(val => {
+
+            if (val.id == value) {
+                dispatch(setAcaoSelecionada(val));
+            }
+        });
+
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -82,17 +103,7 @@ export default function Analise() {
             })
             .catch(error => {
 
-                let resposta = error.response.data.error;
-
-                var erros = "";
-
-                if (typeof resposta === 'object') {
-
-                    Object.keys(resposta).forEach(function (index) {
-                        erros += resposta[index] + "\n";
-                    });
-
-                } else erros = resposta;
+                let erros = tratarErro(error.response.data.error);
 
                 toast.update(toast_submit, {
                     render: `Erro ao salvar seu progresso.\n ${erros}`,
@@ -108,55 +119,6 @@ export default function Analise() {
 
             })
     }
-
-    const dataPizza = [
-        ["Pizza", "Popularity"],
-        ["Pepperoni", 33],
-        ["Hawaiian", 26],
-        ["Mushroom", 22],
-        ["Sausage", 10],
-        ["Anchovies", 9],
-    ];
-
-
-    const dataColumn = [
-        ["Element", "Density", { role: "style" }],
-        ["Copper", 8.94, "#b87333"],
-        ["Silver", 10.49, "silver"],
-        ["Gold", 19.3, "gold"],
-        ["Platinum", 21.45, "color: #e5e4e2"],
-    ];
-
-    const dataColumnBar = [
-        [
-            "Element",
-            "Density",
-            { role: "style" },
-            {
-                sourceColumn: 0,
-                role: "annotation",
-                type: "string",
-                calc: "stringify",
-            },
-        ],
-        ["Copper", 8.94, "#b87333", null],
-        ["Silver", 10.49, "silver", null],
-        ["Gold", 19.3, "gold", null],
-        ["Platinum", 21.45, "color: #e5e4e2", null],
-    ];
-
-    const dataLine = [
-        ["x", "dogs", "cats"],
-        [0, 0, 0],
-        [1, 10, 5],
-        [2, 23, 15],
-        [3, 17, 9],
-        [4, 18, 10],
-        [5, 9, 5],
-        [6, 11, 3],
-        [7, 27, 19],
-    ];
-
 
     return (
         <div className="row-page">
@@ -176,14 +138,30 @@ export default function Analise() {
                                 <Title
                                     icon="bi-bookmark-fill"
                                     titulo="Análise"
-                                    subTitulo="Aqui, você pode analisar os resultados e escrever sua análise final"
+                                    subTitulo="Análise os resultados e escrever sua análise final"
                                 />
 
-                                <AnaliseGrafico data={null} />
+                                <div className="row mt-2 align-items-center">
+                                    <div className="col-md-12 col-12">
+                                        <label className="mb-2   tituloDemonstrativo">
+                                            <i className="bi bi-building"></i>
+                                            Empresa selecionada
+                                        </label>
+                                        <select className="form-select" onChange={handleAcaoChange}>
+                                            {acao.map(dado => {
+                                                return (<option value={dado.id}>{dado.nome_curto}</option>);
+                                            })}
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+                                <AnaliseGrafico />
 
                                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                                    <button className="btn-salvar" onClick={handleSubmit}>Próximo</button>
-                                    <button className="btn-cancelar" onClick={handleEtapaSubmit}>Voltar para o demonstrativo</button>
+                                    <button className="btn-cancelar" onClick={handleEtapaSubmit}>Anterior</button>
+                                    <button className="btn-salvar" onClick={handleSubmit}>Salvar</button>
                                 </div>
 
                             </>

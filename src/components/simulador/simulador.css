@@ -25,9 +25,15 @@
     transition: 0.4s;
 }
 
+
 .etapa{
     font-size: 0.70rem;
     color: #000;
+}
+
+.card-simuladores:hover .etapa{
+    transition: 0.4s;
+    color: #FFF;
 }
 
 .nomes{
@@ -35,6 +41,12 @@
     background-color: #AEACAC;
     border-radius: 6px;
     padding: 4px;
+}
+
+.card-simuladores:hover .nomes{
+    background-color: #7a7a7a;
+    color: #FFF;
+    transition: 0.4s;
 }
 
 .footer-card{
@@ -49,10 +61,20 @@
     justify-content: center;
 }
 
+.card-simuladores:hover .link{
+    color: #FFF !important;
+    transition: 0.4s;
+}
+
 .bi-arrow-right::before {
     content: "\f138";
     color: #000;
     margin-left: 5px;
+}
+
+.card-simuladores:hover .bi-arrow-right::before{
+    color: #FFF;
+    transition: 0.4s;
 }
 
 .bi-diagram-2::before {

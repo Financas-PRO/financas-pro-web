@@ -12,6 +12,7 @@ import axios from "axios";
 import api from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import tratarErro from "../../util/tratarErro";
 
 export default function Empresa() {
 
@@ -53,7 +54,6 @@ export default function Empresa() {
 
             })
             .catch(err => {
-                console.log(err);
             })
 
     }, [busca]);
@@ -79,17 +79,8 @@ export default function Empresa() {
                     }
                 })
                 .catch(function (error) {
-                    let resposta = error.response.data.error;
 
-                    var erros = "";
-
-                    if (typeof resposta === 'object') {
-
-                        Object.keys(resposta).forEach(function (index) {
-                            erros += resposta[index] + "\n";
-                        });
-
-                    } else erros = resposta;
+                    let erros = tratarErro(error.response.data.error);
 
                     toast.update(empresa_toast, {
                         render: `\n ${erros}`,
@@ -111,15 +102,11 @@ export default function Empresa() {
     function handleChangeFaixa(e) {
         const valor = e.target.value;
         setFaixa(valor);
-
-        console.log(valor);
     }
 
     function handleChangeIntervalo(e) {
         const valor = e.target.value;
         setItervalo(valor);
-
-        console.log(valor);
     }
 
     function handleChange(e) {
@@ -129,7 +116,6 @@ export default function Empresa() {
     function handleClick(simbolo) {
         setIcone(!icone)
         setEmpresas([...empresas, simbolo]);
-        console.log(empresas)
 
         if (empresas.includes(simbolo)) {
             setEmpresas(empresas.filter(empresa => empresa !== simbolo))
@@ -142,7 +128,6 @@ export default function Empresa() {
             setEmpresaSelecionada([...empresaSelecionada, simbolo]);
         }
 
-        console.log(empresaSelecionada)
     }
 
 
@@ -224,8 +209,8 @@ export default function Empresa() {
                                         stock={empresa.stock}
                                         click={e => { e.preventDefault(); handleClick(empresa.stock) }}
                                         key={icone.id}
-                                        imagem={empresas.includes(empresa.stock) ? <i class="bi bi-check"></i> : <i class="bi bi-plus"></i>}
-                                        onChange={() => handleSelecao(simbolo)} />);
+                                        imagem={empresas.includes(empresa.stock) ? <i className="bi bi-check"></i> : <i className="bi bi-plus"></i>}
+/>);
                                 })
                             }
 
@@ -235,8 +220,8 @@ export default function Empresa() {
 
                     </div>
                     <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
-                        <ButtonSalvar nome="Salvar" />
                         <ButtonCancelar link={`simuladores/${grupo.turma.id}`} nome="Cancelar" />
+                        <ButtonSalvar nome="Salvar" />
                     </div>
                 </form>
 

@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import './TabelaDemonstrativo.css';
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
 import { registerRenderer, textRenderer } from "handsontable/renderers";
@@ -141,8 +142,9 @@ const TabelaDemonstrativo = props => {
         <>
         <ToastContainer/>
             <div className="row mt-2 align-items-center">
-                <div className="col-md-4 col-12">
-                    <label className="mb-2 tituloDemonstrativo" style={{ color: 'black' }}>
+                <div className="col-md-12 col-12">
+                    <label className="mb-2 tituloDemonstrativo">
+                        <i className="bi bi-building"></i>
                         Empresa selecionada
                     </label>
                     <select className="form-select" onChange={handleAcaoChange}>
@@ -157,7 +159,7 @@ const TabelaDemonstrativo = props => {
 
             <div className="row mt-4 mb-4 cardFundoDemonstrativo">
                 <div className="row square">
-                    <label className="mb-2 tituloDemonstrativo">
+                    <label className="mb-2 informacoes_empresa">
                         Informações Gerais
                     </label>
                     <div className="col col-md-4 col-12 ">
@@ -212,7 +214,7 @@ const TabelaDemonstrativo = props => {
                         />
                     </div>
                 </div>
-                <div className="row justify-content-end mb-2">
+                <div className="row mb-2 excel_row">
                     <button
                         className="btn py-0 col-2 btn-success buttonExcel align-items-center"
                         onClick={exportarExcel}
@@ -239,9 +241,10 @@ const TabelaDemonstrativo = props => {
                 colHeights={40}
                 colWidths={180}
                 mergeCells={[
-                    { row: 0, col: 0, rowspan: 1, colspan: 14 },
-                    { row: 11, col: 0, rowspan: 1, colspan: 14 },
-                    { row: 18, col: 0, rowspan: 1, colspan: 14 },
+                    { row: 0, col: 0, rowspan: 1, colspan: 38 },
+                    { row: 11, col: 0, rowspan: 1, colspan: 38 },
+                    { row: 18, col: 0, rowspan: 1, colspan: 38 },
+                    { row: 23, col: 0, rowspan: 1, colspan: 38 },
                 ]}
                 className="custom-hot-table htCenter"
                 licenseKey="non-commercial-and-evaluation"
@@ -252,6 +255,8 @@ const TabelaDemonstrativo = props => {
                     } else if (row === 11) {
                         cellProperties.renderer = firstRowRenderer;
                     } else if (row === 18) {
+                        cellProperties.renderer = firstRowRenderer;
+                    } else if (row === 23) {
                         cellProperties.renderer = firstRowRenderer;
                     }
                     else {

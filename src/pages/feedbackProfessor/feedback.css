@@ -2,3 +2,29 @@
     content: "\f71d";
     color: #12304A;
 }
+
+.bi-journal-text::before {
+    content: "\f444";
+    color: #12304A;
+}
+
+.titulo_modal{
+    font-family: Poppins-bold;
+    color: #12304A;
+}
+
+
+.nota_texto{
+    font-family: Poppins;
+    color: #12304A;
+    margin-left: 0 !important;
+}
+
+.nota_margin{
+    margin-right: 5px;
+}
+
+.nota{
+    font-family: Poppins-bold;
+    color: #12304A;
+}

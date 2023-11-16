@@ -9,6 +9,7 @@ import ButtonCancelar from "../../components/button/buttonCancelar";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { ToastContainer, toast } from "react-toastify";
+import tratarErro from "../../util/tratarErro";
 
 const Resumo = props => {
 
@@ -45,24 +46,14 @@ const Resumo = props => {
                 });
 
                 setTimeout(() => {
-                    return navigate(`/turma/${id}`, { replace: true });
+                    return navigate(`/turmas`);
                 }, 2500);
 
             }
         })
         .catch(error => {
 
-            let resposta = error.response.data.error;
-
-            var erros = "";
-
-            if (typeof resposta === 'object') {
-
-                Object.keys(resposta).forEach(function (index) {
-                    erros += resposta[index] + "\n";
-                });
-
-            } else erros = resposta;
+            let erros = tratarErro(error.response.data.error);
 
             toast.update(toast_submit, {
                 render: `Erro ao salvar seu progresso.\n ${erros}`,
@@ -148,13 +139,13 @@ const Resumo = props => {
 
             <div className="container mt-4 col-md-8 col-9">
                 <ToastContainer />
-                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Antes de enviar sua análise, confira todo o conteúdo abaixo." />
-                <TabelaDemonstrativo planilha={planilha} />
-                <AnaliseGrafico data={null} />
+                <Title titulo="Resumo" icon="bi-body-text" subTitulo="Resumo análise, confira todo o conteúdo abaixo." />
+                <TabelaDemonstrativo planilha={planilha} readonly={true}/>
+                <AnaliseGrafico data={null} readonly={true}/>
 
                 <form className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4" onSubmit={handleSubmit}>
+                    <ButtonCancelar nome="Cancelar" link={`analise/${id}`} />
                     <ButtonSalvar nome="Finalizar" />
-                    <ButtonCancelar nome="Voltar" />
                 </form>
             </div>
         </div>

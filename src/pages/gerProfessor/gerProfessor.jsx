@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
+import tratarErro from "../../util/tratarErro";
+import { async } from "q";
 
 export default function GerProfessor() {
   const [docentes, setDocentes] = useState([]);
@@ -20,8 +22,6 @@ export default function GerProfessor() {
   }
   useEffect(() => {
     api.get(`docente`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setDocentes(res.data.data);
       setBusca(res.data.data);
 
@@ -52,48 +52,53 @@ export default function GerProfessor() {
   {
     /*FUNÇÃO INATIVAR DOCENTE */
   }
-  const deletarDocente = (e, id) => {
+  
+  const deletarDocente = async (e, id) => {
     e.preventDefault();
 
-    const NoClick = e.currentTarget;
-    NoClick.innerText = "Inativando...";
-
     try {
-      api
-        .delete(`docente/${id}`)
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Docente inativo com sucesso");
-            NoClick.closest("tr").remove();
-            setTimeout(() => {
-              return navigate("/professor/gerenciar", { replace: true });
-            }, 1000);
+      const response = await api.delete(`docente/${id}`);
+
+      if (response.status === 200) {
+        const updatedDocentes = docentes.map((docente) => {
+          if (docente.id === id) {
+            // Inverte o status da turma (se estava ativo, torna inativo e vice-versa)
+            docente.ativo = docente.ativo === 1 ? 0 : 1;
           }
-        })
-        .catch(function (error) {
-          let resposta = error.response.data.errors;
-
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
-          toast.error(`Erro ao alterar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
-          });
+          return docente;
         });
-    } catch (err) {
-      console.log(docentes);
+
+        setDocentes(updatedDocentes);
+
+        toast.success(
+          `Docente ${
+            docentes.find((d) => d.id === id).ativo === 1
+              ? "ativado"
+              : "inativado"
+          } com sucesso`
+        );
+
+        setTimeout(() => {
+          return navigate("/professor/gerenciar", { replace: true });
+        }, 1000);
+      }
+    }catch (error) {
+      let erros = tratarErro(error.response.data.error);
+
+      toast.error(`Erro ao alterar!\n ${erros}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        style: { whiteSpace: "pre-line" },
+      });
     }
   };
+
   {
     /*-----------------------------------------------------------------------------------------------*/
   }
@@ -106,8 +111,6 @@ export default function GerProfessor() {
   docenteDetalhe = busca.map((item, index) => {
     const statusClass = item.ativo === 1 ? "ativo" : "inativo";
     const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
-
-    console.log(`item.ativo: ${item.ativo}`);
 
     return (
       <tr key={index}>

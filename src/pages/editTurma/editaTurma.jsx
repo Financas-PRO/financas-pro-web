@@ -18,7 +18,7 @@ export default function EditaTurma() {
     ano: "",
     semestre: "",
     id_curso: "",
-    turma: ""
+    descricao: ""
   });
   let { id } = useParams();
   let navigate = useNavigate();
@@ -26,9 +26,8 @@ export default function EditaTurma() {
   useEffect(() => {
 
     api.get(`turma/${id}`).then((res) => {
-      console.log(setTurmas);
       setTurmas({
-        turma: res.data.data.descricao,
+        descricao: res.data.data.descricao,
         semestre: res.data.data.semestre,
         ano: res.data.data.ano,
       });
@@ -51,7 +50,6 @@ export default function EditaTurma() {
           }
         })
         .catch(function (error) {
-          console.log(error)
           let resposta = error.response.data.error;
 
           var erros = "";
@@ -74,7 +72,6 @@ export default function EditaTurma() {
         });
 
     } catch (err) {
-      console.log(turmas);
     }
   }
 
@@ -82,8 +79,6 @@ export default function EditaTurma() {
     const nome = e.target.name;
     const valor = e.target.value.trim();
     setTurmas({ ...turmas, [nome]: valor });
-
-    console.log(turmas);
   }
 
   return (
@@ -107,10 +102,9 @@ export default function EditaTurma() {
                   <input
                     onChange={handleChange}
                     type="text"
-                    name="turma"
+                    name="descricao"
                     className="form-control"
-                    maxLength="1"
-                    value={turmas.turma}
+                    defaultValue={turmas.descricao}
                   />
                 </div>
                 <div className="col col-md-6 col-12">
@@ -144,8 +138,8 @@ export default function EditaTurma() {
               </div>
             </div>
             <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
-              <ButtonSalvar nome="Salvar" />
               <ButtonCancelar link="turma/gerenciar" nome="Cancelar" />
+              <ButtonSalvar nome="Salvar" />
             </div>
           </form>
         </div>

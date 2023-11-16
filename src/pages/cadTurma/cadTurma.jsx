@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function CadTurma() {
 
@@ -34,14 +35,8 @@ export default function CadTurma() {
           }
         })
         .catch(function (error) {
-          console.log(error)
-          let resposta = error.response.data.error;
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
+          let erros = tratarErro(error.response.data.error);
 
           toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
@@ -57,16 +52,13 @@ export default function CadTurma() {
         });
 
     } catch (err) {
-      console.log(turmas);
     }
   }
 
   function handleChange(e) {
     const nome = e.target.name;
     const valor = e.target.value.trim();
-    setTurmas({ ...turmas, [nome]: valor, id_docente: 1 });
-
-    console.log(turmas);
+    setTurmas({ ...turmas, [nome]: valor});
   }
 
   return (
@@ -77,7 +69,7 @@ export default function CadTurma() {
         <div className="container mt-4 col-md-8 col-9">
 
           <Title
-            icon="bi-clipboard2"
+            icon="bi-clipboard2-fill"
             titulo="Turma"
             subTitulo="Gerenciamento cadastro de Turma" />
 
@@ -93,13 +85,12 @@ export default function CadTurma() {
                     type="text"
                     name="descricao"
                     className="form-control"
+                    maxLength={50}
                   />
                 </div>
                 <div className="col col-md-6 col-12">
-                  <label>
-                    <i className="bi bi-person icons-cad"></i>
-                    Semestre
-                  </label>
+                  <i className="bi bi-calendar-plus-fill"></i>
+                  <label>Semestre</label>
                   <select
                     onChange={handleChange}
                     name="semestre"
@@ -111,7 +102,7 @@ export default function CadTurma() {
                   </select>
                 </div>
                 <div className="col col-md-6 col-12 mb-5">
-                  <i className="bi bi-person-add"></i>
+                  <i className="bi bi-calendar-plus-fill"></i>
                   <label>Ano</label>
                   <input
                     onChange={handleChange}
@@ -124,8 +115,8 @@ export default function CadTurma() {
               </div>
             </div>
             <div className="col col-md-10 col-12 buttons justify-content-end mb-5 mt-4">
-              <ButtonSalvar nome="Salvar" />
               <ButtonCancelar link="turma/gerenciar" nome="Cancelar" />
+              <ButtonSalvar nome="Salvar" />
             </div>
           </form>
         </div>

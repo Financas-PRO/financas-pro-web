@@ -2,10 +2,8 @@ nav {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-
     color: #fff;
     background-color: #12304A;
-
     font-style: italic;
 }
 
@@ -23,13 +21,15 @@ nav {
     height: 100vh;
     position: sticky;
     top: 0;
+    z-index: 99999;
 }
 
 @media only screen and (max-width: 720px) {
 
     .header {
         position: fixed;
-        z-index: 999;
+        /* z-index: ; */
+
     }
 
     .header .toggled {
@@ -40,8 +40,9 @@ nav {
     .navbar-mobile {
         display: block !important;
         padding: 0 !important;
-        position: fixed;
-        z-index: 999;
+        position: sticky;
+        top: 0;
+        z-index: 9999;
     }
 
 }
@@ -52,8 +53,12 @@ nav {
     font-family: Poppins-bold;
 }
 
+.header i::before {
+    color: #fff;
+}
+
 li span {
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
 @keyframes nav {
@@ -78,3 +83,16 @@ li span {
     color: #ff7b10 !important;
     transition: 0.3s;
 }
+
+
+@media (max-width: 600px) {
+    
+    .navbar-toggler {
+
+        background-color: #fff;
+
+    }
+}
+
+
+

@@ -1,4 +1,4 @@
-.titulo-turma{
+.titulo-turma {
     font-family: Poppins-bold;
     font-size: 1.3rem;
     color: #FFF;
@@ -8,8 +8,9 @@
     padding: 0.6em;
 }
 
-.titulo-turma:hover, .titulo-turma:hover i::before{
-    color: #EE7F01!important;
+.titulo-turma:hover,
+.titulo-turma:hover i::before {
+    color: #EE7F01 !important;
     transition: 0.4s;
 }
 
@@ -22,7 +23,7 @@
 
 }
 
-.card-turma{
+.card-turma {
     background-color: #8d6f6f;
     border-radius: 14px;
 }
@@ -30,11 +31,16 @@
 
 
 @keyframes arrow {
-    from {left: 0px;}
-    to {left: 15px;}
-  }
+    from {
+        left: 0px;
+    }
 
-  .animacao {
+    to {
+        left: 15px;
+    }
+}
+
+.animacao {
     animation-name: arrow;
     position: relative;
     left: 0px;
@@ -43,9 +49,19 @@
     animation-direction: alternate;
     font-size: 25px;
 
-  }
+}
 
-  .animacao {
+.animacao {
     display: none;
-  }
+}
 
+
+
+@media (max-width: 600px) {
+
+    .acesso {
+
+        justify-content: center;
+
+    }
+}

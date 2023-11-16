@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Title from "../../components/title/title";
+import tratarErro from "../../util/tratarErro";
 
 export default function GerTurma() {
   const [turmas, setTurmas] = useState({});
@@ -22,8 +23,6 @@ export default function GerTurma() {
   }
   useEffect(() => {
     api.get(`turma`).then((res) => {
-      //console.log(res);
-      console.log(res.data.data);
       setTurmas(res.data.data);
       setBusca(res.data.data);
     });
@@ -41,9 +40,9 @@ export default function GerTurma() {
     setBusca(
       turmas.filter(
         (f) =>
-          f.ano.includes(buscando) ||
-          f.semestre.includes(buscando) ||
-          f.descricao.includes(buscando)
+          f.descricao.toLowerCase().includes(buscando) ||
+          f.ano.toString().includes(buscando) ||
+          f.semestre.toString().includes(buscando)
       )
     );
   };
@@ -54,48 +53,52 @@ export default function GerTurma() {
   {
     /*FUNÇÃO INATIVAR TURMA */
   }
-  const deletarTurma = (e, id) => {
+  const deletarTurma = async (e, id) => {
     e.preventDefault();
 
-    const NoClick = e.currentTarget;
-    NoClick.innerText = "Inativando...";
-
     try {
-      api
-        .delete(`turma/${id}`)
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Turma inativo com sucesso");
-            NoClick.closest("tr").remove();
-            setTimeout(() => {
-              return navigate("/turma/gerenciar", { replace: true });
-            }, 1000);
+      const response = await api.delete(`turma/${id}`);
+
+      if (response.status === 200) {
+        const updatedTurmas = turmas.map((turma) => {
+          if (turma.id === id) {
+            // Inverte o status da turma (se estava ativo, torna inativo e vice-versa)
+            turma.ativo = turma.ativo === 1 ? 0 : 1;
           }
-        })
-        .catch(function (error) {
-          let resposta = error.response.data.errors;
-
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index] + "\n";
-          });
-          toast.error(`Erro ao alterar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
-          });
+          return turma;
         });
-    } catch (err) {
-      console.log(turmas);
+
+        setTurmas(updatedTurmas);
+
+        toast.success(
+          `Turma ${
+            turmas.find((t) => t.id === id).ativo === 1
+              ? "ativada"
+              : "inativada"
+          } com sucesso`
+        );
+
+        setTimeout(() => {
+          return navigate("/turma/gerenciar", { replace: true });
+        }, 1000);
+      }
+    } catch (error) {
+      let erros = tratarErro(error.response.data.error);
+
+      toast.error(`Erro ao alterar!\n ${erros}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        style: { whiteSpace: "pre-line" },
+      });
     }
   };
+
   {
     /*-----------------------------------------------------------------------------------------------*/
   }
@@ -106,25 +109,36 @@ export default function GerTurma() {
   var turmaDetalhe = "";
 
   turmaDetalhe = busca.map((item, index) => {
+    const statusClass = item.ativo === 1 ? "ativo" : "inativo";
+    const statusText = item.ativo === 1 ? "Ativo" : "Inativo";
+
     return (
       <tr key={index}>
-        <td>
-          <strong>{item.id}</strong>
-        </td>
         <td>{item.descricao}</td>
-        <td>{item.ano}</td>
-        <td>{item.semestre}</td>
+        <td className="text-center">{item.ano}</td>
+        <td className="text-center">{item.semestre}</td>
         <td>
-          <Link to={`/importa/${item.id}`} className="btn btn-primary" style={{ width: 'auto', borderRadius: '7px' }}>
+          <span className={`status ${statusClass}`}>{statusText}</span>
+        </td>
+        <td className="text-center">
+          <Link
+            to={`/importa/${item.id}`}
+            className="btn btn-primary"
+            style={{ width: "auto", borderRadius: "7px" }}
+          >
             <i className="bi bi-arrow-bar-up"></i>
           </Link>
         </td>
-        <td>
-          <Link to={`/turma/${item.id}/editar`} className="btn btn-warning" style={{ width: 'auto', borderRadius: '7px' }}>
+        <td className="text-center">
+          <Link
+            to={`/turma/${item.id}/editar`}
+            className="btn btn-warning"
+            style={{ width: "auto", borderRadius: "7px" }}
+          >
             <i className="bi bi-pencil-square"></i>
           </Link>
         </td>
-        <td>
+        <td className="text-center">
           <button
             type="button"
             onClick={(e) => deletarTurma(e, item.id)}
@@ -144,7 +158,6 @@ export default function GerTurma() {
   return (
     <>
       <div className="row-page">
-
         <Header />
 
         <div className="container mt-4 col-md-8 col-8 ">
@@ -153,7 +166,8 @@ export default function GerTurma() {
           <Title
             icon="bi-book-fill"
             titulo="Gerenciamento"
-            subTitulo="Gerenciamento das Turma cadastradas" />
+            subTitulo="Gerenciamento das Turma cadastradas"
+          />
 
           <div className="row">
             <div className="col col-md-8 col-12 mt-5">
@@ -179,13 +193,13 @@ export default function GerTurma() {
                   <table className="table table-striped">
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>DESCRIÇÃO</th>
-                        <th>ANO</th>
-                        <th>SEMESTRE</th>
-                        <th>IMPORTAR</th>
-                        <th>EDITAR</th>
-                        <th>INATIVAR</th>
+                        <th className="text-center">ANO</th>
+                        <th className="text-center">SEMESTRE</th>
+                        <th>STATUS</th>
+                        <th className="text-center">IMPORTAR</th>
+                        <th className="text-center">EDITAR</th>
+                        <th className="text-center">INATIVAR</th>
                       </tr>
                     </thead>
                     <tbody>{turmaDetalhe}</tbody>
