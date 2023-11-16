@@ -203,15 +203,15 @@ export default function Empresa() {
                             {
                                 resultados.map((empresa) => {
                                     return (<EmpresaCard
-                                        ativo={empresas.includes(empresa.stock) ? 1 : 0}
-                                        nome={empresa.name}
-                                        imgurl={empresa.logo}
-                                        stock={empresa.stock}
-                                        click={e => { e.preventDefault(); handleClick(empresa.stock) }}
-                                        key={icone.id}
-                                        imagem={empresas.includes(empresa.stock) ? <i className="bi bi-check"></i> : <i className="bi bi-plus"></i>}
-/>);
-                                })
+                                            key={empresa.stock}
+                                            ativo={empresas.includes(empresa.stock) ? 1 : 0}
+                                            nome={empresa.name}
+                                            imgurl={empresa.logo}
+                                            stock={empresa.stock}
+                                            click={e => { e.preventDefault(); handleClick(empresa.stock) }}
+                                            imagem={empresas.includes(empresa.stock) ? <i className="bi bi-check"></i> : <i className="bi bi-plus"></i>}
+                                        />);
+                                    })
                             }
 
                         </div>

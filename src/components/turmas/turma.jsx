@@ -19,8 +19,10 @@ export default function Turmas(props) {
                         <h6 className="mx-3">Docente: {props.docente}</h6>
                     </div>
                     <h6 className="col col-md-2 col-12 d-flex acesso">
-                        <h5>Acesse</h5>
-                        <i className="animacao bi bi-arrow-right"></i>
+                        <div>
+                            <h5>Acesse</h5>
+                            <i className="animacao bi bi-arrow-right"></i>
+                        </div>
                     </h6>
                 </Link>
             </div>
