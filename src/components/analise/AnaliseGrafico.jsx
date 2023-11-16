@@ -106,8 +106,6 @@ const AnaliseGrafico = props => {
             };
 
             setDataDividendo(dividendos);
-
-        
     }
 
     useEffect(() => {
@@ -116,7 +114,7 @@ const AnaliseGrafico = props => {
 
     return (
         <>
-            <div className="row mt-5">
+            <div className="row mt-3">
                  <Grafico titulo="Histórico de ações" grafico="LineChart" data={data} />
                  <Grafico titulo="Histórico de dividendos" grafico="LineChart" data={dataDividendo} />
             </div>

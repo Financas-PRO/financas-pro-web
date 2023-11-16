@@ -7,8 +7,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import Title from "../../components/title/title";
 import api from "../../services/api";
 import Loading from "../../components/loading/loading";
-import { useDispatch } from "react-redux";
-import { setAcoes } from "../../redux/action.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setAcaoSelecionada, setAcoes } from "../../redux/action.js";
 import AnaliseGrafico from "../../components/analise/AnaliseGrafico.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import tratarErro from "../../util/tratarErro";
@@ -18,6 +18,8 @@ export default function Analise() {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
+    const acao = useSelector((state) => state.acoesReducer);
+    const acaoSelecionada = useSelector((state) => state.acaoSelecionadaReducer);
 
     const [grupo, setGrupo] = useState({
         id: 1,
@@ -42,11 +44,29 @@ export default function Analise() {
                         id: res.data.data[0].grupo.turma.id
                     }
                 });
+
+                dispatch(setAcaoSelecionada(res.data.data[0]));
+
             })
             .finally(res => {
                 setLoading(false);
             });
     }, [id]);
+
+    function handleAcaoChange(e){
+
+        const value = e.target.value;
+
+        let copia_dados = acao;
+
+        copia_dados.forEach(val => {
+
+            if (val.id == value) {
+                dispatch(setAcaoSelecionada(val));
+            }
+        });
+
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -121,7 +141,23 @@ export default function Analise() {
                                     subTitulo="Análise os resultados e escrever sua análise final"
                                 />
 
-                                <AnaliseGrafico/>
+                                <div className="row mt-2 align-items-center">
+                                    <div className="col-md-12 col-12">
+                                        <label className="mb-2   tituloDemonstrativo">
+                                            <i className="bi bi-building"></i>
+                                            Empresa selecionada
+                                        </label>
+                                        <select className="form-select" onChange={handleAcaoChange}>
+                                            {acao.map(dado => {
+                                                return (<option value={dado.id}>{dado.nome_curto}</option>);
+                                            })}
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+                                <AnaliseGrafico />
 
                                 <div className="col col-md-12 col-12 buttons justify-content-end mb-5 mt-4">
                                     <button className="btn-cancelar" onClick={handleEtapaSubmit}>Anterior</button>
