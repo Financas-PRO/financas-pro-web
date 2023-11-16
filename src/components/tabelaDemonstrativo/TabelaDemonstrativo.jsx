@@ -241,9 +241,10 @@ const TabelaDemonstrativo = props => {
                 colHeights={40}
                 colWidths={180}
                 mergeCells={[
-                    { row: 0, col: 0, rowspan: 1, colspan: 14 },
-                    { row: 11, col: 0, rowspan: 1, colspan: 14 },
-                    { row: 18, col: 0, rowspan: 1, colspan: 14 },
+                    { row: 0, col: 0, rowspan: 1, colspan: 38 },
+                    { row: 11, col: 0, rowspan: 1, colspan: 38 },
+                    { row: 18, col: 0, rowspan: 1, colspan: 38 },
+                    { row: 23, col: 0, rowspan: 1, colspan: 38 },
                 ]}
                 className="custom-hot-table htCenter"
                 licenseKey="non-commercial-and-evaluation"
@@ -254,6 +255,8 @@ const TabelaDemonstrativo = props => {
                     } else if (row === 11) {
                         cellProperties.renderer = firstRowRenderer;
                     } else if (row === 18) {
+                        cellProperties.renderer = firstRowRenderer;
+                    } else if (row === 23) {
                         cellProperties.renderer = firstRowRenderer;
                     }
                     else {
