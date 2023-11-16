@@ -53,43 +53,48 @@ export default function GerTurma() {
   {
     /*FUNÇÃO INATIVAR TURMA */
   }
-  const deletarTurma = (e, id) => {
+  const deletarTurma = async (e, id) => {
     e.preventDefault();
-
-    const NoClick = e.currentTarget;
-    NoClick.innerText = "Inativando...";
-
+  
     try {
-      api
-        .delete(`turma/${id}`)
-        .then(async (res) => {
-          if (res.status) {
-            toast.success("Turma inativo com sucesso");
-            NoClick.closest("tr").remove();
-            setTimeout(() => {
-              return navigate("/turma/gerenciar", { replace: true });
-            }, 1000);
+     
+      const response = await api.delete(`turma/${id}`);
+  
+      if (response.status === 200) {
+        const updatedTurmas = turmas.map((turma) => {
+          if (turma.id === id) {
+            // Inverte o status da turma (se estava ativo, torna inativo e vice-versa)
+            turma.ativo = turma.ativo === 1 ? 0 : 1;
           }
-        })
-        .catch(function (error) {
-          
-          let erros = tratarErro(error.response.data.error);
-
-          toast.error(`Erro ao alterar!\n ${erros}`, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            style: { whiteSpace: "pre-line" },
-          });
+          return turma;
         });
-    } catch (err) {
-    }
+  
+        setTurmas(updatedTurmas);
+  
+        toast.success(`Turma ${turmas.find((t) => t.id === id).ativo === 1 ? "ativada" : "inativada"} com sucesso`);
+  
+        setTimeout(() => {
+          return navigate("/turma/gerenciar", { replace: true });
+        }, 1000);
+      }
+    } catch (error) {
+      let erros = tratarErro(error.response.data.error);
+  
+      toast.error(`Erro ao alterar!\n ${erros}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        style: { whiteSpace: "pre-line" },
+      });
+    } 
   };
+  
+
   {
     /*-----------------------------------------------------------------------------------------------*/
   }
