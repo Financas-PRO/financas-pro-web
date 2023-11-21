@@ -42,9 +42,8 @@ export default function Dashboard() {
                             <span>{relacaoProfessor.pendencias}</span>
                         </div>
                     </div>
-
-
                 </Link>
+
                 <Link to="/turmas" className="card-relacao card-corrigidos py-3 col-md-6 col-12">
                     <div className="row justify-content-center align-items-center">
                         <div className="col-2">
@@ -57,7 +56,6 @@ export default function Dashboard() {
                             <span>{relacaoProfessor.concluidos}</span>
                         </div>
                     </div>
-
                 </Link>
 
             </div>
@@ -79,7 +77,7 @@ export default function Dashboard() {
 
                         return (
                             <Simulador
-                                key={grupo}
+                                key={grupo.id}
                                 titulo={grupo.descricao}
                                 etapa={grupo.etapa}
                                 nomes={alunos.join(", ")}

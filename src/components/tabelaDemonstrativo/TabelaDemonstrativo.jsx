@@ -149,7 +149,7 @@ const TabelaDemonstrativo = props => {
                     </label>
                     <select className="form-select" onChange={handleAcaoChange}>
                         {acao.map(dado => {
-                            return (<option value={dado.id}>{dado.nome_curto}</option>);
+                            return (<option key={dado.id} value={dado.id}>{dado.nome_curto}</option>);
                         })}
                     </select>
                 </div>

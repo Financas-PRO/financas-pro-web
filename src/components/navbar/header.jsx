@@ -173,11 +173,11 @@ const Header = () => {
     return (
       <div className='navbar-mobile container-fluid' style={{ display: 'none' }}>
         <CDBNavbar className='justify-content-start'>
-          <CDBNavToggle style={{backgroundColor: '#fff'}}
+          <CDBNavToggle style={{backgroundColor: '#fff', marginLeft: '10px'}}
             onClick={() => toggled ? dispatch(setToggle(false)) : dispatch(setToggle(true))}
           />
 
-          <CDBNavBrand href="/">
+          <CDBNavBrand >
             <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
               <img className="aguia-menu img-fluid" style={{ height: "2em", marginLeft: "1em" }} src={menutoledo} alt='aguia' />
             </a>
