@@ -88,59 +88,80 @@ export default function Feedback() {
     function getTableData() {
 
         if (acaoSelecionada.planilha_grupo && acaoSelecionada.planilha_grupo != "null") {
-            setPlanilha(acaoSelecionada.planilha_grupo)
+          setPlanilha(acaoSelecionada.planilha_grupo)
         } else {
-
-            const historicoData = {}; // crei uma variavel vazia para armazena os dados do historico
-
-            const demonstrativosData = acaoSelecionada && acaoSelecionada.demonstrativos ? acaoSelecionada.demonstrativos : {};
-
-            if (acaoSelecionada && acaoSelecionada.historico) {
-                // nesta parte verifico se não ha objeto indefinido ou nulo
-                acaoSelecionada.historico.forEach((historicoItem) => {
-                    // faço uma repitação para percorrer o array
-                    const dataAcao = new Date(historicoItem.data_acao).toLocaleDateString(); // entao aqui para cada data sera inserido abaixo os elementos abaixo
-                    historicoData[dataAcao] = {
-                        "Preço Abertura": historicoItem.preco_abertura,
-                        "Preço Mais Alto": historicoItem.preco_mais_alto,
-                        "Preço Mais Baixo": historicoItem.preco_mais_baixo,
-                        "Preço Fechamento": historicoItem.preco_fechamento,
-                        "Preço Fechamento Ajustado": historicoItem.preco_fechamento_ajustado
-                    };
-                });
-            }
-
-            const data = [
-                ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-                ["PREÇO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.preco_merc_regular || "" : ""],
-                ["ALTA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.alto_merc_regular || "" : ""],
-                ["BAIXA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.baixo_merc_regular || "" : ""],
-                ["INTERVALO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
-                ["VARIAÇÃO MERCARDO REGULAR", acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
-                ["VALOR MERCADO", acaoSelecionada ? acaoSelecionada.valor_merc || "" : ""],
-                ["VOLUME MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.volume_merc_regular || "" : ""],
-                ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.fecha_ant_merc_regular || "" : ""],
-                ["ABERTURA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.abertura_merc_regular || "" : ""],
-                ["PREÇO LUCRO", acaoSelecionada ? acaoSelecionada.preco_lucro || "" : ""],
-                ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-                ["HISTORICO", ...Object.keys(historicoData)], // Adicione as datas na primeira linha
-                ["PREÇO ABERTURA", ...Object.values(historicoData).map((item) => item["Preço Abertura"])],
-                ["PREÇO MAIS ALTO", ...Object.values(historicoData).map((item) => item["Preço Mais Alto"])],
-                ["PREÇO MAIS BAIXO", ...Object.values(historicoData).map((item) => item["Preço Mais Baixo"])],
-                ["PREÇO FECHAMENTO", ...Object.values(historicoData).map((item) => item["Preço Fechamento"])],
-                ["PREÇO FECHAMENTO AJUSTADO", ...Object.values(historicoData).map((item) => item["Preço Fechamento Ajustado"])],
-                ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-                ...Object.keys(demonstrativosData).map((key) => [
-                    key.toUpperCase(), demonstrativosData[key],
-                ]),
-                ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-
-            ];
-
-            setPlanilha(data);
+    
+          const demonstrativosData = acaoSelecionada && acaoSelecionada.demonstrativos ? acaoSelecionada.demonstrativos : {};
+    
+          const historicoData = acaoSelecionada && acaoSelecionada.historico ? acaoSelecionada.historico : [];
+          const historicHeaders = ["HISTORICO"];
+          const historicoRows = [];
+    
+          if (acaoSelecionada && acaoSelecionada.historico) {
+            historicoData.forEach((historico) => {
+              historicHeaders.push(historico.data_acao);
+              historicoRows.push([
+                historico.preco_abertura,
+                historico.preco_mais_alto,
+                historico.preco_mais_baixo,
+                historico.preco_fechamento,
+                historico.preco_fechamento_ajustado,
+                historico.id,
+              ]);
+            });
+          }
+    
+          const dividendosData = acaoSelecionada && acaoSelecionada.dividendos ? acaoSelecionada.dividendos : [];
+          const dividendosHeaders = ["DIVIDENDO"];
+          const dividendosRows = [];
+    
+          if (acaoSelecionada && acaoSelecionada.dividendos) {
+            dividendosData.forEach((dividendo) => {
+              dividendosHeaders.push(dividendo.relacionado);
+              dividendosRows.push([
+                dividendo.ativo_emitido,
+                dividendo.taxa,
+                dividendo.rotulo,
+              ]);
+            });
+          }
+    
+          const data = [
+           ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+            ["PREÇO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.preco_merc_regular || "" : ""],
+            ["ALTA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.alto_merc_regular || "" : ""],
+            ["BAIXA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.baixo_merc_regular || "" : ""],
+            ["INTERVALO MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.intervalo_merc_regular || "" : ""],
+            ["VARIAÇÃO MERCARDO REGULAR", acaoSelecionada ? acaoSelecionada.variacao_merc_regular || "" : ""],
+            ["VALOR MERCADO", acaoSelecionada ? acaoSelecionada.valor_merc || "" : ""],
+            ["VOLUME MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.volume_merc_regular || "" : ""],
+            ["FECHAMENTO ANTERIOR MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.fecha_ant_merc_regular || "" : ""],
+            ["ABERTURA MERCADO REGULAR", acaoSelecionada ? acaoSelecionada.abertura_merc_regular || "" : ""],
+            ["PREÇO LUCRO", acaoSelecionada ? acaoSelecionada.preco_lucro || "" : ""],
+            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+            [...historicHeaders],
+            ["PREÇO ABERTURA", ...historicoRows.map((row) => row[0])],
+            ["PREÇO MAIS ALTO", ...historicoRows.map((row) => row[1])],
+            ["PREÇO MAIS BAIXO", ...historicoRows.map((row) => row[2])],
+            ["PREÇO FECHAMENTO", ...historicoRows.map((row) => row[3])],
+            ["PREÇO FECHAMENTO AJUSTADO", ...historicoRows.map((row) => row[4])],
+            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+            [...dividendosHeaders],
+            ["ATIVO EMITIDO", ...dividendosRows.map((row) => row[0])],
+            ["TAXA", ...dividendosRows.map((row) => row[1])],
+            ["ROTULO", ...dividendosRows.map((row) => row[2])],
+            ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+            ...Object.keys(demonstrativosData).map((key) => [
+              key.toUpperCase(), demonstrativosData[key],
+            ]),
+            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    
+          ];
+    
+          setPlanilha(data);
         }
-
-    }
+    
+      }
 
     useEffect(() => {
         getTableData();
