@@ -11,6 +11,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Title from "../../components/title/title";
 import ButtonSalvar from "../../components/button/buttonSalvar";
 import ButtonCancelar from "../../components/button/buttonCancelar";
+import tratarErro from "../../util/tratarErro";
 
 export default function EditaProfessor() {
   const [professor, setProfessor] = useState({
@@ -62,6 +63,20 @@ export default function EditaProfessor() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (!validaCPF(professor.cpf)) {
+      toast.error("CPF inválido", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
     try {
       api
         .put(`docente/${id}`, professor)
@@ -75,14 +90,9 @@ export default function EditaProfessor() {
           }
         })
         .catch(function (error) {
-          let resposta = error.response.data.error;
+          let erros = tratarErro(error.response.data.error);
 
-          var erros = "";
-
-          Object.keys(resposta).forEach(function (index) {
-            erros += resposta[index];
-          });
-          toast.error(`Erro ao alterar!\n ${erros}`, {
+          toast.error(`Erro ao cadastrar!\n ${erros}`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -148,6 +158,50 @@ export default function EditaProfessor() {
 
     setProfessor({ ...professor, [name]: valor });
 
+  }
+
+  function validaCPF(cpf) {
+    var Soma = 0;
+    var Resto;
+  
+    var strCPF = String(cpf).replace(/[^\d]/g, '');
+  
+    if (strCPF.length !== 11) return false;
+  
+    if ([
+      '00000000000',
+      '11111111111',
+      '22222222222',
+      '33333333333',
+      '44444444444',
+      '55555555555',
+      '66666666666',
+      '77777777777',
+      '88888888888',
+      '99999999999',
+    ].indexOf(strCPF) !== -1) return false;
+  
+    for (var i = 1; i <= 9; i++)
+      Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+  
+    Resto = (Soma * 10) % 11;
+  
+    if (Resto == 10 || Resto == 11) Resto = 0;
+  
+    if (Resto !== parseInt(strCPF.substring(9, 10))) return false;
+  
+    Soma = 0;
+  
+    for (var i = 1; i <= 10; i++)
+      Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+  
+    Resto = (Soma * 10) % 11;
+  
+    if (Resto == 10 || Resto == 11) Resto = 0;
+  
+    if (Resto !== parseInt(strCPF.substring(10, 11))) return false;
+  
+    return true;
   }
 
   return (
