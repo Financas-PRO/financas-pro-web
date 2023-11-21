@@ -170,7 +170,7 @@ export default function Dashboard() {
                 <CDBModal size="lg" isOpen={modal} toggle={() => { setModal(1) }} centered fade>
                     <CDBModalBody className="bg-toledo p-4" >
                         <div className="container">
-                            <iframe src={`https://www.youtube.com/embed/${videoId}`} width="100%" height="500px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            <iframe src={`https://www.youtube.com/embed/${videoId}?autoplay=true`} width="100%" height="500px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
                         </div>
 
                         <div className="buttons justify-content-end mt-4">

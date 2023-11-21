@@ -1,62 +1,27 @@
 [
     {
         "titulo": "Navegação: aluno",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
+        "codigo": "PlV3B-KlSmA",
+        "usuario": "Aluno"
+    },
+    {
+        "titulo": "Demonstrativos, análise e feedback",
+        "codigo": "-GhwTqbrVLg",
         "usuario": "Aluno"
     },
     {
         "titulo": "Navegação: docente",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
+        "codigo": "sUQcofJlL_Y",
         "usuario": "Docente"
-    },
-    {
-        "titulo": "Cadastrando turmas",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Docente"
-    },
-    {
-        "titulo": "Cadastrando docentes",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Coordenador"
-    },
-    {
-        "titulo": "Importando alunos",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Docente"
-    },
-    {
-        "titulo": "Criando um grupo",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Aluno"
     },
     {
         "titulo": "Feedback ao aluno",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
+        "codigo": "gVB20etnYmw",
         "usuario": "Docente"
     },
     {
-        "titulo": "Dados das empresas",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Aluno"
-    },
-    {
-        "titulo": "Analisando demonstrativos",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Aluno"
-    },
-    {
-        "titulo": "Análise final e feedback",
-        "codigo": "rI2MHg_cwUU",
-        "descricao": "Teste",
-        "usuario": "Aluno"
+        "titulo": "Gerenciamento",
+        "codigo": "ILAQbBki6ew",
+        "usuario": "Docente"
     }
 ]
